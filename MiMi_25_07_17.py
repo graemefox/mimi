@@ -2,6 +2,9 @@
 import ConfigParser, subprocess, os, time, csv, Bio, argparse, re, shutil, time, tempfile
 from Bio import SeqIO
 ####
+# MiMi wanted the "filtered" output from the pal_finder workflow.
+# this is only really important as it needs the primer seqs etc. to be in the correct columns
+#
 # this is the version that appears to be working on 25_07_17
 # check with several sets of data and assembly, filtering etc all appears to be working
 #
@@ -298,11 +301,11 @@ if __name__ == "__main__":
             next(pal)
             for line in pal:
                 seqIDs[y].append(line[0])
-                motif[y].append(line[6])
-                Fprimerlist[y].append(line[1])
-                all_F_primers.append(line[1])
-                Rprimerlist[y].append(ReverseComplement(line[3]))
-                all_R_primers.append(ReverseComplement(line[3]))
+                motif[y].append(line[1])
+                Fprimerlist[y].append(line[7])
+                all_F_primers.append(line[7)
+                Rprimerlist[y].append(ReverseComplement(line[9]))
+                all_R_primers.append(ReverseComplement(line[9]))
     # write out combined primer lists to files
     filePath = str(os.getcwd())
 
