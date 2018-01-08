@@ -1,8 +1,22 @@
 #!/usr/bin/python
 import ConfigParser, subprocess, os, time, csv, Bio, argparse, re, shutil, time, tempfile
 from Bio import SeqIO
+from subprocess import Popen, PIPE
 ####
-## it needs the file produced by pal_finder and pal_filter which ends with ASSEMBLY
+
+#
+#
+#
+#
+
+# the "cat: write error: broken pipe" error is very annoying.
+# if I run it with 4 samples, it gets through with no error.
+# if I run it with 8 samples, I get the error.
+# why would that be the case?
+
+# it doesn't seem to affect the running of the script as far as I can tell
+
+## it needs the file produced by pal_finder and pal_filter which with filtered microsatellites
 
 ####
 # this is the version that appears to be working on 25_07_17
@@ -89,6 +103,7 @@ def get_seqs(script, get_paired, sequencefile, paired_sequence_file, primer_seq)
             seq_ID_line_number = (int(str(matchObj).lstrip("\[\'").rstrip("\'\]"))-2)
             # get sequence itself
             seq = out.split("\n")[n].lstrip(str(matchObj))
+            #print(seq)
             output.append(seq.lstrip(":"))
             # increment 3 as a fastQ file is in blocks of 5
             n = n + 3
@@ -105,6 +120,9 @@ def get_seqs(script, get_paired, sequencefile, paired_sequence_file, primer_seq)
 
 def get_fastq_format_from_ID_line_number(forward_paired_file, reverse_paired_file, ID_line_number, primer_seq, count):
     with open("Forward_reads_for_assembly.fastq", 'a') as ffa, open("Reverse_reads_for_assembly.fastq", 'a') as rfa:
+        #print("searching for " + primer_seq + " in: ")
+        #print(forward_paired_file)
+        #print(reverse_paired_file)
         F_output = ""
         R_output = ""
         with open(forward_paired_file) as f, open(reverse_paired_file) as r:
@@ -133,8 +151,8 @@ def get_fastq_format_from_ID_line_number(forward_paired_file, reverse_paired_fil
                 if i == ID_line_number+3:   # quality info
                     R_output = R_output + R_line
                 count = count + 1
-        ffa.write(F_output)
-        rfa.write(R_output)
+            ffa.write(F_output)
+            rfa.write(R_output)
 
 # count the occurrences of a primer sequence in a FastQ file
 def count_primers(script, sequence_filecount, direction):
@@ -160,29 +178,28 @@ def count_primers(script, sequence_filecount, direction):
             n = n + 1
 
 # count how many individuals data contains the primer sequence
-
 #we have a list of lists *all_F_lists or *all_R_list, all the same length
 #one list corresponds to each sequence file and each "row" is a locus
 #zip over all the lists to determine which individuals have the primer
 #at least x number of times (minimum individuals)
 
 def how_many_files(group_of_lists, direction, minimum_individuals, how_many_individuals):
-  position = 0
-  for x in zip (*group_of_lists):
-    count = 0
+    position = 0
+    for x in zip (*group_of_lists):
+        count = 0
     # in how many individuals was it found at least once?
-    for i in x:
-      if i != "0":
-          count = count + 1
-    if int(count) > float(minimum_individuals):
-      if direction == "F":
-        wanted_F_primers.append(all_F_primers[position])
-        how_many_individuals.append(count)
-        file_contains_F_primer.append(x)
-      else:
-        wanted_R_primers.append(all_R_primers[position])
-        file_contains_R_primer.append(x)
-    position = position + 1
+        for i in x:
+            if i != "0":
+                count = count + 1
+        if int(count) > float(minimum_individuals):
+            if direction == "F":
+                wanted_F_primers.append(all_F_primers[position])
+                how_many_individuals.append(count)
+                file_contains_F_primer.append(x)
+            else:
+                wanted_R_primers.append(all_R_primers[position])
+                file_contains_R_primer.append(x)
+        position = position + 1
 
 def get_reads(sequencefile, wanted_primers, file_contains_primer,n, paired_sequence_file, output):
     wanted_reads = []
@@ -304,13 +321,18 @@ if __name__ == "__main__":
             next(pal)
             for line in pal:
                 seqIDs[y].append(line[0])
-                motif[y].append(line[6])
-                Fprimerlist[y].append(line[1])
-                all_F_primers.append(line[1])
-                Rprimerlist[y].append(ReverseComplement(line[3]))
-                all_R_primers.append(ReverseComplement(line[3]))
+                motif[y].append(line[1])
+                Fprimerlist[y].append(line[7])
+                all_F_primers.append(line[7])
+                Rprimerlist[y].append(ReverseComplement(line[9]))
+                #Rprimerlist[y].append(line[9])
+                ### it is the reverse complement of the reverse primers which actually appears in the R2 files
+                all_R_primers.append(ReverseComplement(line[9]))
+                #all_R_primers.append(line[9])
     # write out combined primer lists to files
     filePath = str(os.getcwd())
+
+
 
     # generate a big list of all F primers and all R primers
     # also write these out to files as they are needed by Blast later
@@ -321,7 +343,8 @@ if __name__ == "__main__":
                 all_R_primers.append(R_primer)
                 f.write(F_primer + "\n")
                 r.write(R_primer + "\n")
-
+    f.close()
+    r.close()
     # generate an empty list for each Individual to hold the primer count data:
     Fprimercountlist, Rprimercountlist = {}, {}
     all_F_lists, all_R_lists = [], []
@@ -358,13 +381,13 @@ if __name__ == "__main__":
             if int(primer_list) != int(sequencefile_count):
                 # then it is a primer -> sequence file comparison that we need to make
                 Fgrep_script = "cat " + Fprimerfile + " | head -n " + \
-                                str(end_pos+1) + "| tail -n " + str(diff+1) + \
+                                str(end_pos+1) + " | tail -n " + str(diff+1) + \
                                 " | while read line ; do grep -c $line " + \
-                                Fsequencefile + "\n" + "done"
+                                Fsequencefile + "; done"
                 Rgrep_script = "cat " + Rprimerfile + " | head -n " + \
-                                str(end_pos+1) + "| tail -n " + str(diff+1) + \
+                                str(end_pos+1) + " | tail -n " + str(diff+1) + \
                                 " | while read line ; do grep -c $line " + \
-                                Rsequencefile + "\n" + "done"
+                                Rsequencefile + "; done"
                 count_primers(Fgrep_script, sequencefile_count, "F")
                 #count_primers(Rgrep_script, sequencefile_count, "R")
                 start_pos = start_pos + len(Fprimerlist[primer_list])
@@ -377,6 +400,7 @@ if __name__ == "__main__":
                 n = 0
                 while int(count) < int(end_pos+1):
                     Fprimercountlist[sequencefile_count].append("1")
+                    Rprimercountlist[sequencefile_count].append("1")
                     count = count + 1
                     n = n + 1
                 start_pos = start_pos + len(Fprimerlist[primer_list])
@@ -384,9 +408,9 @@ if __name__ == "__main__":
         sequencefile_count = int(sequencefile_count ) + 1
         sample_number = sample_number + 1
 
+
     ## now that we have all the sequence counts, we can go through the lists
     # and get a list of just those primers which occur in > 50% of individuals
-
     # get a list of all the primers which appear in >50% of individuals
     wanted_F_primers, wanted_R_primers, file_contains_F_primer, file_contains_R_primer = [], [], [], []
     position = 0
@@ -394,13 +418,18 @@ if __name__ == "__main__":
     how_many_individuals = []
     how_many_files(all_F_lists, "F", minimum_individuals, how_many_individuals)
     #how_many_files(all_R_lists, "R", minimum_individuals, how_many_individuals)
-    with open("wanted_F_primers.txt", 'w') as wantedF:
+    with open("wanted_F_primers.txt", 'w') as wantedF, open("wanted_R_primers.txt", 'w') as wantedR:
         for x in wanted_F_primers:
+            #print(x)
             wantedF.write(x + "\n")
+        for y in wanted_R_primers:
+            #print(y)
+            wantedR.write(y + "\n")
 
     # put the primer seqs and how many individuals they were found in, into a dict
-    which_individuals = dict(zip(wanted_F_primers, how_many_individuals))
-
+    which_individuals_F = dict(zip(wanted_F_primers, how_many_individuals))
+    print(which_individuals_F)
+    #which_individuals_R = dict(zip(wanted_R_primers, how_many_individuals))
 
     print "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     print "Merging all reads containing common primer sequences."
@@ -413,16 +442,23 @@ if __name__ == "__main__":
     if os.path.exists("Reverse_reads_for_assembly.fastq"):
         os.remove("Reverse_reads_for_assembly.fastq")
 
-    wanted_F_reads, wanted_R_reads = [], []
+    wanted_F_reads, wanted_R_reads, F_sequence_file, R_sequence_file = [], [], [], []
     n = 0
     for sequencefile, paired_sequence_file in zip(list_of_R1_files, list_of_R2_files):
         print (time.strftime("%H:%M:%S"))
         print "Extracting reads from file: " + sequencefile + "\n"
-
         get_reads(sequencefile, wanted_F_primers, file_contains_F_primer, n, paired_sequence_file, wanted_F_reads)
+        n = n + 1
+
+    n = 0
+    for sequencefile, paired_sequence_file in zip(list_of_R2_files, list_of_R1_files):
+        print (time.strftime("%H:%M:%S"))
+        print "Extracting reads from file: " + sequencefile + "\n"
         get_reads(sequencefile, wanted_R_primers, file_contains_R_primer, n, paired_sequence_file, wanted_R_reads)
         n = n + 1
 
+
+    """
     # create a file to go into pal_finder which enables us to count the repeats in each read
     filePath = "pal_finder_input_file.fasta"
     unique_number = 0
@@ -430,16 +466,11 @@ if __name__ == "__main__":
         for row in wanted_F_reads:
             f.write(row + "\n")
     f.close()
+    """
 
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     print "Finished scanning samples for common primer sequences"
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"
-
-    wd = os.getcwd()
-    if os.path.isdir(wd + "/Alignments"):
-        shutil.rmtree(wd + "/Alignments")
-    os.mkdir(wd + "/Alignments")
-    output_path = wd + "/Alignments/"
 
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     print "Creating config file for pal_finder"
@@ -458,6 +489,15 @@ if __name__ == "__main__":
     # section below needs 1 indent to the right
         # create new alignment for each set of primer sequences - made of the assembled reads
     # get a list of unique IDs contained in the file
+
+
+    wd = os.getcwd()
+    if os.path.isdir(wd + "/Alignments"):
+        shutil.rmtree(wd + "/Alignments")
+    os.mkdir(wd + "/Alignments")
+    output_path = wd + "/Alignments/"
+
+
     wanted = set()
     fasta1 = SeqIO.parse("Assembled_reads.fasta",'fasta')
     for seq in fasta1:
@@ -490,31 +530,35 @@ if __name__ == "__main__":
             os.remove(wd + "/Alignments/" + filename)
 
 
+
+    ### suspect that this section below is going through and adding an extra copy of each sequence
+    ### does this need to exist?
     """
     # get set of unique sequence IDs
     for record in wanted_F_reads:
         for x in record.split("\n"):
             wanted.add(record.split("\n")[0].lstrip(">"))
-    # create a file for each and write out the sequences into each files
+    ## create a file for each and write out the sequences into each files
     for record in wanted_F_reads:
-        #for x in record.split("\n"):
-        if record.split("\n")[0].lstrip(">") in wanted:
-            filePath = str(os.getcwd()) + '/Alignments/%s.fasta' % (record.split("\n")[0].lstrip(">"))
-            if os.path.exists(filePath):
-                with open(filePath, 'a') as f:
-                    f.write(record + "\n")
-            else:
-                with open(filePath, 'w') as f:
-                    f.write(record + "\n")
+        for x in record.split("\n"):
+            if record.split("\n")[0].lstrip(">") in wanted:
+                filePath = str(os.getcwd()) + '/Alignments/%s.fasta' % (record.split("\n")[0].lstrip(">"))
+                if os.path.exists(filePath):
+                    with open(filePath, 'a') as f:
+                        f.write(record + "\n")
+                else:
+                    with open(filePath, 'w') as f:
+                        f.write(record + "\n")
     """
+    output_path = wd
     copy_and_rename_file(pal_finder_config, output_path + "pal_finder_config_file.txt")
     write_to_config(output_path + "pal_finder_config_file.txt","findPrimers 1", "findPrimers 0")
     write_to_config(output_path + "pal_finder_config_file.txt","platform Illumina", "platform 454")
     write_to_config(output_path + "pal_finder_config_file.txt","inputFormat fastq", "inputFormat fasta")
     write_to_config(output_path + "pal_finder_config_file.txt","pairedEnd  1","pairedEnd  0" )
     write_to_config(output_path + "pal_finder_config_file.txt","input454reads  test/data/454_All_python.fna", "input454reads " + wd + "/Assembled_reads.fasta")
-    write_to_config(output_path + "pal_finder_config_file.txt","MicrosatSumOut  test/output/test_microsat_summary.txt", "MicrosatSumOut " + output_path + "pal_finder_summary_out.txt")
-    write_to_config(output_path + "pal_finder_config_file.txt","PALsummaryOut  test/output/test_PAL_summary.txt", "PALsummaryOut " + output_path + "pal_finder_PAL_summary.txt")
+    write_to_config(output_path + "pal_finder_config_file.txt","MicrosatSumOut  test/output/test_microsat_summary.txt", "MicrosatSumOut " + output_path + "/pal_finder_files/pal_finder_summary_out.txt")
+    write_to_config(output_path + "pal_finder_config_file.txt","PALsummaryOut  test/output/test_PAL_summary.txt", "PALsummaryOut " + output_path + "/pal_finder_files/pal_finder_PAL_summary.txt")
     write_to_config(output_path + "pal_finder_config_file.txt","2merMinReps 	6", "2merMinReps 	6")
     write_to_config(output_path + "pal_finder_config_file.txt","3merMinReps 	0", "3merMinReps 	6")
     write_to_config(output_path + "pal_finder_config_file.txt","4merMinReps 	0", "4merMinReps 	6")
@@ -526,6 +570,10 @@ if __name__ == "__main__":
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     print (time.strftime("%H:%M:%S"))
     subprocess.call(pal_finder_command, shell=True)
+
+    ### I think this is an accidental duplication of the section above.
+    # remove if doesn't appear to be needed
+    """
     wanted = set()
     fasta1 = SeqIO.parse("Assembled_reads.fasta",'fasta')
     for seq in fasta1:
@@ -540,9 +588,21 @@ if __name__ == "__main__":
                     SeqIO.write([seq], f, "fasta")
                 wanted.add(sequence_ID)
         wd = os.getcwd()
-
+    """
     #### parse the pal_finder output to find the variable loci
     # get a list of unique IDs (the forward primer sequences)
+
+
+
+    #### error is:
+    """
+    raceback (most recent call last):
+  File "./MiMi_updated_Nov2017.py", line 609, in <module>
+    with open(wd + "/pal_finder_files/pal_finder_PAL_summary.txt") as pf:
+IOError: [Errno 2] No such file or directory: '/home/graeme/Dropbox/Research_Associate/blue_tits/mimi/pal_finder_files/pal_finder_PAL_summary.txt'
+
+
+     """
     with open(wd + "/pal_finder_files/pal_finder_PAL_summary.txt") as pf:
         unique_primers = set()
         allele_count = []
@@ -604,13 +664,13 @@ if __name__ == "__main__":
         with open("Mimi_output.txt", 'w') as final_output:
             final_output.write("Foward_primer_seq\tReverse_primer_seq\tNumber_of_alleles\tFound_in_individuals\tAlleles_present\tSize-Range\n")
             for x in ranked_output:
-                final_output.write(x.split("\t")[0] + "\t" + ReverseComplement(primer_pairs[x.split("\t")[0]]) + "\t" + x.split("\t")[1] + "\t" + str(which_individuals[x.split("\t")[0]]) + "\t" + x.split("\t")[2] + "\t" + x.split("\t")[3] + "\n")
+                final_output.write(x.split("\t")[0] + "\t" + ReverseComplement(primer_pairs[x.split("\t")[0]]) + "\t" + x.split("\t")[1] + "\t" + str(which_individuals_F[x.split("\t")[0]]) + "\t" + x.split("\t")[2] + "\t" + x.split("\t")[3] + "\n")
     else:
         print("Some error message here. Need to work out what exactly causes it to get here")
 
     # some tidying up of temporary files
 
-
+    """
     if os.path.exists("Forward_reads_for_assembly.fastq"):
         os.remove("Forward_reads_for_assembly.fastq")
     if os.path.exists("Reverse_reads_for_assembly.fastq"):
@@ -625,5 +685,6 @@ if __name__ == "__main__":
         os.remove("wanted_F_primers.txt")
     if os.path.exists("wanted_R_primers.txt"):
         os.remove("wanted_R_primers.txt")
-    print("\n\nSuccessfully Complete")
+    print("\n\nSuccessfully Completed MiMi analysis.")
     print (time.strftime("%H:%M:%S"))
+    """
