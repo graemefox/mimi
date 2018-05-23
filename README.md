@@ -1,16 +1,16 @@
-# 'Multi-individual Microsatelite identification' - (MiMi)
+# 'multi individual microsatelite identification' - (mimi)
 ### A tool to improve the design of novel microsatellite panels from genome next-generation sequencing data.
 
 
 #### What does it do?
-MiMi is a Python script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/)
+mimi is a Python script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/)
 by increasing the rate at which markers amplify by PCR and also allows the user to select polymorphic loci from the data. It does this by
 using the genome data from several individuals of the same species, rather than from a single indivdual which is more common in the microsatellite
 design process.
 
 
 #### What does it allow me to do?
-MiMi allows you to visualise three important pieces of information which are not available when designing microsatellite markers from the genome of a single individual.
+mimi allows you to visualise three important pieces of information which are not available when designing microsatellite markers from the genome of a single individual.
 
 1) You can select primer pairs which show strong sequence conservation across several individuals. This gives a much higher rate of PCR success and should allow for a 
 reduction in the frequency of null alleles (in theory...). (fig. 1).
@@ -67,7 +67,7 @@ Try -h for help.
 ```
 
 #### Set up the configuration file
-There is a config.txt file which contains the parameters used to control MiMi. Open it in a **plain text** editor (not a word processor) and change the following fields to accomodate your data:
+There is a config.txt file which contains the parameters used to control mimi. Open it in a **plain text** editor (not a word processor) and change the following fields to accomodate your data:
 
 ```
 Amount of individuals sequenced:
@@ -100,7 +100,7 @@ These are the paths to your raw FASTQ files. Each individual should have two ent
 Extend the list if neccessary by adding new rows. Single-end sequencing reads are not supported.
 
 ```
-Prior to running MiMi, each individual should have been processed with pal_finder and the
+Prior to running mimi, each individual should have been processed with pal_finder and the
 additional filtering and PANDAseq QC steps by Griffiths et al (unpublished)
 with the path to the output file given below in the following format:
 
@@ -119,17 +119,17 @@ pal_finder_config = /path/to/pal_finder/config.txt
 ```
 
 Finally, your pal_finder installation shipped two files: "pal_finder_v0.02.04.pl" and "config.txt". Provide the paths for these two files. Do not alter the config file as this is accessed and modified
-by the MiMi script. Please note there are two "config.txt" files; one which is accessed by MiMi and one which is accessed by pal_finder. These are different and both are required.
+by the mimi script. Please note there are two "config.txt" files; one which is accessed by MiMi and one which is accessed by pal_finder. These are different and both are required.
 
 #### Run the script
-You may need to give MiMi permission to run:
+You may need to give mimi permission to run:
 ```
-sudo chmod +x ./MiMi.py
+sudo chmod +x ./mimi.py
 ```
 
 Run the script and pass the MiMi config file:
 ```
-./MiMi.py /path/to/config.txt
+./mimi.py /path/to/config.txt
 ```
 
 On my modest desktop machine, using data from a single Miseq run (approx 12-16Gb) the MiMi process runs in approximately four hours.
