@@ -11,21 +11,24 @@ design process.
 #### What does it allow me to do?
 MiMi allows you to visualise three important pieces of information which are not available when designing microsatellite markers from the genome of a single individual.
 
-Firstly, you can select primer pairs which show strong sequence conservation across several individuals. This gives a much higher rate of PCR success and should allow for a 
-reduction in the frequency of null alleles (in theory...).
+1) You can select primer pairs which show strong sequence conservation across several individuals. This gives a much higher rate of PCR success and should allow for a 
+reduction in the frequency of null alleles (in theory...). (fig. 1).
 
+**Fig 1**
 ![Figure1 - strong sequence conservation](/images/fig1.png)
 
 
-Secondly, by looking at the microsatellite locus itself in several individuals you can select loci which are polymiorphic in the amount of microsatellite repeats
-and avoid loci where all individuals appear to have the same number of repeats.
+2) By looking at the microsatellite locus itself in several individuals you can select loci which are polymiorphic in the amount of microsatellite repeats
+and avoid loci where all individuals appear to have the same number of repeats. (fig. 2).
 
+**Fig. 2**
 ![Figure2 - variable number of repeats](/images/fig3.png)
 
-Finally, you can detect whether a potential microsatellite marker contains other fragment length altering polymorphisms, outside of those caused by the change in number
+3) You can detect whether a potential microsatellite marker contains other fragment length altering polymorphisms, outside of those caused by the change in number
 of motif repeats. Insertion/deletions in the flanking regions are clearly visible and can be avoided when designing your microsatellite panel. Mutations of thus sort
-are an important source of error and would otherwise be very difficult to detect in a panel designed in a single individual.
+are an important source of error and would otherwise be very difficult to detect in a panel designed in a single individual. (fig. 3).
 
+**Fig. 3**
 ![Figure3 - insertion/deletion mutation](/images/fig2.png)
 
 #### Installation Instructions
