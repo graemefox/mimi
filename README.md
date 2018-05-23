@@ -25,7 +25,7 @@ Finally, you can detect whether a potential microsatellite marker contains other
 of motif repeats. Insertion/deletions in the flanking regions are clearly visible and can be avoided when designing your microsatellite panel. Mutations of thus sort
 are an important source of error and would otherwise be very difficult to detect in a panel designed in a single individual.
 
-![Figure3 - insertion/deletion mutation(/images/fig2.png)
+![Figure3 - insertion/deletion mutation](/images/fig2.png)
 
 
 
