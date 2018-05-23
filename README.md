@@ -46,7 +46,7 @@ sequence conservation.
 v0.1 - This is the initial version which should establish core functionality. Bugs are likely to be found and improvements/modifications will come in the future.
 This was made by a humble biology PhD student, not a "programmer", so please be patient!
 
-##### Installation Instructions
+### Installation Instructions
 This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 18.04) but *should* also work on OSX (Your mileage may vary).
 
 #### Dependencies
