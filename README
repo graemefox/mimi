@@ -1,126 +1,21 @@
-<html>
-<head>
-  <style type="text/css">
-    @font-face {
-      font-family: "Computer Modern";
-      src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunss.otf');
-    }
-    @font-face {
-      font-family: "Computer Modern";
-      src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunsx.otf');
-      font-weight: bold;
-    }
-    @font-face {
-      font-family: "Computer Modern";
-      src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunsi.otf');
-      font-style: italic, oblique;
-    }
-    @font-face {
-      font-family: "Computer Modern";
-      src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunbxo.otf');
-      font-weight: bold;
-      font-style: italic, oblique;
-    }
-    div {
-       word-wrap: break-word;
-       width: 800px;
-    }
-    body {
-      font-family: "Computer Modern", sans-serif;
-    }
-  </style>
+###### HEADING 6
+##### HEADING 5
+#### HEADING 4
+### HEADING 3
+## HEADING 2
+# HEADING 1
 
-</head>
-<body>
-<h3>Graeme Fox</h3><h5>MSc, BSc (Hons) (The University of Liverpool)</h5><br>
-<img src="img_9192.jpg",  alt="hi" class="inline"/>
-<div>
-<br>
-I am a PhD student at Manchester Metropolitan University researching next-generation sequencing methods and applications in conservation and ecology. Specialising in molecular biology, sequencing technologies and bioinformatics I am attempting to use NGS and computational tools to understand and answer a range of biological questions.
-Currently I am focused upon novel bioinformatics techniques of developing microsatellite marker panels in species of conservation interest, meta-barcoding of mixed pollen communities in honey and applying SNP markers to questions of population biology.<br>
-<br>
-<h5>Get in touch: g.fox@mmu.ac.uk  / @graefox  /  <a href="https://www.ecologicalgenetics.org/">Lab  </a> </h5>
-<h3>Published Work</h3>
-<b>2018<br></b>
-<br>
-Graeme Fox, Iulia Darolti, Jean-Denis Hibbitt, Richard F. Preziosi, John L. Fitzpatrick, Jennifer K. Rowntree (2018)
-Bespoke markers for ex situ conservation; application, analysis and challenges in the assessment of a population of endangered undulate rays.
-<i>Journal of Zoo and Aquarium Research.</i>
-6(2): 50-56.
-<br><br>
+**bold**
+*italic*
 
-Combe F, Taylor-Cox E, Fox G, Sandri T, Davis N, Jones M, Cain B, Mallon D, Harris E (2018)
-Rapid isolation and characterization of microsatellites in the critically endangered Mountain Bongo <i>(Tragelaphus eurycerus isaaci)</i>.
-<i>Journal of Genetics.</i>
-DOI: https://doi.org/10.1007/s12041-018-0922-z
-<br><br>
-Rachael Antwis, Sarah Griffiths, Xavier Harrison, Ché Weldon, Michael Wood, Abigail Pretorius, Kevin Hopkins, Graeme Fox, and Richard Preziosi (accepted)
-Genetic Variability and Ontogeny Predict Microbiome Structure in a Disease-Challenged Montane Amphibian.
-<i>Multidisciplinary Journal of Microbial Ecology.</i> (accepted, awaiting publication).
-<br><br>
-D'Cruze N, Singh B, Mookerjee A, Hunter K, Brassey CA, Rowntree J, Megson S, Fox G, Louies J, Sharath RS Macdonald DW (2018)
-What’s in a name? Wildlife traders evade authorities using code words.
-<i>Oryx.</i>
-52(1). 13-15
-<br><br>
-<b>2017<br></b>
-<br>
-Ramirez K, Knight C, de Hollander M, Brearley F, Constantinides C, Cotton A, Creer S, Crowther T, Davison J , Delgado-Baquerizo M, Dorrepaal E, Elliott D, Fox G, Griffiths R,
-Hale C, Hartman K, Houlden A, Jones D, Krab E, Maestre F, McGuire K, Monteux S, Orr C, van der Putten W, Roberts I, Robinson D, Rocca J, Rowntree J, Schlaeppi K, Shepherd M,
-Singh B, Straathof A, Bhatnagar J, Thion C, van der Heijden M, and de Vries F (2017)
-Detecting macroecological patterns in bacterial communities across independent studies of global soils.
-<i>Nature Microbiology.</i> (doi:10.1038/s41564-017-0062-x).
-<br><br>
-<b>2016<br></b>
-<br>
-Griffiths SM, Fox G, Briggs PJ, Donaldson IJ, Hood S, Richardson P, Leaver GW, Truelove NK & Preziosi RF (2016)
-A Galaxy-based bioinformatics pipeline for optimised, streamlined microsatellite development from Illumina next-generation sequencing data.
-<i>Conservation Genetics Resources.</i>
-DOI 10.1007/s12686-016-0570-7
-<br><br>
-Moat J, Rizoulis A, Fox G & Upton M (2016)
-Domestic shower hose biofilms contain fungal species capable of causing opportunistic infection.
-<i>Journal of Water and Health.</i> 14(4). DOI: 10.2166/wh.2016.297
-<br><br>
-<b>2015<br></b>
-<br>
-Langarica-Fuentes A, Fox G, Robson GD (2015)
-Metabarcoding analysis of home composts reveals distinctive fungal communities with a high number of unassigned sequences.
-<i>Microbiology.</i>
-doi: 10.1099/mic.0.000153
-<br><br>
-Dr Madhura Castelino, MBBS, Stephen Eyre, PhD, John Moat, MSc, Graeme Fox, MSc, Paul Martin, MPhil, Umer Ijaz, PhD, Christopher Quince, PhD,
-Pauline Ho, PhD, Mathew Upton, PhD, Anne Barton, PhD (2015)
-The skin microbiome in psoriatic arthritis: methodology development and pilot data.
-<i>The Lancet.</i> 385(1): S27.
- <br><br>
-<b>2014<br></b>
-<br>
-Adrian Langarica-Fuentes, Pauline S Handley PhD, Ashley Houlden PhD, Graeme Fox, Geoffrey D Robson PhD (2014)
-An investigation of the biodiversity of thermophilic and thermotolerant fungal species in composts using culture-based and molecular techniques.
-<i>Fungal Ecology.</i> 11. 132-144. Elsevier.
-<br><br>
-Langarica-Fuentes, Adrian; Zafar, Urooj; Heyworth, Alan; Brown, Thomas; Fox, Graeme; Robson, Geoff. (2014)
-Fungal succession in an in-vessel composting system characterised using DGGE and 454-pyrosequencing.
-<i>FEMS Microbiology Ecology.</i> 88. 296-308
-<br><br>
-<b>2013<br></b>
-<br>
-David Penney PhD, Caroline Wadsworth; Graeme Fox; Sandra L Kennedy; Richard F Preziosi; Terence A Brown. (2013)
-Absence of Ancient DNA in Sub-Fossil Insect Inclusions Preserved in 'Anthropocene' Colombian Copal.
-<i>PLOSONE</i> 8(9):e73150.
-doi: https://doi.org/10.1371/journal.pone.0073150
-<br><br>
+> I am a quote.
 
-<h3>Work In The Press</h3>
-Some recent work the department performed on trade in 'hatha jodi': a root believed to bring good luck in some cultures.
-Trade in the plant has been fuelling illicit trade in animal parts. <br>
-This work has been featured at <a href="https://gizmodo.com/if-you-ordered-a-rare-indian-root-online-its-probably-1796245321">Gizmodo</a>,
-<a href="https://www.telegraph.co.uk/news/2017/06/20/lizard-penis-passed-lucky-plant-wide-ranging-scam/">The Telegraph</a>, and the
-<a href="http://www.bbc.co.uk/news/world-asia-india-40323340">BBC</a> amongst others, with a range of great headlines.
-<br><br>
-My work on captive populations of <i>Raja undulata</i> has been featured on <a href="http://www.bbc.co.uk/earth/story/20141112-ray-dna-mapped-to-stop-inbreeding">BBC Earth</a>
- and Manchester University News.
-</div>
-</body>
-</html>
+```
+I am come code?
+```
+
+I am [A LINK](graemefox.github.io)
+
+Hello, this will eventually become the README file for this repository.
+
+
