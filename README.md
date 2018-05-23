@@ -1,6 +1,15 @@
 # 'Multi-individual Microsatelite identification' - (MiMi)
 ### A tool to improve the design of novel microsatellite panels from genome next-generation sequencing data.
 
+          ~~~~~~~~~~~~~~~~~~~~~~~~~
+           __  __   _   __  __   _ 
+          |  \/  | (_) |  \/  | (_)
+          | \  / |  _  | \  / |  _ 
+          | |\/| | | | | |\/| | | |
+          | |  | | | | | |  | | | |
+          |_|  |_| |_| |_|  |_| |_|
+          ~~~~~~~~~~~~~~~~~~~~~~~~~
+
 #### What does it do?
 MiMi is a script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/)
 by increasing the rate at which markers amplify by PCR and also allows the user to select polymorphic loci from the data. It does this by
@@ -15,6 +24,7 @@ MiMi allows you to visualise three important pieces of information which are not
 reduction in the frequency of null alleles (in theory...). (fig. 1).
 
 **Fig 1**
+
 ![Figure1 - strong sequence conservation](/images/fig1.png)
 
 
@@ -22,6 +32,7 @@ reduction in the frequency of null alleles (in theory...). (fig. 1).
 and avoid loci where all individuals appear to have the same number of repeats. (fig. 2).
 
 **Fig. 2**
+
 ![Figure2 - variable number of repeats](/images/fig3.png)
 
 3) You can detect whether a potential microsatellite marker contains other fragment length altering polymorphisms, outside of those caused by the change in number
@@ -29,6 +40,7 @@ of motif repeats. Insertion/deletions in the flanking regions are clearly visibl
 are an important source of error and would otherwise be very difficult to detect in a panel designed in a single individual. (fig. 3).
 
 **Fig. 3**
+
 ![Figure3 - insertion/deletion mutation](/images/fig2.png)
 
 #### Installation Instructions
