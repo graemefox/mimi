@@ -67,7 +67,7 @@ Try -h for help.
 ```
 
 #### Set up the configuration file
-There is a config.txt file which contains the parameters used to control mimi. Open it in a **plain text** editor (not a word processor) and change the following fields to accomodate your data:
+There is a mimi_config.txt file which contains the parameters used to control mimi. Open it in a **plain text** editor (not a word processor) and change the following fields to accomodate your data:
 
 ```
 Amount of individuals sequenced:
@@ -119,7 +119,8 @@ pal_finder_config = /path/to/pal_finder/config.txt
 ```
 
 Finally, your pal_finder installation shipped two files: "pal_finder_v0.02.04.pl" and "config.txt". Provide the paths for these two files. Do not alter the config file as this is accessed and modified
-by the mimi script. Please note there are two "config.txt" files; one which is accessed by MiMi and one which is accessed by pal_finder. These are different and both are required.
+by the mimi script. Please note there are two config files; one which is accessed by MiMi (mimi_config.txt by default) and one which is accessed by pal_finder (config.txt by default).
+ These are different and both are required.
 
 #### Run the script
 You may need to give mimi permission to run:
