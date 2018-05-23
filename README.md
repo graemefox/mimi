@@ -42,10 +42,10 @@ sequence conservation.
 
 ![Figure3 - insertion/deletion mutation](/images/fig2.png)
 
-#### Installation Instructions
+### Installation Instructions
 This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 18.04) but *should* also work on OSX (Your mileage may vary).
 
-### Dependencies
+#### Dependencies
 You **must** have [Biopython](https://biopython.org/) and [PANDAseq](https://biopython.org/) installed.
 PANDAseq **must** be in your $PATH.
 
@@ -62,7 +62,59 @@ Too confused to continue.
 Try -h for help.
 ```
 
+#### Running the script
+There is a config.txt file which contains the parameters used to control MiMi. Open it in a **plain text** editor (not a word processor) and change the following fields to accomodate your data:
 
+```
+Amount of individuals sequenced:
+number_of_samples = 3
+```
+
+MiMi will run on anything >1 sample but you will not get particularly meaningful results with a small number. I recommend eight samples (eight individuals).
+
+```
+Proportion of individuals in which a microsatellite loci should occur (default 0.5)
+proportion_of_individuals = 0.5
+```
+
+"proportion_of_individuals" controls in how many of your sequence files a microsatellite locus must be discovered to pass through the filters. The default value is 0.5
+but if you find you are not getting many results, this can be reduced.
+
+```
+Each Individual should have two input files: paths to "R1" and "R2" file in the
+following format:
+
+
+Input your real data below:
+input1_R1 = /path/to/individual_1_R1.fastq
+input1_R2 = /path/to/individual_1_R2.fastq
+input2_R1 = /path/to/individual_2_R1.fastq
+input2_R2 = /path/to/individual_2_R2.fastq
+```
+
+These are the paths to your raw FASTQ files. Each individual should have two entries, one for the forward of the pair of reads (R1) and one for the reverse of the pair of reads (R2).
+Extend the list if neccessary by adding new rows. Single-end sequencing reads are not supported.
+
+```
+Prior to running MiMi, each individual should have been processed with pal_finder and the
+additional filtering and PANDAseq QC steps by Griffiths et al (unpublished)
+with the path to the output file given below in the following format:
+
+input1_pal_finder = /path/to/individual_1_pal_finder_output.txt
+input2_pal_finder = /path/to/individual_2_pal_finder_output.txt
+```
+
+These are the paths to the output files from the Griffiths et al (2016) workflow. This must have been performed on your data prior to running MiMi as the process depends on
+these output files for the loci and primer sequences.
+
+```
+Path to pal_finder_v0.02.04 script and config file:
+
+pal_finder_path = pal_finder/pal_finder_v0.02.04.pl
+pal_finder_config = pal_finder/config.txt
+```
+
+Finally, your pal_finder installation shipped two files: "pal_finder_v0.02.04.pl" and "config.txt"
 #### Who made this?
 [Graeme Fox](https://graemefox.github.io)
 
