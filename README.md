@@ -44,7 +44,7 @@ sequence conservation.
 
 ### Versions
 v0.1 - This is the initial version which should establish core functionality. Bugs are likely to be found and improvements/modifications will come in the future.
-This was made by a PhD student, not a "programmer", so please be patient!
+This was made by a humble biology PhD student, not a "programmer", so please be patient!
 
 ### Installation Instructions
 This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 18.04) but *should* also work on OSX (Your mileage may vary).
@@ -66,7 +66,7 @@ Too confused to continue.
 Try -h for help.
 ```
 
-#### Running the script
+#### Set up the configuration file
 There is a config.txt file which contains the parameters used to control MiMi. Open it in a **plain text** editor (not a word processor) and change the following fields to accomodate your data:
 
 ```
@@ -114,11 +114,29 @@ these output files for the loci and primer sequences.
 ```
 Path to pal_finder_v0.02.04 script and config file:
 
-pal_finder_path = pal_finder/pal_finder_v0.02.04.pl
-pal_finder_config = pal_finder/config.txt
+pal_finder_path = /path/to/pal_finder_v0.02.04.pl
+pal_finder_config = /path/to/pal_finder/config.txt
 ```
 
-Finally, your pal_finder installation shipped two files: "pal_finder_v0.02.04.pl" and "config.txt"
+Finally, your pal_finder installation shipped two files: "pal_finder_v0.02.04.pl" and "config.txt". Provide the paths for these two files. Do not alter the config file as this is accessed and modified
+by the MiMi script. Please note there are two "config.txt" files; one which is accessed by MiMi and one which is accessed by pal_finder. These are different and both are required.
+
+#### Run the script
+You may need to give MiMi permission to run:
+```
+sudo chmod +x ./MiMi.py
+```
+
+Run the script and pass the MiMi config file:
+```
+./MiMi.py /path/to/config.txt
+```
+
+On my modest desktop machine, using data from a single Miseq run (approx 12-16Gb) the MiMi process runs in approximately four hours.
+
+
+
+
 #### Who made this?
 [Graeme Fox](https://graemefox.github.io)
 
