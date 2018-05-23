@@ -1,3 +1,6 @@
+# 'Multi-individual Microsatelite identification' - (MiMi)
+### A tool to improve the design of novel microsatellite panels from genome next-generation sequencing data.
+
 ###### HEADING 6
 ##### HEADING 5
 #### HEADING 4
