@@ -40,6 +40,14 @@ ie. Run the following from a terminal on your system.
 pandaseq
 ```
 
+If PANDAseq is correctly installed, you will see:
+
+```
+You must supply both forward and reverse reads.
+Too confused to continue.
+Try -h for help.
+```
+
 
 #### Who made this?
 [Graeme Fox](graemefox.github.io)
