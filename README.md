@@ -23,7 +23,7 @@ reduction in the frequency of null alleles (in theory...). (fig. 1).
 2) By looking at the microsatellite locus itself in several individuals you can select loci which are polymiorphic in the amount of microsatellite repeats
 and avoid loci where all individuals appear to have the same number of repeats. (fig. 2).
 
-**Fig. 2** A "CATA" microsatellite motif in five individuals. The number of repeats varies between individuals with strong sequence conservation either side of the microsatellite.
+**Fig. 2** A "CATA" microsatellite motif in five individuals highlighted in red. The number of repeats varies between individuals with strong sequence conservation either side of the microsatellite.
 
 ![Figure2 - variable number of repeats](/images/fig3.png)
 
@@ -31,7 +31,7 @@ and avoid loci where all individuals appear to have the same number of repeats. 
 of motif repeats. Insertion/deletions in the flanking regions are clearly visible and can be avoided when designing your microsatellite panel. Mutations of thus sort
 are an important source of error and would otherwise be very difficult to detect in a panel designed in a single individual. (fig. 3).
 
-**Fig. 3** A section of flanking sequence (in between a priming region and the microsatellite itsel). One individual has a significant deletion mutation in otherwise strong
+**Fig. 3** A section of flanking sequence (in between a priming region and the microsatellite itsel). One individual has a significant deletion mutation (highlighted in red) in otherwise strong
 sequence conservation.
 
 ![Figure3 - insertion/deletion mutation](/images/fig2.png)
