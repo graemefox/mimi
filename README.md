@@ -14,6 +14,8 @@ MiMi allows you to visualise two important pieces of information which are not a
 Firstly, you can select primer pairs which show strong sequence conservation across several individuals. This gives a much higher rate of PCR success and should allow for a 
 reduction in the frequency of null alleles (in theory...).
 
+![GitHub Logo](/images/fig1.png)
+
 Secondly, by looking at the microsatellite locus itself in several individuals you can select loci which are polymiorphic in the amount of microsatellite repeats
 and avoid loci where all individuals appear to have the same number of repeats.
 
