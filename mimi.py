@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import ConfigParser, subprocess, os, time, csv, Bio, argparse, re, shutil, time, tempfile
+import ConfigParser, subprocess, os, time, csv, Bio, argparse, re, shutil, time, tempfile, argparse
 from Bio import SeqIO
 from subprocess import Popen, PIPE
 ####
@@ -214,6 +214,13 @@ def assemble_reads(forward_fastq, reverse_fastq, assembled_reads):
 ###########################################################
 if __name__ == "__main__":
     wd = os.getcwd()
+
+    # parse arguments
+    parser = argparse.ArgumentParser(description='arguments for mimi.py')
+    parser.add_argument('-c','--config1', help='mimi configuration file', \
+                    required=True)
+    args = parser.parse_args()
+
     # print obnoxious ascii text art
     print "\n          ~~~~~~~~~~~~~~~~~~~~~~~~~"
     print "           __  __   _   __  __   _ "
@@ -229,8 +236,8 @@ if __name__ == "__main__":
     # Read and parse the config file
     time.sleep(1)
     configParser = ConfigParser.RawConfigParser()
-    configFilePath = r'config.txt'
-    configParser.read(configFilePath)
+    configParser.read(args.config1)
+
     # Get number of samples
     number_of_samples = configParser.get('config_file', 'number_of_samples')
     print number_of_samples + " samples to be analysed."
@@ -267,8 +274,8 @@ if __name__ == "__main__":
             print "Fail:    Duplicate entry in list of .fastq input files. Check config file.\n"
             print "ERROR is: Duplicate entry in list of R1 and R2 files. Every file must be unique.\n\nQuitting program....\n"
             quit()
-        check_for_duplicates.append(R1_file_url)
-        check_for_duplicates.append(R2_file_url)
+        check_for_duplicates.append(wd + "/" + R1_file_url)
+        check_for_duplicates.append(wd + "/" + R2_file_url)
         pal_finder = configParser.get('config_file', pal_finder_output)
         list_of_pal_finder_output.append(pal_finder)
     # troubleshooting file path(s):
@@ -311,6 +318,7 @@ if __name__ == "__main__":
             for line in pal:
                 seqIDs[y].append(line[0])
                 motif[y].append(line[1])
+                print(line[7])
                 Fprimerlist[y].append(line[7])
                 all_F_primers.append(line[7])
                 Rprimerlist[y].append(ReverseComplement(line[9]))
@@ -417,7 +425,7 @@ if __name__ == "__main__":
 
     # put the primer seqs and how many individuals they were found in, into a dict
     which_individuals_F = dict(zip(wanted_F_primers, how_many_individuals))
-    print(which_individuals_F)
+
     #which_individuals_R = dict(zip(wanted_R_primers, how_many_individuals))
 
     print "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -560,6 +568,13 @@ if __name__ == "__main__":
     print (time.strftime("%H:%M:%S"))
     subprocess.call(pal_finder_command, shell=True)
 
+    print "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    print "pal_finder complete."
+    print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+    print (time.strftime("%H:%M:%S"))
+
+
+
     ### I think this is an accidental duplication of the section above.
     # remove if doesn't appear to be needed
     """
@@ -655,10 +670,11 @@ IOError: [Errno 2] No such file or directory: '/home/graeme/Dropbox/Research_Ass
             for x in ranked_output:
                 final_output.write(x.split("\t")[0] + "\t" + ReverseComplement(primer_pairs[x.split("\t")[0]]) + "\t" + x.split("\t")[1] + "\t" + str(which_individuals_F[x.split("\t")[0]]) + "\t" + x.split("\t")[2] + "\t" + x.split("\t")[3] + "\n")
     else:
-        print("Some error message here. Need to work out what exactly causes it to get here")
+        print("Something has gone wrong and MiMi has not found any microsatellites" \
+                "in the sequence data, which occur in multiple individuals.")
+        print("Please check all your input files. failing that, please contact the author.")
 
     # some tidying up of temporary files
-
     """
     if os.path.exists("Forward_reads_for_assembly.fastq"):
         os.remove("Forward_reads_for_assembly.fastq")
@@ -674,6 +690,6 @@ IOError: [Errno 2] No such file or directory: '/home/graeme/Dropbox/Research_Ass
         os.remove("wanted_F_primers.txt")
     if os.path.exists("wanted_R_primers.txt"):
         os.remove("wanted_R_primers.txt")
+    """
     print("\n\nSuccessfully Completed MiMi analysis.")
     print (time.strftime("%H:%M:%S"))
-    """

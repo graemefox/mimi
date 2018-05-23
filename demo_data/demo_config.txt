@@ -1,0 +1,60 @@
+[config_file]
+# Coniguration file for MiMi - Multi-Individual-Microsatellite-Identification
+
+###########################################################
+# Amount of individuals sequenced:
+number_of_samples = 4
+
+
+###########################################################
+# Proportion of individuals in which a microsatellite loci should occur (default 0.5)
+proportion_of_individuals = 0.3
+
+###########################################################
+# Each Individual should have two input files: paths to "R1" and "R2" file in the
+# following format:
+
+# NOTE: if using relative paths, these need to be relative to the mimi.py script
+# rather than the location of this config file.
+
+# Two lines of example data to follow:
+# input1_R1 = /path/to/fileX_R1.fastq
+# input1_R2 = /path/to/fileX_R2.fastq
+
+# Input your real data below:
+input1_R1 =  demo_data/sequence_data/Sample1_R1_001.fastq
+input1_R2 =  demo_data/sequence_data/Sample1_R2_001.fastq
+input2_R1 =  demo_data/sequence_data/Sample2_R1_001.fastq
+input2_R2 =  demo_data/sequence_data/Sample2_R2_001.fastq
+input3_R1 =  demo_data/sequence_data/Sample3_R1_001.fastq
+input3_R2 =  demo_data/sequence_data/Sample3_R2_001.fastq
+input4_R1 =  demo_data/sequence_data/Sample4_R1_001.fastq
+input4_R2 =  demo_data/sequence_data/Sample4_R2_001.fastq
+
+###########################################################
+# Prior to running MiMi, each individual should have been processed with pal_finder and the
+# additional filtering and PANDAseq QC steps by Griffiths et al (unpublished)
+# with the path to the output file given below in the following format:
+
+# NOTE: if using relative paths, these need to be relative to the mimi.py script     
+# rather than the location of this config file.
+
+# One line of example data to follow:
+#pal_finder_output = /path/to/pal_finder_output.tabular
+
+# Input your real data below:
+input1_pal_finder = demo_data/pal_filter_output/Sample1_pal_filter_output.txt
+input2_pal_finder = demo_data/pal_filter_output/Sample2_pal_filter_output.txt
+input3_pal_finder = demo_data/pal_filter_output/Sample3_pal_filter_output.txt
+input4_pal_finder = demo_data/pal_filter_output/Sample4_pal_filter_output.txt
+
+###########################################################
+
+# NOTE: if using relative paths, these need to be relative to the mimi.py script     
+# rather than the location of this config file.
+
+
+# Path to pal_finder_v0.02.04 script and config file:
+
+pal_finder_path = demo_data/pal_finder_0.02.04/pal_finder_v0.02.04.pl
+pal_finder_config = demo_data/pal_finder_0.02.04/config.txt
