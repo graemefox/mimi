@@ -4,10 +4,7 @@ from Bio import SeqIO
 from subprocess import Popen, PIPE
 ####
 
-#
-#
-#
-#
+#   known bugs/problems:
 
 # the "cat: write error: broken pipe" error is very annoying.
 # if I run it with 4 samples, it gets through with no error.
@@ -16,17 +13,12 @@ from subprocess import Popen, PIPE
 
 # it doesn't seem to affect the running of the script as far as I can tell
 
-## it needs the file produced by pal_finder and pal_filter which with filtered microsatellites
+## MiMi needs the files produced by pal_finder and pal_filter which with filtered microsatellites
 
 ####
-# this is the version that appears to be working on 25_07_17
-# check with several sets of data and assembly, filtering etc all appears to be working
-#
-#
-# Additional features to build at some point:
+# Additional features that need to be included:
 #
 # make it tell you which sequence file each read came from
-#
 #
 # searching for reads containing the reverse primer will almost certainly improve the rate at
 # which conserved reverse primer regions are discovered. There will be a performance hit
@@ -39,9 +31,6 @@ from subprocess import Popen, PIPE
 # some sort of quality filter as to how good the primers score would also be nice.
 # (no idea how this would work in practice though)
 
-
-####
-# this is the version that appears to be working on 25_07_17
 ###
 ###########################################################
 # FUNCTION LIST
