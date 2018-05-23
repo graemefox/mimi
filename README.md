@@ -1,17 +1,9 @@
 # 'Multi-individual Microsatelite identification' - (MiMi)
 ### A tool to improve the design of novel microsatellite panels from genome next-generation sequencing data.
 
-          ~~~~~~~~~~~~~~~~~~~~~~~~~
-           __  __   _   __  __   _ 
-          |  \/  | (_) |  \/  | (_)
-          | \  / |  _  | \  / |  _ 
-          | |\/| | | | | |\/| | | |
-          | |  | | | | | |  | | | |
-          |_|  |_| |_| |_|  |_| |_|
-          ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #### What does it do?
-MiMi is a script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/)
+MiMi is a Python script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/)
 by increasing the rate at which markers amplify by PCR and also allows the user to select polymorphic loci from the data. It does this by
 using the genome data from several individuals of the same species, rather than from a single indivdual which is more common in the microsatellite
 design process.
