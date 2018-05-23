@@ -9,15 +9,19 @@ design process.
 
 
 #### What does it allow me to do?
-MiMi allows you to visualise two important pieces of information which are not available when designing microsatellite markers from the genome of a single individual.
+MiMi allows you to visualise three important pieces of information which are not available when designing microsatellite markers from the genome of a single individual.
 
 Firstly, you can select primer pairs which show strong sequence conservation across several individuals. This gives a much higher rate of PCR success and should allow for a 
 reduction in the frequency of null alleles (in theory...).
 
-![GitHub Logo](/images/fig1.png)
+![Figure1 - strong sequence conservation](/images/fig1.png)
 
 Secondly, by looking at the microsatellite locus itself in several individuals you can select loci which are polymiorphic in the amount of microsatellite repeats
 and avoid loci where all individuals appear to have the same number of repeats.
+
+![Figure2 - variable number of repeats](/images/fig3.png)
+
+
 
 ###### HEADING 6
 ##### HEADING 5
