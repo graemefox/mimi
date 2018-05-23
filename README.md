@@ -14,9 +14,8 @@ MiMi allows you to visualise three important pieces of information which are not
 Firstly, you can select primer pairs which show strong sequence conservation across several individuals. This gives a much higher rate of PCR success and should allow for a 
 reduction in the frequency of null alleles (in theory...).
 
-<p align="center">
 ![Figure1 - strong sequence conservation](/images/fig1.png)
-</p>
+
 
 Secondly, by looking at the microsatellite locus itself in several individuals you can select loci which are polymiorphic in the amount of microsatellite repeats
 and avoid loci where all individuals appear to have the same number of repeats.
@@ -29,26 +28,15 @@ are an important source of error and would otherwise be very difficult to detect
 
 ![Figure3 - insertion/deletion mutation](/images/fig2.png)
 
+#### Installation Instructions
+This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 18.04) but *should* also work on OSX (YMMV).
+
+### Dependencies
+You **must** have [Biopython](https://biopython.org/) and [PANDAseq](https://biopython.org/) installed.
+
+#### Who made this?
+[Graeme Fox](graemefox.github.io)
 
 
-###### HEADING 6
-##### HEADING 5
-#### HEADING 4
-### HEADING 3
-## HEADING 2
-# HEADING 1
-
-**bold**
-*italic*
-
-> I am a quote.
-
-```
-I am come code?
-```
-
-I am [A LINK](graemefox.github.io)
-
-Hello, this will eventually become the README file for this repository.
 
 
