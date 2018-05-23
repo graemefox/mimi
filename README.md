@@ -29,10 +29,17 @@ are an important source of error and would otherwise be very difficult to detect
 ![Figure3 - insertion/deletion mutation](/images/fig2.png)
 
 #### Installation Instructions
-This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 18.04) but *should* also work on OSX (YMMV).
+This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 18.04) but *should* also work on OSX (Your mileage may vary).
 
 ### Dependencies
 You **must** have [Biopython](https://biopython.org/) and [PANDAseq](https://biopython.org/) installed.
+PANDAseq **must** be in your $PATH.
+
+ie. Run the following from a terminal on your system.
+```
+pandaseq
+```
+
 
 #### Who made this?
 [Graeme Fox](graemefox.github.io)
