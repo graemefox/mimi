@@ -455,15 +455,7 @@ if __name__ == "__main__":
         n = n + 1
 
 
-    """
-    # create a file to go into pal_finder which enables us to count the repeats in each read
-    filePath = "pal_finder_input_file.fasta"
-    unique_number = 0
-    with open(filePath, 'w') as f:
-        for row in wanted_F_reads:
-            f.write(row + "\n")
-    f.close()
-    """
+
 
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     print "Finished scanning samples for common primer sequences"
@@ -476,10 +468,11 @@ if __name__ == "__main__":
     # create a unique pal_finder config file for each
     # check for file of pal_finder configs, delete and re-create if necessary
 
-    if os.path.isdir(wd + "/pal_finder_files"):
-        shutil.rmtree(wd + "/pal_finder_files")
-    os.mkdir(wd + "/pal_finder_files")
-    output_path = wd + "/pal_finder_files/"
+    if os.path.isdir(wd + "/mimi_output/pal_finder_files"):
+        shutil.rmtree(wd + "/mimi_output/pal_finder_files")
+    os.mkdir(wd + "/mimi_output")
+    os.mkdir(wd + "/mimi_output/pal_finder_files")
+    output_path = wd + "/mimi_output/pal_finder_files/"
     assemble_reads("Forward_reads_for_assembly.fastq", "Reverse_reads_for_assembly.fastq", "Assembled_reads.fasta" )
 
 
@@ -489,10 +482,10 @@ if __name__ == "__main__":
 
 
     wd = os.getcwd()
-    if os.path.isdir(wd + "/Alignments"):
-        shutil.rmtree(wd + "/Alignments")
-    os.mkdir(wd + "/Alignments")
-    output_path = wd + "/Alignments/"
+    if os.path.isdir(wd + "/mimi_output/Alignments"):
+        shutil.rmtree(wd + "/mimi_output/Alignments")
+    os.mkdir(wd + "/mimi_output/Alignments")
+    output_path = wd + "/mimi_output/Alignments/"
 
 
     wanted = set()
@@ -500,7 +493,7 @@ if __name__ == "__main__":
     for seq in fasta1:
         sequence_ID = (seq.id.split(":")[7].split("_")[0])
         sequence = str(seq.seq)
-        filePath = str(os.getcwd()) + '/Alignments/%s.fasta' % (sequence_ID)
+        filePath = str(os.getcwd()) + '/mimi_output/Alignments/%s.fasta' % (sequence_ID)
         if sequence_ID in wanted:
             if os.path.exists(filePath):
                 with open(filePath, 'a') as f:
@@ -522,31 +515,10 @@ if __name__ == "__main__":
 
     # check length of files in Alignments folder
     # remove anything with only one sequence
-    for filename in os.listdir(wd + "/Alignments"):
-        if not file_len(wd + "/Alignments/" + filename) > 2:
-            os.remove(wd + "/Alignments/" + filename)
+    for filename in os.listdir(wd + "/mimi_output/Alignments"):
+        if not file_len(wd + "/mimi_output/Alignments/" + filename) > 2:
+            os.remove(wd + "/mimi_output/Alignments/" + filename)
 
-
-
-    ### suspect that this section below is going through and adding an extra copy of each sequence
-    ### does this need to exist?
-    """
-    # get set of unique sequence IDs
-    for record in wanted_F_reads:
-        for x in record.split("\n"):
-            wanted.add(record.split("\n")[0].lstrip(">"))
-    ## create a file for each and write out the sequences into each files
-    for record in wanted_F_reads:
-        for x in record.split("\n"):
-            if record.split("\n")[0].lstrip(">") in wanted:
-                filePath = str(os.getcwd()) + '/Alignments/%s.fasta' % (record.split("\n")[0].lstrip(">"))
-                if os.path.exists(filePath):
-                    with open(filePath, 'a') as f:
-                        f.write(record + "\n")
-                else:
-                    with open(filePath, 'w') as f:
-                        f.write(record + "\n")
-    """
     output_path = wd
     copy_and_rename_file(pal_finder_config, output_path + "pal_finder_config_file.txt")
     write_to_config(output_path + "pal_finder_config_file.txt","findPrimers 1", "findPrimers 0")
@@ -554,8 +526,8 @@ if __name__ == "__main__":
     write_to_config(output_path + "pal_finder_config_file.txt","inputFormat fastq", "inputFormat fasta")
     write_to_config(output_path + "pal_finder_config_file.txt","pairedEnd  1","pairedEnd  0" )
     write_to_config(output_path + "pal_finder_config_file.txt","input454reads  test/data/454_All_python.fna", "input454reads " + wd + "/Assembled_reads.fasta")
-    write_to_config(output_path + "pal_finder_config_file.txt","MicrosatSumOut  test/output/test_microsat_summary.txt", "MicrosatSumOut " + output_path + "/pal_finder_files/pal_finder_summary_out.txt")
-    write_to_config(output_path + "pal_finder_config_file.txt","PALsummaryOut  test/output/test_PAL_summary.txt", "PALsummaryOut " + output_path + "/pal_finder_files/pal_finder_PAL_summary.txt")
+    write_to_config(output_path + "pal_finder_config_file.txt","MicrosatSumOut  test/output/test_microsat_summary.txt", "MicrosatSumOut " + output_path + "/mimi_output/pal_finder_files/pal_finder_summary_out.txt")
+    write_to_config(output_path + "pal_finder_config_file.txt","PALsummaryOut  test/output/test_PAL_summary.txt", "PALsummaryOut " + output_path + "/mimi_output/pal_finder_files/pal_finder_PAL_summary.txt")
     write_to_config(output_path + "pal_finder_config_file.txt","2merMinReps 	6", "2merMinReps 	6")
     write_to_config(output_path + "pal_finder_config_file.txt","3merMinReps 	0", "3merMinReps 	6")
     write_to_config(output_path + "pal_finder_config_file.txt","4merMinReps 	0", "4merMinReps 	6")
@@ -573,41 +545,9 @@ if __name__ == "__main__":
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     print (time.strftime("%H:%M:%S"))
 
-
-
-    ### I think this is an accidental duplication of the section above.
-    # remove if doesn't appear to be needed
-    """
-    wanted = set()
-    fasta1 = SeqIO.parse("Assembled_reads.fasta",'fasta')
-    for seq in fasta1:
-        sequence_ID = (seq.id.split(":")[7].split("_")[0])
-        filePath = str(os.getcwd()) + '/Alignments/%s.fasta' % (sequence_ID)
-        if sequence_ID in wanted:
-            if os.path.exists(filePath):
-                with open(filePath, 'a') as f:
-                    SeqIO.write([seq], f, "fasta")
-            else:
-                with open(filePath, 'w') as f:
-                    SeqIO.write([seq], f, "fasta")
-                wanted.add(sequence_ID)
-        wd = os.getcwd()
-    """
     #### parse the pal_finder output to find the variable loci
     # get a list of unique IDs (the forward primer sequences)
-
-
-
-    #### error is:
-    """
-    raceback (most recent call last):
-  File "./MiMi_updated_Nov2017.py", line 609, in <module>
-    with open(wd + "/pal_finder_files/pal_finder_PAL_summary.txt") as pf:
-IOError: [Errno 2] No such file or directory: '/home/graeme/Dropbox/Research_Associate/blue_tits/mimi/pal_finder_files/pal_finder_PAL_summary.txt'
-
-
-     """
-    with open(wd + "/pal_finder_files/pal_finder_PAL_summary.txt") as pf:
+    with open(wd + "/mimi_output/pal_finder_files/pal_finder_PAL_summary.txt") as pf:
         unique_primers = set()
         allele_count = []
         unique_alleles = []
@@ -622,7 +562,7 @@ IOError: [Errno 2] No such file or directory: '/home/graeme/Dropbox/Research_Ass
 
     ## go through and get the unique alleles associated with each primer sequence
     all_data = []
-    with open(wd + "/pal_finder_files/pal_finder_PAL_summary.txt") as pf:
+    with open(wd + "/mimi_output/pal_finder_files/pal_finder_PAL_summary.txt") as pf:
         for line in pf:
             motifs = (line.split("\t")[3])
             if (len(motifs.split(" "))-1) == 1:
@@ -646,6 +586,7 @@ IOError: [Errno 2] No such file or directory: '/home/graeme/Dropbox/Research_Ass
         if (len(unique) == 1 and len(motifs.split(" ")) > 1):
             single_motif_only.append(row.rstrip(" "))
 
+
     # calcualte the difference in size between the biggest number of repeats and the smallest
     diff_in_motif_size = []
     for row in single_motif_only:
@@ -659,23 +600,23 @@ IOError: [Errno 2] No such file or directory: '/home/graeme/Dropbox/Research_Ass
     ranked_output = []
     count = 0
     if len(diff_in_motif_size) > 0:
-        while count < max(diff_in_motif_size):
+        while count <= max(diff_in_motif_size):
             for x, y in zip(single_motif_only, diff_in_motif_size):
                 if y == count:
                     ranked_output.insert(0, x.replace("Motifs: ", " ") + "\t" + str(y))
             count = count + 1
         # write out final output
-        with open("Mimi_output.txt", 'w') as final_output:
+        with open("mimi_output/mimi_output.txt", 'w') as final_output:
             final_output.write("Foward_primer_seq\tReverse_primer_seq\tNumber_of_alleles\tFound_in_individuals\tAlleles_present\tSize-Range\n")
             for x in ranked_output:
                 final_output.write(x.split("\t")[0] + "\t" + ReverseComplement(primer_pairs[x.split("\t")[0]]) + "\t" + x.split("\t")[1] + "\t" + str(which_individuals_F[x.split("\t")[0]]) + "\t" + x.split("\t")[2] + "\t" + x.split("\t")[3] + "\n")
+        final_output.close()
     else:
-        print("Something has gone wrong and MiMi has not found any microsatellites" \
+        print("Something has gone wrong and mimi has not found any microsatellites" \
                 "in the sequence data, which occur in multiple individuals.")
         print("Please check all your input files. failing that, please contact the author.")
 
     # some tidying up of temporary files
-    """
     if os.path.exists("Forward_reads_for_assembly.fastq"):
         os.remove("Forward_reads_for_assembly.fastq")
     if os.path.exists("Reverse_reads_for_assembly.fastq"):
@@ -690,6 +631,8 @@ IOError: [Errno 2] No such file or directory: '/home/graeme/Dropbox/Research_Ass
         os.remove("wanted_F_primers.txt")
     if os.path.exists("wanted_R_primers.txt"):
         os.remove("wanted_R_primers.txt")
-    """
-    print("\n\nSuccessfully Completed MiMi analysis.")
+    if os.path.exists("Assembled_reads.fasta"):
+        os.remove("Assembled_reads.fasta")
+
+    print("\n\nSuccessfully completed mimi analysis.")
     print (time.strftime("%H:%M:%S"))
