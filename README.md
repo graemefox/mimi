@@ -1,7 +1,7 @@
 ![ASCII - mimi](/images/ascii.png)
 
 # 'multi individual microsatelite identification' - (mimi)
-### A tool to improve the design of novel microsatellite panels from genome next-generation sequencing data.
+### A tool to improve the design of novel microsatellite panels from genomic next-generation sequencing data.
 
 
 #### What does it do?
@@ -34,7 +34,7 @@ A "CATA" microsatellite motif in five individuals highlighted in red. The number
 ![Figure2 - variable number of repeats](/images/fig3.png)
 
 3) You can detect whether a potential microsatellite marker contains other fragment length altering polymorphisms, outside of those caused by the change in number
-of motif repeats. Insertion/deletions in the flanking regions are clearly visible and can be avoided when designing your microsatellite panel. Mutations of thus sort
+of motif repeats. Insertion/deletions in the flanking regions are clearly visible and can be avoided when designing your microsatellite panel. Mutations of this sort
 are an important source of error and would otherwise be very difficult to detect in a panel designed in a single individual. (fig. 3).
 
 **Fig. 3**
@@ -52,10 +52,11 @@ This was made by a humble biology PhD student, not a "programmer", so please be 
 This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 18.04) but *should* also work on OSX (Your mileage may vary).
 
 #### Dependencies
-You **must** have [Biopython](https://biopython.org/) and [PANDAseq](https://biopython.org/) installed.
-PANDAseq **must** be in your $PATH.
+You need to have [Biopython](https://biopython.org/) and [PANDAseq](https://biopython.org/) installed.
+PANDAseq be in your $PATH.
 
-ie. Run the following from a terminal on your system.
+#### Test PANDAseq installation:
+Run the following from a terminal on your system.
 ```
 pandaseq
 ```
@@ -67,6 +68,19 @@ You must supply both forward and reverse reads.
 Too confused to continue.
 Try -h for help.
 ```
+
+#### Test Biopython Installation
+Run the following from a terminal on your system.
+```
+python
+```
+
+and then at the Python prompt, type
+```
+import Bio
+```
+
+If no error message appears, Biopython is correctly installed.
 
 #### Set up the configuration file
 There is a mimi_config.txt file which contains the parameters used to control mimi. Open it in a **plain text** editor (not a word processor) and change the following fields to accomodate your data:

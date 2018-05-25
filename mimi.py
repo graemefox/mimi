@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python -tt
 import ConfigParser, subprocess, os, time, csv, Bio, argparse, re, shutil, time, tempfile, argparse
 from Bio import SeqIO
 from subprocess import Popen, PIPE
