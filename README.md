@@ -143,9 +143,9 @@ pal_finder_path = /path/to/pal_finder_v0.02.04.pl
 pal_finder_config = /path/to/pal_finder/config.txt
 ```
 
-Finally, your pal_finder installation shipped two files: "pal_finder_v0.02.04.pl" and "config.txt". Provide the paths for these two files. Do not alter the config file as this is accessed and modified
+Finally, mimi also brings the pal_finder tool when you download which contains two files: "pal_finder_v0.02.04.pl" and "config.txt". Provide the paths for these two files. Do not alter the config file as this is accessed and modified
 by the mimi script. Please note there are two config files; one which is accessed by MiMi (mimi_config.txt by default) and one which is accessed by pal_finder (config.txt by default).
- These are different and both are required.
+These are different and both are required.
 
 #### Run the script
 You may need to give mimi permission to run:
