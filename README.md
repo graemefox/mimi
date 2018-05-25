@@ -5,7 +5,7 @@
 
 
 #### What does it do?
-mimi is a Python script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/)
+mimi is a Python script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/) (castoe et al, 2012)
 by increasing the rate at which markers amplify by PCR and also allows the user to select polymorphic loci from the data. It does this by
 using the genome data from several individuals of the same species, rather than from a single indivdual which is more common in the microsatellite
 design process.
@@ -103,7 +103,7 @@ Extend the list if neccessary by adding new rows. Single-end sequencing reads ar
 
 ```
 Prior to running mimi, each individual should have been processed with pal_finder and the
-additional filtering and PANDAseq QC steps by Griffiths et al (unpublished)
+additional filtering and PANDAseq QC steps by Griffiths et al (2016)
 with the path to the output file given below in the following format:
 
 input1_pal_finder = /path/to/individual_1_pal_finder_output.txt
@@ -154,15 +154,19 @@ Figure 4. Showing the mimi output for one microsatellite locus. The primer seque
 in which this locus has been detected, the alleles present (numbers in brackets represent the number of repeats) and the size range between the smallest and largest allele.
 
 
-#### Run mimi with real data
+### Run mimi with real data
 Prior to running mimi you must perform the following:
 
-### Next-generation sequencing of your samples.
+#### Next-generation sequencing of your samples.
+mimi requires paired-end, genomic sequence data in FASTQ format. In our lab we generate sequence data using the Illumina Nextera protocol and sequence using a MiSeq platform. Generally eight individuals are sequenced on a single MiSeq flowcell. Ideally, these would be from multiple sites to help mimi counter any site-specific variation in the primer regions which may lead to null alleles.
+
+#### Required bioinformatics prior to mimi
+You should have already detected microsatellite loci and designed primers using the workflow described in Griffiths et al. (2016.) This is most easily performed using the Galaxy version of the tool hosted at the University of Manchester (https://palfinder.ls.manchester.ac.uk/). This must be performed seperately for each of your individual samples. The Galaxy workflow will produce several output files for each dataset; it is the files containing "filtered_microsatellites_(full_details)].tabular" in the filename which are required by mimi and are referred to as the "pal_filter output files" in the mimi documentation.
 
 
-Configure the mimi_config.txt file as appropriate and run the script:
+Configure the mimi_config.txt file to contain paths to each of your paired-end sequencing FASTQ files, each of your pal_filter output files and the pal_finder scripts. Finally, run the script:
 ```
-./mimi.py -c /path/to/config.txt
+./mimi.py -c /path/to/mimi_config.txt
 ```
 On my modest desktop machine, using data from a single Miseq run (approx 12-16Gb) the MiMi process runs in approximately four hours.
 
@@ -172,6 +176,8 @@ Data interpretation is identical to that described in the demo_data section, how
 result in smaller slippages producing an inflated number of alleles.
 
 #### References
+Castoe, T.A., Poole, A.W., Jason de Koning, A. P., Jones, K.L., Tomback, D.F., Oyler-McCance, S.J., Fike, J.A., Lance, S.L., Streicher, J.W., Smith, E.N. and Pollock, D.D. (2012) Rapid Microsatellite Identification from Illumina Paired-End Genomic Sequencing in Two Birds and a Snake. *PLoS ONE*. 7(2): e30953
+
 Griffiths, S.M., Fox, G., Briggs, J., Donaldson, I.J., Hood, S., Richardson, P., Leaver, G.W., Truelove, N.K. and Preziosi, R.F. (2016) A Galaxy-based bioinformatics pipeline for optimised, streamlined microsatellite development from Illumina next-generation sequencing data. *Conservation Genetics Resources.* 8(4)pp. 481-486.
 
 #### Who made this?
