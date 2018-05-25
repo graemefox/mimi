@@ -154,7 +154,12 @@ Figure 4. Showing the mimi output for one microsatellite locus. The primer seque
 in which this locus has been detected, the alleles present (numbers in brackets represent the number of repeats) and the size range between the smallest and largest allele.
 
 
-#### Run with real data
+#### Run mimi with real data
+Prior to running mimi you must perform the following:
+
+###Next-generation sequencing of your samples.
+
+
 Configure the mimi_config.txt file as appropriate and run the script:
 ```
 ./mimi.py -c /path/to/config.txt
@@ -166,7 +171,8 @@ Data interpretation is identical to that described in the demo_data section, how
 "Size Range" column as we propose that a large range in allele size is most likely to be indicative of a true polymorphic microsatellite as opposed to a sequencing error which may
 result in smaller slippages producing an inflated number of alleles.
 
-
+#### References
+Griffiths, S.M., Fox, G., Briggs, J., Donaldson, I.J., Hood, S., Richardson, P., Leaver, G.W., Truelove, N.K. and Preziosi, R.F. (2016) A Galaxy-based bioinformatics pipeline for optimised, streamlined microsatellite development from Illumina next-generation sequencing data. *Conservation Genetics Resources.* 8(4)pp. 481-486.
 
 #### Who made this?
 [Graeme Fox](https://graemefox.github.io)
