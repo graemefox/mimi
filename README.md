@@ -163,11 +163,11 @@ mimi requires paired-end, genomic sequence data in FASTQ format. In our lab we g
 You should have already detected microsatellite loci and designed primers using the workflow described in Griffiths et al. (2016.) This is most easily performed using the Galaxy version of the tool hosted at the University of Manchester (https://palfinder.ls.manchester.ac.uk/). This must be performed seperately for each of your individual samples. The Galaxy workflow will produce several output files for each dataset; it is the files containing "filtered_microsatellites_(full_details)].tabular" in the filename which are required by mimi and are referred to as the "pal_filter output files" in the mimi documentation.
 
 
-Configure the mimi_config.txt file to contain paths to each of your paired-end sequencing FASTQ files, each of your pal_filter output files and the pal_finder scripts. Finally, run the script:
+Configure the mimi_config.txt file to contain paths to each of your paired-end sequencing FASTQ files, each of your pal_filter output files and the pal_finder scripts. Finally, run the script and pass the mimi_config file:
 ```
 ./mimi.py -c /path/to/mimi_config.txt
 ```
-On my modest desktop machine, using data from a single Miseq run (approx 12-16Gb) the MiMi process runs in approximately four hours.
+On my modest desktop machine, using data from a single Miseq run (approx 12-16Gb) the mimi process runs in approximately four hours.
 
 #### Interpret the results
 Data interpretation is identical to that described in the demo_data section, however you will hopefully have many more results. The rows in the "mimi_output.txt" are ranked by the
