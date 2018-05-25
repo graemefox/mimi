@@ -145,9 +145,14 @@ Microsatellites had already been detected in these individuals and primers desig
 using the Griffiths et al workflow (available here: https://palfinder.ls.manchester.ac.uk/). The output files from the Griffiths workflow were provided in the "pal_filter_output"
 directory in the demo data. mimi detected that one of these primer pairs was found in three of the four individuals
 and has extracted those reads and placed them into a FASTA file in the Alignments directory. The FASTA file is named with the forward primer sequence. Furthermore, in the "mimi_output.txt"
-file, the three alleles which were found at this locus are listed.
+file, the three alleles which were found at this locus are listed (Fig 4).
+
+**Fig. 4**
 
 ![Figure4 - Demo output](/images/demo_output.png)
+Figure 4. Showing the mimi output for one microsatellite loci. The primer sequences are provided along with the number of alleles which have been detected, the number of individuals' datasets
+in which this locus has been detected, the alleles present (numbers in brackets represent the number of repeats) and the size range between the smallest and largest allele.
+
 
 Run the script and pass the MiMi config file:
 ```
