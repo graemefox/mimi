@@ -70,17 +70,24 @@ Try -h for help.
 ```
 
 #### Test Biopython Installation
-Run the following from a terminal on your system.
+Run the following from a terminal on your system:
 ```
 python
 ```
 
-and then at the Python prompt, type
+and then at the Python prompt, type:
 ```
 import Bio
 ```
 
 If no error message appears, Biopython is correctly installed.
+
+Type:
+```
+exit()
+```
+
+to exit the Python prompt.
 
 #### Set up the configuration file
 There is a mimi_config.txt file which contains the parameters used to control mimi. Open it in a **plain text** editor (not a word processor) and change the following fields to accomodate your data:
