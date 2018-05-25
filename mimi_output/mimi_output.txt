@@ -1,0 +1,2 @@
+Foward_primer_seq	Reverse_primer_seq	Number_of_alleles	Found_in_individuals	Alleles_present	Size-Range
+TACACAATGCCCATAGCAACGAACC	ACTATTCAAGAGAGCATGTGCAAGCC	3	3	 TC(24) TC(54) TC(18)	36

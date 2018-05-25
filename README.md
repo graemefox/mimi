@@ -1,4 +1,4 @@
-![ASCII - mimi](/images/ascii.png) 
+![ASCII - mimi](/images/ascii.png)
 
 # 'multi individual microsatelite identification' - (mimi)
 ### A tool to improve the design of novel microsatellite panels from genome next-generation sequencing data.
@@ -130,8 +130,6 @@ You may need to give mimi permission to run:
 sudo chmod +x ./mimi.py
 ```
 
-
-
 #### Testing with the demo data
 When you clone the mimi repo, it supplies some demo data to test your installation.
 
@@ -139,6 +137,13 @@ Run the script and pass the demo_config file:
 ```
 ./mimi.py -c /demo_data/demo_config.txt
 ```
+
+#### Interpret demo data output
+If the script ran correctly you will see a file named "mimi_output" in the mimi directory. Within this directory is a file "mimi_output" and a directory "Alignments".
+The demo data consisted of small 'shotgun' sequencing datasets of four individuals. Microsatellites had already been detected in these individuals and primers designed
+using the Griffiths et al workflow (available here: https://palfinder.ls.manchester.ac.uk/). mimi detected that one of these primer pairs was found in three of the four individuals
+and has extracted those reads and placed them into a FASTA file in the Alignments directory. The FASTA file is named with the forward primer sequence. Furthermore, in the "mimi_output.txt"
+file, the three alleles which were found at this locus are listed. 
 
 Run the script and pass the MiMi config file:
 ```
