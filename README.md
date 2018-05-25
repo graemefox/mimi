@@ -144,17 +144,25 @@ pal_finder_config = /path/to/pal_finder/config.txt
 ```
 
 Finally, mimi also brings the pal_finder tool when you download which contains two files: "pal_finder_v0.02.04.pl" and "config.txt". Provide the paths for these two files. Do not alter the config file as this is accessed and modified
-by the mimi script. Please note there are two config files; one which is accessed by MiMi (mimi_config.txt by default) and one which is accessed by pal_finder (config.txt by default).
+by the mimi script. Please note there are two config files; one which is accessed by mimi (mimi_config.txt by default) and one which is accessed by pal_finder (config.txt by default).
 These are different and both are required.
 
 #### Run the script
 You may need to give mimi permission to run:
 ```
 sudo chmod +x ./mimi.py
+
 ```
 
+#### Usage
+```
+./mimi.py -c /path/to/config.txt
+```
+
+The usage is very simple. You only need to pass the mimi_config file with the "-c" flag. All other settings are contained within the config file itself.
+
 #### Testing with the demo data
-When you clone the mimi repo, it supplies some demo data to test your installation.
+When you clone the mimi repository, it supplies some demo data and a pre-configured mimi_config file to test your installation.
 
 Run the script and pass the demo_config file:
 ```
@@ -165,7 +173,7 @@ Run the script and pass the demo_config file:
 If the script ran correctly you will see a directory named "mimi_output" in the mimi directory. Within this directory is a file "mimi_output.txt" and a directory "Alignments".
 The demo data consisted of small 'shotgun', paired-end sequencing datasets of four individuals provided in the "sequence_data" directory of the demo data.
 Microsatellites had already been detected in these individuals and primers designed
-using the Griffiths et al. workflow (available here: https://palfinder.ls.manchester.ac.uk/). The output files from the Griffiths workflow were provided in the "pal_filter_output"
+using the Griffiths et al. (2016) workflow (available here: https://palfinder.ls.manchester.ac.uk/). The output files from the Griffiths workflow were provided in the "pal_filter_output"
 directory in the demo data. mimi detected that one of these primer pairs was found in three of the four individuals
 and has extracted those reads and placed them into a FASTA file in the Alignments directory. The FASTA file is named with the forward primer sequence. Furthermore, in the "mimi_output.txt"
 file, the three alleles which were found at this locus are listed (Fig 4).
@@ -196,6 +204,13 @@ On my modest desktop machine, using data from a single Miseq run (approx 12-16Gb
 Data interpretation is identical to that described in the demo_data section, however you will hopefully have many more results. The rows in the "mimi_output.txt" are ranked by the
 "Size Range" column as we propose that a large range in allele size is most likely to be indicative of a true polymorphic microsatellite as opposed to a sequencing error which may
 result in smaller slippages producing an inflated number of alleles.
+
+#### Cite mimi
+If you found this tool useful please cite mimi:
+
+Fox, G., Antwis, R., Preziosi, R.F. and Rowntree, J.K. (in progress) Multi individual Microsatellite identification (MiMi). A microsatellite design workflow incorporating multiple genomes.
+
+(mimi is currently a work in progress but will be submitted for peer review and publication very soon).
 
 #### References
 Castoe, T.A., Poole, A.W., Jason de Koning, A. P., Jones, K.L., Tomback, D.F., Oyler-McCance, S.J., Fike, J.A., Lance, S.L., Streicher, J.W., Smith, E.N. and Pollock, D.D. (2012) Rapid Microsatellite Identification from Illumina Paired-End Genomic Sequencing in Two Birds and a Snake. *PLoS ONE*. 7(2): e30953
