@@ -147,6 +147,8 @@ directory in the demo data. mimi detected that one of these primer pairs was fou
 and has extracted those reads and placed them into a FASTA file in the Alignments directory. The FASTA file is named with the forward primer sequence. Furthermore, in the "mimi_output.txt"
 file, the three alleles which were found at this locus are listed.
 
+![Figure4 - Demo output](/images/demo_output.png)
+
 Run the script and pass the MiMi config file:
 ```
 ./mimi.py -c /path/to/config.txt
