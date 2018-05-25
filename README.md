@@ -154,14 +154,17 @@ Figure 4. Showing the mimi output for one microsatellite locus. The primer seque
 in which this locus has been detected, the alleles present (numbers in brackets represent the number of repeats) and the size range between the smallest and largest allele.
 
 
-Run the script and pass the MiMi config file:
+#### Run with real data
+Configure the mimi_config.txt file as appropriate and run the script:
 ```
 ./mimi.py -c /path/to/config.txt
 ```
 On my modest desktop machine, using data from a single Miseq run (approx 12-16Gb) the MiMi process runs in approximately four hours.
 
 #### Interpret the results
-
+Data interpretation is identical to that described in the demo_data section, however you will hopefully have many more results. The rows in the "mimi_output.txt" are ranked by the
+"Size Range" column as we propose that a large range in allele size is most likely to be indicative of a true polymorphic microsatellite as opposed to a sequencing error which may
+result in smaller slippages producing an inflated number of alleles.
 
 
 
