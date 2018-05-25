@@ -139,11 +139,13 @@ Run the script and pass the demo_config file:
 ```
 
 #### Interpret demo data output
-If the script ran correctly you will see a file named "mimi_output" in the mimi directory. Within this directory is a file "mimi_output" and a directory "Alignments".
-The demo data consisted of small 'shotgun' sequencing datasets of four individuals. Microsatellites had already been detected in these individuals and primers designed
-using the Griffiths et al workflow (available here: https://palfinder.ls.manchester.ac.uk/). mimi detected that one of these primer pairs was found in three of the four individuals
+If the script ran correctly you will see a directory named "mimi_output" in the mimi directory. Within this directory is a file "mimi_output.txt" and a directory "Alignments".
+The demo data consisted of small 'shotgun', paired-end sequencing datasets of four individuals provided in the "sequence_data" directory of the demo data.
+Microsatellites had already been detected in these individuals and primers designed
+using the Griffiths et al workflow (available here: https://palfinder.ls.manchester.ac.uk/). The output files from the Griffiths workflow were provided in the "pal_filter_output"
+directory in the demo data. mimi detected that one of these primer pairs was found in three of the four individuals
 and has extracted those reads and placed them into a FASTA file in the Alignments directory. The FASTA file is named with the forward primer sequence. Furthermore, in the "mimi_output.txt"
-file, the three alleles which were found at this locus are listed. 
+file, the three alleles which were found at this locus are listed.
 
 Run the script and pass the MiMi config file:
 ```
