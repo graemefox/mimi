@@ -53,7 +53,7 @@ This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 1
 
 #### Dependencies
 You need to have [Biopython](https://biopython.org/) and [PANDAseq](https://biopython.org/) installed.
-PANDAseq be in your $PATH.
+PANDAseq must be in your $PATH.
 
 #### Test PANDAseq installation:
 Run the following from a terminal on your system.
