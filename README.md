@@ -157,7 +157,7 @@ in which this locus has been detected, the alleles present (numbers in brackets 
 #### Run mimi with real data
 Prior to running mimi you must perform the following:
 
-###Next-generation sequencing of your samples.
+### Next-generation sequencing of your samples.
 
 
 Configure the mimi_config.txt file as appropriate and run the script:
