@@ -155,7 +155,6 @@ in which this locus has been detected, the alleles present (numbers in brackets 
 
 
 ### Run mimi with real data
-Prior to running mimi you must perform the following:
 
 #### Next-generation sequencing of your samples.
 mimi requires paired-end, genomic sequence data in FASTQ format. In our lab we generate sequence data using the Illumina Nextera protocol and sequence using a MiSeq platform. Generally eight individuals are sequenced on a single MiSeq flowcell. Ideally, these would be from multiple sites to help mimi counter any site-specific variation in the primer regions which may lead to null alleles.
