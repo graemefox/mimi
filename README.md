@@ -12,10 +12,10 @@ design process.
 #### What does it allow me to do?
 mimi allows you to visualise three important pieces of information which are not available when designing microsatellite markers from the genome of a single individual.
 
-1) You can select primer pairs which show strong sequence conservation across several individuals. This gives a much higher rate of PCR success and should allow for a 
+1) You can select primer pairs which show strong sequence conservation across several individuals. This gives a much higher rate of PCR success and should allow for a
 reduction in the frequency of null alleles (in theory...). (fig. 1).
 
-**Fig 1** 
+**Fig 1**
 
 A potential primer highlighted in red, showing 100% sequence conservaion in four individuals above.
 
@@ -25,7 +25,7 @@ A potential primer highlighted in red, showing 100% sequence conservaion in four
 2) By looking at the microsatellite locus itself in several individuals you can select loci which are polymiorphic in the amount of microsatellite repeats
 and avoid loci where all individuals appear to have the same number of repeats. (fig. 2).
 
-**Fig. 2** 
+**Fig. 2**
 
 A "CATA" microsatellite motif in five individuals highlighted in red. The number of repeats varies between individuals with strong sequence conservation either side of the microsatellite.
 
@@ -35,7 +35,7 @@ A "CATA" microsatellite motif in five individuals highlighted in red. The number
 of motif repeats. Insertion/deletions in the flanking regions are clearly visible and can be avoided when designing your microsatellite panel. Mutations of thus sort
 are an important source of error and would otherwise be very difficult to detect in a panel designed in a single individual. (fig. 3).
 
-**Fig. 3** 
+**Fig. 3**
 
 A section of flanking sequence (in between a priming region and the microsatellite itsel). One individual has a significant deletion mutation (highlighted in red) in otherwise strong
 sequence conservation.
@@ -128,11 +128,20 @@ You may need to give mimi permission to run:
 sudo chmod +x ./mimi.py
 ```
 
-Run the script and pass the MiMi config file:
+
+
+#### Testing with the demo data
+When you clone the mimi repo, it supplies some demo data to test your installation.
+
+Run the script and pass the demo_config file:
 ```
-./mimi.py /path/to/config.txt
+./mimi.py -c /demo_data/demo_config.txt
 ```
 
+Run the script and pass the MiMi config file:
+```
+./mimi.py -c /path/to/config.txt
+```
 On my modest desktop machine, using data from a single Miseq run (approx 12-16Gb) the MiMi process runs in approximately four hours.
 
 #### Interpret the results
@@ -142,7 +151,3 @@ On my modest desktop machine, using data from a single Miseq run (approx 12-16Gb
 
 #### Who made this?
 [Graeme Fox](https://graemefox.github.io)
-
-
-
-
