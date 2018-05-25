@@ -222,17 +222,20 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # print obnoxious ascii text art
-    print "\n          ~~~~~~~~~~~~~~~~~~~~~~~~~"
-    print "           __  __   _   __  __   _ "
-    print "          |  \/  | (_) |  \/  | (_)"
-    print "          | \  / |  _  | \  / |  _ "
-    print "          | |\/| | | | | |\/| | | |"
-    print "          | |  | | | | | |  | | | |"
-    print "          |_|  |_| |_| |_|  |_| |_|"
-    print "          ~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-    print "Multi-Individual-Microsatellite-Identification\n\n\n"
+        print(" .----------------.  .----------------.  .----------------.  .----------------. ")
+    print("| .--------------. || .--------------. || .--------------. || .--------------. |")
+    print("| | ____    ____ | || |     _____    | || | ____    ____ | || |     _____    | |")
+    print("| ||_   \  /   _|| || |    |_   _|   | || ||_   \  /   _|| || |    |_   _|   | |")
+    print("| |  |   \/   |  | || |      | |     | || |  |   \/   |  | || |      | |     | |")
+    print("| |  | |\  /| |  | || |      | |     | || |  | |\  /| |  | || |      | |     | |")
+    print("| | _| |_\/_| |_ | || |     _| |_    | || | _| |_\/_| |_ | || |     _| |_    | |")
+    print("| ||_____||_____|| || |    |_____|   | || ||_____||_____|| || |    |_____|   | |")
+    print("| |              | || |              | || |              | || |              | |")
+    print("| '--------------' || '--------------' || '--------------' || '--------------' |")
+    print(" '----------------'  '----------------'  '----------------'  '----------------' ")
+    print("Multi-Individual-Microsatellite-Identification\n\n\n")
     time.sleep(1)
-    print "Reading config file......\n"
+    print("Reading config file......\n")
     # Read and parse the config file
     time.sleep(1)
     configParser = ConfigParser.RawConfigParser()
