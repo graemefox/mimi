@@ -123,9 +123,11 @@ These are the paths to your raw FASTQ files. Each individual should have two ent
 Extend the list if neccessary by adding new rows. Single-end sequencing reads are not supported.
 
 ```
-Prior to running mimi, each individual should have been processed with pal_finder and the
-additional filtering and PANDAseq QC steps by Griffiths et al (2016)
-with the path to the output file given below in the following format:
+# Prior to running MiMi, each individual should have been processed with pal_finder and the
+# additional filtering and PANDAseq QC steps by Griffiths et al (2016)
+# This is most easily achieved using the Galaxy hosted tool at the University of Manchester,
+# here: https://palfinder.ls.manchester.ac.uk/
+# with the path to the "filtered_microsatellites_(full_details)].tabular" output file given below in the following format:
 
 input1_pal_finder = /path/to/individual_1_pal_finder_output.txt
 input2_pal_finder = /path/to/individual_2_pal_finder_output.txt
