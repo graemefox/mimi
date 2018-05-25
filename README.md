@@ -97,7 +97,7 @@ Amount of individuals sequenced:
 number_of_samples = 3
 ```
 
-MiMi will run on anything >1 sample but you will not get particularly meaningful results with a small number. I recommend eight samples (eight individuals).
+mimi will run on anything >1 sample but you will not get particularly meaningful results with a small number. I recommend eight samples (eight individuals).
 
 ```
 Proportion of individuals in which a microsatellite loci should occur (default 0.5)
@@ -123,7 +123,7 @@ These are the paths to your raw FASTQ files. Each individual should have two ent
 Extend the list if neccessary by adding new rows. Single-end sequencing reads are not supported.
 
 ```
-# Prior to running MiMi, each individual should have been processed with pal_finder and the
+# Prior to running mimi, each individual should have been processed with pal_finder and the
 # additional filtering and PANDAseq QC steps by Griffiths et al (2016)
 # This is most easily achieved using the Galaxy hosted tool at the University of Manchester,
 # here: https://palfinder.ls.manchester.ac.uk/
@@ -133,7 +133,7 @@ input1_pal_finder = /path/to/individual_1_pal_finder_output.txt
 input2_pal_finder = /path/to/individual_2_pal_finder_output.txt
 ```
 
-These are the paths to the output files from the Griffiths et al (2016) workflow. This must have been performed on your data prior to running MiMi as the process depends on
+These are the paths to the output files from the Griffiths et al (2016) workflow. This must have been performed on your data prior to running mimi as the process depends on
 these output files for the loci and primer sequences.
 
 ```
