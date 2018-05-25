@@ -6,7 +6,7 @@
 
 #### What does it do?
 mimi is a Python script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/) (castoe et al, 2012)
-by increasing the rate at which markers amplify by PCR and also allows the user to select polymorphic loci from the data. It does this by
+by increasing the rate at which markers amplify by PCR, allows the user to select polymorphic loci from the data and allows the avoidance of insertion/deletions in the flanking regions. It does this by
 using the genome data from several individuals of the same species, rather than from a single indivdual which is more common in the microsatellite
 design process.
 
