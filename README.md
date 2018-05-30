@@ -49,7 +49,7 @@ This was made by a humble biology PhD student, not a "programmer", so please be 
 This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 18.04) but *should* also work on OSX (your mileage may vary).
 
 #### Dependencies
-You need to have [Python](https://www.python.org/), [Biopython](https://biopython.org/) and [PANDAseq](https://biopython.org/) installed.
+You need to have [Python](https://www.python.org/), [Biopython](https://biopython.org/) and [PANDAseq](https://github.com/neufeld/pandaseq) installed.
 PANDAseq must be in your $PATH.
 
 #### Test PANDAseq installation:
@@ -85,6 +85,11 @@ exit()
 ```
 
 to exit the Python prompt.
+
+#### Clone the MiMi repository to your disk
+```
+git clone https://github.com/graemefox/mimi.git
+```
 
 #### Set up the configuration file
 There is a MiMi_config.txt file which contains the parameters used to control MiMi. Open it in a **plain text** editor (not a word processor) and change the following fields to accomodate your data:
