@@ -3,9 +3,9 @@
 
 
 #### What does it do?
-MiMi is a Python script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/) (castoe et al, 2012)
+MiMi is a Python script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/) (Castoe et al., 2012)
 by increasing the rate at which markers amplify by PCR, allows the user to select polymorphic loci from the data and allows the avoidance of insertion/deletions in the flanking regions. It does this by
-using the genome data from several individuals of the same species, rather than from a single indivdual which is more common in the microsatellite
+using genomic data from several individuals of the same species, rather than from a single indivdual which is more common in the microsatellite
 design process.
 
 
@@ -13,7 +13,7 @@ design process.
 MiMi allows you to visualise three important pieces of information which are not available when designing microsatellite markers from the genome of a single individual.
 
 1) You can select primer pairs which show strong sequence conservation across several individuals. This gives a much higher rate of PCR success and should allow for a
-reduction in the frequency of null alleles (in theory...). (fig. 1).
+reduction in the frequency of null alleles (in theory...). (Fig. 1).
 
 **Fig 1**
 
@@ -21,9 +21,8 @@ A potential primer highlighted in red, showing 100% sequence conservaion in four
 
 ![Figure1 - strong sequence conservation](/images/fig1.png)
 
-
-2) By looking at the microsatellite locus itself in several individuals you can select loci which are polymiorphic in the amount of microsatellite repeats
-and avoid loci where all individuals appear to have the same number of repeats. (fig. 2).
+2) By looking at the microsatellite locus itself in several individuals you can select loci which appear to be polymorphic in the amount of microsatellite repeats
+and avoid loci where all individuals appear to have the same number of repeats. (Fig. 2).
 
 **Fig. 2**
 
@@ -33,7 +32,7 @@ A "CATA" microsatellite motif in five individuals highlighted in red. The number
 
 3) You can detect whether a potential microsatellite marker contains other fragment length altering polymorphisms, outside of those caused by the change in number
 of motif repeats. Insertion/deletions in the flanking regions are clearly visible and can be avoided when designing your microsatellite panel. Mutations of this sort
-are an important source of error and would otherwise be very difficult to detect in a panel designed in a single individual. (fig. 3).
+are an important source of error and would otherwise be very difficult to detect in a panel designed in a single individual. (Fig. 3).
 
 **Fig. 3**
 
@@ -47,10 +46,10 @@ v0.1 - This is the initial version which should establish core functionality. Bu
 This was made by a humble biology PhD student, not a "programmer", so please be patient!
 
 ### Installation Instructions
-This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 18.04) but *should* also work on OSX (Your mileage may vary).
+This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 18.04) but *should* also work on OSX (your mileage may vary).
 
 #### Dependencies
-You need to have [Biopython](https://biopython.org/) and [PANDAseq](https://biopython.org/) installed.
+You need to have [Python](https://www.python.org/), [Biopython](https://biopython.org/) and [PANDAseq](https://biopython.org/) installed.
 PANDAseq must be in your $PATH.
 
 #### Test PANDAseq installation:
