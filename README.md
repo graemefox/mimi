@@ -1,18 +1,16 @@
-![ASCII - mimi](/images/ascii.png)
-
-# 'multi individual microsatelite identification' - (mimi)
+# 'Multi individual Microsatelite identification' - (MiMi)
 ### A tool to improve the design of novel microsatellite panels from genomic next-generation sequencing data.
 
 
 #### What does it do?
-mimi is a Python script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/) (castoe et al, 2012)
+MiMi is a Python script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/) (castoe et al, 2012)
 by increasing the rate at which markers amplify by PCR, allows the user to select polymorphic loci from the data and allows the avoidance of insertion/deletions in the flanking regions. It does this by
 using the genome data from several individuals of the same species, rather than from a single indivdual which is more common in the microsatellite
 design process.
 
 
 #### What does it allow me to do?
-mimi allows you to visualise three important pieces of information which are not available when designing microsatellite markers from the genome of a single individual.
+MiMi allows you to visualise three important pieces of information which are not available when designing microsatellite markers from the genome of a single individual.
 
 1) You can select primer pairs which show strong sequence conservation across several individuals. This gives a much higher rate of PCR success and should allow for a
 reduction in the frequency of null alleles (in theory...). (fig. 1).
@@ -90,14 +88,14 @@ exit()
 to exit the Python prompt.
 
 #### Set up the configuration file
-There is a mimi_config.txt file which contains the parameters used to control mimi. Open it in a **plain text** editor (not a word processor) and change the following fields to accomodate your data:
+There is a MiMi_config.txt file which contains the parameters used to control MiMi. Open it in a **plain text** editor (not a word processor) and change the following fields to accomodate your data:
 
 ```
 Amount of individuals sequenced:
 number_of_samples = 3
 ```
 
-mimi will run on anything >1 sample but you will not get particularly meaningful results with a small number. I recommend eight samples (eight individuals).
+MiMi will run on anything >1 sample but you will not get particularly meaningful results with a small number. I recommend eight samples (eight individuals).
 
 ```
 Proportion of individuals in which a microsatellite loci should occur (default 0.5)
@@ -123,7 +121,7 @@ These are the paths to your raw FASTQ files. Each individual should have two ent
 Extend the list if neccessary by adding new rows. Single-end sequencing reads are not supported.
 
 ```
-# Prior to running mimi, each individual should have been processed with pal_finder and the
+# Prior to running MiMi, each individual should have been processed with pal_finder and the
 # additional filtering and PANDAseq QC steps by Griffiths et al (2016)
 # This is most easily achieved using the Galaxy hosted tool at the University of Manchester,
 # here: https://palfinder.ls.manchester.ac.uk/
@@ -133,7 +131,7 @@ input1_pal_finder = /path/to/individual_1_pal_finder_output.txt
 input2_pal_finder = /path/to/individual_2_pal_finder_output.txt
 ```
 
-These are the paths to the output files from the Griffiths et al (2016) workflow. This must have been performed on your data prior to running mimi as the process depends on
+These are the paths to the output files from the Griffiths et al (2016) workflow. This must have been performed on your data prior to running MiMi as the process depends on
 these output files for the loci and primer sequences.
 
 ```
@@ -143,74 +141,73 @@ pal_finder_path = /path/to/pal_finder_v0.02.04.pl
 pal_finder_config = /path/to/pal_finder/config.txt
 ```
 
-Finally, mimi also brings the pal_finder tool when you download which contains two files: "pal_finder_v0.02.04.pl" and "config.txt". Provide the paths for these two files. Do not alter the config file as this is accessed and modified
-by the mimi script. Please note there are two config files; one which is accessed by mimi (mimi_config.txt by default) and one which is accessed by pal_finder (config.txt by default).
+Finally, MiMi also brings the pal_finder tool when you download which contains two files: "pal_finder_v0.02.04.pl" and "config.txt". Provide the paths for these two files. Do not alter the config file as this is accessed and modified
+by the MiMi script. Please note there are two config files; one which is accessed by MiMi (MiMi_config.txt by default) and one which is accessed by pal_finder (config.txt by default).
 These are different and both are required.
 
 #### Run the script
-You may need to give mimi permission to run:
+You may need to give MiMi permission to run:
 ```
-sudo chmod +x ./mimi.py
+sudo chmod +x MiMi.py
 
 ```
 
 #### Usage
 ```
-./mimi.py -c /path/to/config.txt
+./MiMi.py -c /path/to/config.txt
 ```
 
-The usage is very simple. You only need to pass the mimi_config file with the "-c" flag. All other settings are contained within the config file itself.
+The usage is very simple. You only need to pass the MiMi_config file with the "-c" flag. All other settings are contained within the config file itself.
 
 #### Testing with the demo data
-When you clone the mimi repository, it supplies some demo data and a pre-configured mimi_config file to test your installation.
+When you clone the MiMi repository, it supplies some demo data and a pre-configured MiMi_config file to test your installation.
 
 Run the script and pass the demo_config file:
 ```
-./mimi.py -c /demo_data/demo_config.txt
+./MiMi.py -c /demo_data/demo_config.txt
 ```
 
 #### Interpret demo data output
-If the script ran correctly you will see a directory named "mimi_output" in the mimi directory. Within this directory is a file "mimi_output.txt" and a directory "Alignments".
+If the script ran correctly you will see a directory named "MiMi_output" in the MiMi directory. Within this directory is a file "MiMi_output.txt" and a directory "Alignments".
 The demo data consisted of small 'shotgun', paired-end sequencing datasets of four individuals provided in the "sequence_data" directory of the demo data.
 Microsatellites had already been detected in these individuals and primers designed
 using the Griffiths et al. (2016) workflow (available here: https://palfinder.ls.manchester.ac.uk/). The output files from the Griffiths workflow were provided in the "pal_filter_output"
-directory in the demo data. mimi detected that one of these primer pairs was found in three of the four individuals
-and has extracted those reads and placed them into a FASTA file in the Alignments directory. The FASTA file is named with the forward primer sequence. Furthermore, in the "mimi_output.txt"
+directory in the demo data. MiMi detected that one of these primer pairs was found in three of the four individuals
+and has extracted those reads and placed them into a FASTA file in the Alignments directory. The FASTA file is named with the forward primer sequence. Furthermore, in the "MiMi_output.txt"
 file, the three alleles which were found at this locus are listed (Fig 4).
 
 **Fig. 4**
 
 ![Figure4 - Demo output](/images/demo_output.png)
-Figure 4. Showing the mimi output for one microsatellite locus. The primer sequences are provided along with the number of alleles which have been detected, the number of individuals' datasets
+Figure 4. Showing the MiMi output for one microsatellite locus. The primer sequences are provided along with the number of alleles which have been detected, the number of individuals' datasets
 in which this locus has been detected, the alleles present (numbers in brackets represent the number of repeats) and the size range between the smallest and largest allele.
 
-
-### Run mimi with real data
+### Run MiMi with real data
 
 #### Next-generation sequencing of your samples.
-mimi requires paired-end, genomic sequence data in FASTQ format. In our lab we generate sequence data using the Illumina Nextera protocol and sequence using a MiSeq platform. Generally eight individuals are sequenced on a single MiSeq flowcell. Ideally, these would be from multiple sites to help mimi counter any site-specific variation in the primer regions which may lead to null alleles.
+MiMi requires paired-end, genomic sequence data in FASTQ format. In our lab we generate sequence data using the Illumina Nextera protocol and sequence using a MiSeq platform. Generally eight individuals are sequenced on a single MiSeq flowcell. Ideally, these would be from multiple sites to help MiMi counter any site-specific variation in the primer regions which may lead to null alleles.
 
-#### Required bioinformatics prior to mimi
-You should have already detected microsatellite loci and designed primers using the workflow described in Griffiths et al. (2016.) This is most easily performed using the Galaxy version of the tool hosted at the University of Manchester (https://palfinder.ls.manchester.ac.uk/). This must be performed seperately for each of your individual samples. The Galaxy workflow will produce several output files for each dataset; it is the files containing "filtered_microsatellites_(full_details)].tabular" in the filename which are required by mimi and are referred to as the "pal_filter output files" in the mimi documentation.
+#### Required bioinformatics prior to MiMi
+You should have already detected microsatellite loci and designed primers using the workflow described in Griffiths et al. (2016.) This is most easily performed using the Galaxy version of the tool hosted at the University of Manchester (https://palfinder.ls.manchester.ac.uk/). This must be performed seperately for each of your individual samples. The Galaxy workflow will produce several output files for each dataset; it is the files containing "filtered_microsatellites_(full_details)].tabular" in the filename which are required by MiMi and are referred to as the "pal_filter output files" in the MiMi documentation.
 
 
-Configure the mimi_config.txt file to contain paths to each of your paired-end sequencing FASTQ files, each of your pal_filter output files and the pal_finder scripts. Finally, run the script and pass the mimi_config file:
+Configure the MiMi_config.txt file to contain paths to each of your paired-end sequencing FASTQ files, each of your pal_filter output files and the pal_finder scripts. Finally, run the script and pass the MiMi_config file:
 ```
-./mimi.py -c /path/to/mimi_config.txt
+./MiMi.py -c /path/to/MiMi_config.txt
 ```
-On my modest desktop machine, using data from a single Miseq run (approx 12-16Gb) the mimi process runs in approximately four hours.
+On my modest desktop machine, using data from a single Miseq run (approx 12-16Gb) the MiMi process runs in approximately four hours.
 
 #### Interpret the results
-Data interpretation is identical to that described in the demo_data section, however you will hopefully have many more results. The rows in the "mimi_output.txt" are ranked by the
+Data interpretation is identical to that described in the demo_data section, however you will hopefully have many more results. The rows in the "MiMi_output.txt" are ranked by the
 "Size Range" column as we propose that a large range in allele size is most likely to be indicative of a true polymorphic microsatellite as opposed to a sequencing error which may
 result in smaller slippages producing an inflated number of alleles.
 
-#### Cite mimi
-If you found this tool useful please cite mimi:
+#### Cite MiMi
+If you found this tool useful please cite MiMi:
 
 Fox, G., Antwis, R., Preziosi, R.F. and Rowntree, J.K. (in progress) Multi individual Microsatellite identification (MiMi). A microsatellite design workflow incorporating multiple genomes.
 
-(mimi is currently a work in progress but will be submitted for peer review and publication very soon).
+(MiMi is currently a work in progress but will be submitted for peer review and publication very soon).
 
 #### References
 Castoe, T.A., Poole, A.W., Jason de Koning, A. P., Jones, K.L., Tomback, D.F., Oyler-McCance, S.J., Fike, J.A., Lance, S.L., Streicher, J.W., Smith, E.N. and Pollock, D.D. (2012) Rapid Microsatellite Identification from Illumina Paired-End Genomic Sequencing in Two Birds and a Snake. *PLoS ONE*. 7(2): e30953

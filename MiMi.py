@@ -216,26 +216,22 @@ if __name__ == "__main__":
     wd = os.getcwd()
 
     # parse arguments
-    parser = argparse.ArgumentParser(description='arguments for mimi.py')
-    parser.add_argument('-c','--config1', help='mimi configuration file', \
+    parser = argparse.ArgumentParser(description='arguments for MiMi.py')
+    parser.add_argument('-c','--config1', help='MiMi configuration file', \
                     required=True)
     args = parser.parse_args()
 
     # print obnoxious ascii text art
-    print("\n\n")
-    print(" .----------------.  .----------------.  .----------------.  .----------------. ")
-    print("| .--------------. || .--------------. || .--------------. || .--------------. |")
-    print("| | ____    ____ | || |     _____    | || | ____    ____ | || |     _____    | |")
-    print("| ||_   \  /   _|| || |    |_   _|   | || ||_   \  /   _|| || |    |_   _|   | |")
-    print("| |  |   \/   |  | || |      | |     | || |  |   \/   |  | || |      | |     | |")
-    print("| |  | |\  /| |  | || |      | |     | || |  | |\  /| |  | || |      | |     | |")
-    print("| | _| |_\/_| |_ | || |     _| |_    | || | _| |_\/_| |_ | || |     _| |_    | |")
-    print("| ||_____||_____|| || |    |_____|   | || ||_____||_____|| || |    |_____|   | |")
-    print("| |              | || |              | || |              | || |              | |")
-    print("| '--------------' || '--------------' || '--------------' || '--------------' |")
-    print(" '----------------'  '----------------'  '----------------'  '----------------' ")
-    print("\n\n")
-    print("Multi-Individual-Microsatellite-Identification\n\n\n")
+    print "\n          ~~~~~~~~~~~~~~~~~~~~~~~~~"
+    print "           __  __   _   __  __   _ "
+    print "          |  \/  | (_) |  \/  | (_)"
+    print "          | \  / |  _  | \  / |  _ "
+    print "          | |\/| | | | | |\/| | | |"
+    print "          | |  | | | | | |  | | | |"
+    print "          |_|  |_| |_| |_|  |_| |_|"
+    print "          ~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+    print "Multi-Individual-Microsatellite-Identification\n\n\n"
+
     time.sleep(1)
     print("Reading config file......\n")
     # Read and parse the config file
@@ -473,11 +469,11 @@ if __name__ == "__main__":
     # create a unique pal_finder config file for each
     # check for file of pal_finder configs, delete and re-create if necessary
 
-    if os.path.isdir(wd + "/mimi_output/pal_finder_files"):
-        shutil.rmtree(wd + "/mimi_output/pal_finder_files")
-    os.mkdir(wd + "/mimi_output")
-    os.mkdir(wd + "/mimi_output/pal_finder_files")
-    output_path = wd + "/mimi_output/pal_finder_files/"
+    if os.path.isdir(wd + "/MiMi_output/pal_finder_files"):
+        shutil.rmtree(wd + "/MiMi_output/pal_finder_files")
+    os.mkdir(wd + "/MiMi_output")
+    os.mkdir(wd + "/MiMi_output/pal_finder_files")
+    output_path = wd + "/MiMi_output/pal_finder_files/"
     assemble_reads("Forward_reads_for_assembly.fastq", "Reverse_reads_for_assembly.fastq", "Assembled_reads.fasta" )
 
 
@@ -487,10 +483,10 @@ if __name__ == "__main__":
 
 
     wd = os.getcwd()
-    if os.path.isdir(wd + "/mimi_output/Alignments"):
-        shutil.rmtree(wd + "/mimi_output/Alignments")
-    os.mkdir(wd + "/mimi_output/Alignments")
-    output_path = wd + "/mimi_output/Alignments/"
+    if os.path.isdir(wd + "/MiMi_output/Alignments"):
+        shutil.rmtree(wd + "/MiMi_output/Alignments")
+    os.mkdir(wd + "/MiMi_output/Alignments")
+    output_path = wd + "/MiMi_output/Alignments/"
 
 
     wanted = set()
@@ -498,7 +494,7 @@ if __name__ == "__main__":
     for seq in fasta1:
         sequence_ID = (seq.id.split(":")[7].split("_")[0])
         sequence = str(seq.seq)
-        filePath = str(os.getcwd()) + '/mimi_output/Alignments/%s.fasta' % (sequence_ID)
+        filePath = str(os.getcwd()) + '/MiMi_output/Alignments/%s.fasta' % (sequence_ID)
         if sequence_ID in wanted:
             if os.path.exists(filePath):
                 with open(filePath, 'a') as f:
@@ -520,9 +516,9 @@ if __name__ == "__main__":
 
     # check length of files in Alignments folder
     # remove anything with only one sequence
-    for filename in os.listdir(wd + "/mimi_output/Alignments"):
-        if not file_len(wd + "/mimi_output/Alignments/" + filename) > 2:
-            os.remove(wd + "/mimi_output/Alignments/" + filename)
+    for filename in os.listdir(wd + "/MiMi_output/Alignments"):
+        if not file_len(wd + "/MiMi_output/Alignments/" + filename) > 2:
+            os.remove(wd + "/MiMi_output/Alignments/" + filename)
 
     output_path = wd
     copy_and_rename_file(pal_finder_config, output_path + "pal_finder_config_file.txt")
@@ -531,8 +527,8 @@ if __name__ == "__main__":
     write_to_config(output_path + "pal_finder_config_file.txt","inputFormat fastq", "inputFormat fasta")
     write_to_config(output_path + "pal_finder_config_file.txt","pairedEnd  1","pairedEnd  0" )
     write_to_config(output_path + "pal_finder_config_file.txt","input454reads  test/data/454_All_python.fna", "input454reads " + wd + "/Assembled_reads.fasta")
-    write_to_config(output_path + "pal_finder_config_file.txt","MicrosatSumOut  test/output/test_microsat_summary.txt", "MicrosatSumOut " + output_path + "/mimi_output/pal_finder_files/pal_finder_summary_out.txt")
-    write_to_config(output_path + "pal_finder_config_file.txt","PALsummaryOut  test/output/test_PAL_summary.txt", "PALsummaryOut " + output_path + "/mimi_output/pal_finder_files/pal_finder_PAL_summary.txt")
+    write_to_config(output_path + "pal_finder_config_file.txt","MicrosatSumOut  test/output/test_microsat_summary.txt", "MicrosatSumOut " + output_path + "/MiMi_output/pal_finder_files/pal_finder_summary_out.txt")
+    write_to_config(output_path + "pal_finder_config_file.txt","PALsummaryOut  test/output/test_PAL_summary.txt", "PALsummaryOut " + output_path + "/MiMi_output/pal_finder_files/pal_finder_PAL_summary.txt")
     write_to_config(output_path + "pal_finder_config_file.txt","2merMinReps 	6", "2merMinReps 	6")
     write_to_config(output_path + "pal_finder_config_file.txt","3merMinReps 	0", "3merMinReps 	6")
     write_to_config(output_path + "pal_finder_config_file.txt","4merMinReps 	0", "4merMinReps 	6")
@@ -552,7 +548,7 @@ if __name__ == "__main__":
 
     #### parse the pal_finder output to find the variable loci
     # get a list of unique IDs (the forward primer sequences)
-    with open(wd + "/mimi_output/pal_finder_files/pal_finder_PAL_summary.txt") as pf:
+    with open(wd + "/MiMi_output/pal_finder_files/pal_finder_PAL_summary.txt") as pf:
         unique_primers = set()
         allele_count = []
         unique_alleles = []
@@ -567,7 +563,7 @@ if __name__ == "__main__":
 
     ## go through and get the unique alleles associated with each primer sequence
     all_data = []
-    with open(wd + "/mimi_output/pal_finder_files/pal_finder_PAL_summary.txt") as pf:
+    with open(wd + "/MiMi_output/pal_finder_files/pal_finder_PAL_summary.txt") as pf:
         for line in pf:
             motifs = (line.split("\t")[3])
             if (len(motifs.split(" "))-1) == 1:
@@ -611,13 +607,13 @@ if __name__ == "__main__":
                     ranked_output.insert(0, x.replace("Motifs: ", " ") + "\t" + str(y))
             count = count + 1
         # write out final output
-        with open("mimi_output/mimi_output.txt", 'w') as final_output:
+        with open("MiMi_output/MiMi_output.txt", 'w') as final_output:
             final_output.write("Foward_primer_seq\tReverse_primer_seq\tNumber_of_alleles\tFound_in_individuals\tAlleles_present\tSize-Range\n")
             for x in ranked_output:
                 final_output.write(x.split("\t")[0] + "\t" + ReverseComplement(primer_pairs[x.split("\t")[0]]) + "\t" + x.split("\t")[1] + "\t" + str(which_individuals_F[x.split("\t")[0]]) + "\t" + x.split("\t")[2] + "\t" + x.split("\t")[3] + "\n")
         final_output.close()
     else:
-        print("Something has gone wrong and mimi has not found any microsatellites" \
+        print("Something has gone wrong and MiMi has not found any microsatellites" \
                 "in the sequence data, which occur in multiple individuals.")
         print("Please check all your input files. failing that, please contact the author.")
 
@@ -639,5 +635,5 @@ if __name__ == "__main__":
     if os.path.exists("Assembled_reads.fasta"):
         os.remove("Assembled_reads.fasta")
 
-    print("\n\nSuccessfully completed mimi analysis.")
+    print("\n\nSuccessfully completed MiMi analysis.")
     print (time.strftime("%H:%M:%S"))

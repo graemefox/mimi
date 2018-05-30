@@ -1,5 +1,5 @@
 [config_file]
-# Coniguration file for mimi - Multi-Individual-Microsatellite-Identification
+# Coniguration file for MiMi - Multi-Individual-Microsatellite-Identification
 
 ###########################################################
 # Amount of individuals sequenced:
@@ -37,7 +37,7 @@ input3_R2 =  Urchin_4/Ind4_R2.fastq
 
 
 ###########################################################
-# Prior to running mimi, each individual should have been processed with pal_finder and the
+# Prior to running MiMi, each individual should have been processed with pal_finder and the
 # additional filtering and PANDAseq QC steps by Griffiths et al (2016)
 # This is most easily achieved using the Galaxy hosted tool at the University of Manchester,
 # here: https://palfinder.ls.manchester.ac.uk/
