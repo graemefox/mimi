@@ -2,10 +2,9 @@
 import ConfigParser, subprocess, os, time, csv, Bio, argparse, re, shutil, time, tempfile, argparse
 from Bio import SeqIO
 from subprocess import Popen, PIPE
+
 ####
-
 #   known bugs/problems:
-
 # the "cat: write error: broken pipe" error is very annoying.
 # if I run it with 4 samples, it gets through with no error.
 # if I run it with 8 samples, I get the error.
@@ -13,19 +12,17 @@ from subprocess import Popen, PIPE
 
 # it doesn't seem to affect the running of the script as far as I can tell
 
-## MiMi needs the files produced by pal_finder and pal_filter which with filtered microsatellites
+## MiMi needs the files produced by pal_finder and pal_filter which
+## with filtered microsatellites
 
 ####
 # Additional features that need to be included:
-#
-# make it tell you which sequence file each read came from
-#
-# searching for reads containing the reverse primer will almost certainly improve the rate at
-# which conserved reverse primer regions are discovered. There will be a performance hit
-# but I think it is worth it.
 
-# it would be really useful if the primer sequences were automatically output into
-# the alignments rather than having to be added by hand later
+# searching for reads containing the reverse primer will almost
+## certainly improve the rate at
+# which conserved reverse primer regions are discovered.
+## There will be a performance hit
+# but I think it is worth it.
 
 # similarly, if the alignment were done automatically
 # some sort of quality filter as to how good the primers score would also be nice.
@@ -98,20 +95,23 @@ def get_seqs(script, get_paired, sequencefile, paired_sequence_file, primer_seq)
             n = n + 3
             sequence = sequence + 1
             if get_paired == "1":
-                get_fastq_format_from_ID_line_number(sequencefile, paired_sequence_file, seq_ID_line_number, primer_seq, count)
+                get_fastq_format_from_ID_line_number(sequencefile, \
+                                                    paired_sequence_file, \
+                                                    seq_ID_line_number, \
+                                                    primer_seq, \
+                                                    count)
             count = count + 1
         return(output)
 
 # get paired reads from fastQ files from the line number
-
 #takes the line number (counting from zero) of a sequence ID, and get both fastq
 #format sequences from the raw files (which count from 1)
 
-def get_fastq_format_from_ID_line_number(forward_paired_file, reverse_paired_file, ID_line_number, primer_seq, count):
-    with open("Forward_reads_for_assembly.fastq", 'a') as ffa, open("Reverse_reads_for_assembly.fastq", 'a') as rfa:
-        #print("searching for " + primer_seq + " in: ")
-        #print(forward_paired_file)
-        #print(reverse_paired_file)
+def get_fastq_format_from_ID_line_number(forward_paired_file, \
+                                        reverse_paired_file, ID_line_number, \
+                                        primer_seq, count):
+    with open("Forward_reads_for_assembly.fastq", 'a') as ffa, \
+        open("Reverse_reads_for_assembly.fastq", 'a') as rfa:
         F_output = ""
         R_output = ""
         with open(forward_paired_file) as f, open(reverse_paired_file) as r:
@@ -148,7 +148,8 @@ def count_primers(script, sequence_filecount, direction):
     with tempfile.NamedTemporaryFile() as scriptfile:
         scriptfile.write(script)
         scriptfile.flush()
-        p = subprocess.Popen(['/bin/bash', scriptfile.name], stdout=subprocess.PIPE)
+        p = subprocess.Popen(['/bin/bash', scriptfile.name], \
+                                stdout=subprocess.PIPE)
         out, err = p.communicate()
         # break up the output string and put it into a list
         n = 0
@@ -172,7 +173,8 @@ def count_primers(script, sequence_filecount, direction):
 #zip over all the lists to determine which individuals have the primer
 #at least x number of times (minimum individuals)
 
-def how_many_files(group_of_lists, direction, minimum_individuals, how_many_individuals):
+def how_many_files(group_of_lists, direction, \
+                   minimum_individuals, how_many_individuals):
     position = 0
     for x in zip (*group_of_lists):
         count = 0
@@ -190,24 +192,31 @@ def how_many_files(group_of_lists, direction, minimum_individuals, how_many_indi
                 file_contains_R_primer.append(x)
         position = position + 1
 
-def get_reads(sequencefile, wanted_primers, file_contains_primer,n, paired_sequence_file, output):
+def get_reads(sequencefile, wanted_primers, file_contains_primer, n, \
+              paired_sequence_file, output, containing_file):
     wanted_reads = []
     for x, y in zip(wanted_primers, file_contains_primer):
-        # if y==1 then we know that the primer appears in that file, so do the search
+        # if y==1 then the primer appears in that file, so do the search
         if str(y[n:n+1]) == "('1',)":
-            grep_script = "grep -nr -B 1 -A 2 \"" + x.rstrip("\n") + "\" " + sequencefile
-            result = get_seqs(grep_script, "1", sequencefile, paired_sequence_file, x)
+            grep_script = "grep -nr -B 1 -A 2 \"" + \
+                            x.rstrip("\n") + "\" " + sequencefile
+            result = get_seqs(grep_script, "1", sequencefile, \
+                              paired_sequence_file, x)
             if result is not None:
                 for sequence in result:
                     output.append(">" + x + "\n" + sequence.rstrip("\n"))
-    return(output)
+                    containing_file.append(sequencefile)
+    return(output, containing_file)
 
 def assemble_reads(forward_fastq, reverse_fastq, assembled_reads):
     # description of options:
     pandaseq_command = 'pandaseq -f ' + forward_fastq + \
                         ' -r ' + reverse_fastq + ' -w ' + \
                          assembled_reads
-    subprocess.call(pandaseq_command, shell=True)
+   ## redirect all pandaseqs spiel to dev/null/
+    FNULL = open(os.devnull, 'w')
+    subprocess.call(pandaseq_command, shell=True, stdout=FNULL, \
+                    stderr=subprocess.STDOUT)
 
 ###########################################################
 # MAIN PROGRAM
@@ -241,17 +250,21 @@ if __name__ == "__main__":
 
     # Get number of samples
     number_of_samples = configParser.get('config_file', 'number_of_samples')
-    print number_of_samples + " samples to be analysed."
-    proportion_of_individuals = configParser.get('config_file', 'proportion_of_individuals')
+    print number_of_samples + " samples to be analysed.\n"
+    time.sleep(1)
+    proportion_of_individuals = configParser.get('config_file', \
+                                                 'proportion_of_individuals')
     pal_finder_script = configParser.get('config_file', 'pal_finder_path')
     pal_finder_config = configParser.get('config_file', 'pal_finder_config')
 
-    if not os.path.isfile(pal_finder_script) and os.path.isfile(pal_finder_config) == True:
+    if not os.path.isfile(pal_finder_script) and \
+           os.path.isfile(pal_finder_config) == True:
         print "Cannot find pal_finder script or pal_finder config file."
         print "Please check paths given in the config file"
         quit()
     ##############################
-    # need a method of checking that "sample number" matches the amount of files entered in config"
+    # need a method of checking that "sample number" matches the amount of
+    # files entered in config"
     # if they don't match, then it just errors
     ###############################
     time.sleep(1)
@@ -270,30 +283,45 @@ if __name__ == "__main__":
         list_of_R1_files.append(R1_file_url)
         R2_file_url = configParser.get('config_file', R2input)
         list_of_R2_files.append(R2_file_url)
-        if R1_file_url in check_for_duplicates or R2_file_url in check_for_duplicates:
-            print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-            print "Fail:    Duplicate entry in list of .fastq input files. Check config file.\n"
-            print "ERROR is: Duplicate entry in list of R1 and R2 files. Every file must be unique.\n\nQuitting program....\n"
+        if R1_file_url in check_for_duplicates or \
+           R2_file_url in check_for_duplicates:
+            print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
+                   ~~~~~~~~\n"
+            print "Fail:    Duplicate entry in list of .fastq input files. \
+                   Check config file.\n"
+            print "ERROR is: Duplicate entry in list of R1 and R2 files. \
+                   Every file must be unique.\n\nQuitting program....\n"
             quit()
         check_for_duplicates.append(wd + "/" + R1_file_url)
         check_for_duplicates.append(wd + "/" + R2_file_url)
         pal_finder = configParser.get('config_file', pal_finder_output)
         list_of_pal_finder_output.append(pal_finder)
     # troubleshooting file path(s):
-        print "Checking sequencing files and pal_finder output exist for sample " + R1input + ":\n"
+        print "Checking sequencing files and pal_finder output exist for \
+               sample " + R1input + ":\n"
+        time.sleep(1)
         if os.path.isfile(R1_file_url) and os.path.isfile(R2_file_url) == True:
-            print "Success: Found both sequencing files for sample \"" + R1input + "\""
+            print "Success: Found both sequencing files for sample \"" + \
+                   R1input + "\""
             if os.path.isfile(pal_finder) == True:
-                print "Success: Found pal_finder output file for sample " + pal_finder_output + "\n"
+                print "Success: Found pal_finder output file for sample " + \
+                       pal_finder_output + "\n"
             else:
                 if os.path.isfile(pal_finder) == False:
-                    print "\nFail: pal_finder output file(s) for samples \"" + R1input + "\" and \"" + R2input + "\" not found. Check filepath in config file."
-                    print "\nError is: Sample \"" + R1input + "\" and \"" + R2input + "\" pal_finder output file missing. Quitting program.\n"#
+                    print "\nFail: pal_finder output file(s) for samples \"" + \
+                           R1input + "\" and \"" + R2input + "\" not found. \
+                           Check filepath in config file."
+                    print "\nError is: Sample \"" + R1input + "\" and \"" + \
+                           R2input + "\" pal_finder output file missing. \
+                           Quitting program.\n"#
                     quit()
         else:
-            print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-            print "Fail:    One or more sequence files missing for sample \"R" + str(n)
-            print "\". Please check filepaths in config file, or change sample number\n\n"
+            print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
+                   ~~~~~\n"
+            print "Fail: One or more sequence files missing for sample \"R" + \
+                   str(n)
+            print "\". Please check filepaths in config file, or change sample \
+                   number\n\n"
             print "ERROR is: FILE MISSING.\n\nQuitting program....\n"
             quit()
         n  = n + 1
@@ -306,12 +334,9 @@ if __name__ == "__main__":
 
     # lists to hold all the primer sequences
     all_F_primers, all_R_primers = [],[]
-
     # lists to be generated for each input file
-    #Fprimerlist,Rprimerlist,Fprimercount,Rprimercount,seqIDs,motif = {},{},{},{},{},{}
     Fprimerlist,Rprimerlist,seqIDs,motif = {},{},{},{}
     for x, y in zip (list_of_pal_finder_output, range (0,int(number_of_samples))):
-        #Fprimerlist[y],Rprimerlist[y],Fprimercount[y],Rprimercount[y],seqIDs[y],motif[y] = [],[],[],[],[],[]
         Fprimerlist[y],Rprimerlist[y],seqIDs[y],motif[y] = [],[],[],[]
         with open(x) as pal_finder_csv:
             pal = csv.reader(pal_finder_csv, delimiter = "\t")
@@ -319,22 +344,21 @@ if __name__ == "__main__":
             for line in pal:
                 seqIDs[y].append(line[0])
                 motif[y].append(line[1])
-                print(line[7])
                 Fprimerlist[y].append(line[7])
                 all_F_primers.append(line[7])
                 Rprimerlist[y].append(ReverseComplement(line[9]))
                 #Rprimerlist[y].append(line[9])
-                ### it is the reverse complement of the reverse primers which actually appears in the R2 files
+                ### it is the reverse complement of the reverse primers which
+                ### actually appears in the R2 files
                 all_R_primers.append(ReverseComplement(line[9]))
                 #all_R_primers.append(line[9])
     # write out combined primer lists to files
     filePath = str(os.getcwd())
 
-
-
     # generate a big list of all F primers and all R primers
     # also write these out to files as they are needed by Blast later
-    with open(filePath + "/Fprimerlist.txt", 'w') as f, open(filePath + "/Rprimerlist.txt", 'w') as r:
+    with open(filePath + "/Fprimerlist.txt", 'w') as f, \
+         open(filePath + "/Rprimerlist.txt", 'w') as r:
         for x in range(0, int(number_of_samples)):
             for F_primer, R_primer in zip(Fprimerlist[x], Rprimerlist[x]):
                 all_F_primers.append(F_primer)
@@ -356,14 +380,14 @@ if __name__ == "__main__":
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     print "Searching each individual FastQ for common primer sequences."
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-    # for every primer sequence, use grep to count the occurrences of that sequence
+    # for every primer sequence, grep to count the occurrences of that sequence
     # in the fastQ files of each sample
 
     # Pair up every forward and reverse primer pair in a dict
     primer_pairs = dict(zip(all_F_primers, all_R_primers))
 
-    # it selects different regions of the big Fprimerlist.txt file so as to not bother
-    # checking for primer sequences in the indiviual where they were first detected
+    # it selects different regions of the big Fprimerlist.txt to not bother
+    # checking for primer sequences in the indiviual where they were detected
     Fprimerfile = "Fprimerlist.txt"
     Rprimerfile = "Rprimerlist.txt"
     sequencefile_count = 0
@@ -377,7 +401,7 @@ if __name__ == "__main__":
             end_pos = start_pos + len(Fprimerlist[primer_list]) - 1
             diff = end_pos - start_pos
             if int(primer_list) != int(sequencefile_count):
-                # then it is a primer -> sequence file comparison that we need to make
+                # then it is a primer -> sequence file comparison that need to make
                 Fgrep_script = "cat " + Fprimerfile + " | head -n " + \
                                 str(end_pos+1) + " | tail -n " + str(diff+1) + \
                                 " | while read line ; do grep -c $line " + \
@@ -391,7 +415,8 @@ if __name__ == "__main__":
                 start_pos = start_pos + len(Fprimerlist[primer_list])
                 primer_list = int(primer_list) + 1
             else:
-                # then we are searching for primer sequences in the individual they were discovered
+                # then we are searching for primer sequences in the individual
+                # they were discovered
                 # so it can be skipped and recorded as '1'
                 # fill the primer count data with '1'
                 count = start_pos
@@ -410,13 +435,16 @@ if __name__ == "__main__":
     ## now that we have all the sequence counts, we can go through the lists
     # and get a list of just those primers which occur in > 50% of individuals
     # get a list of all the primers which appear in >50% of individuals
-    wanted_F_primers, wanted_R_primers, file_contains_F_primer, file_contains_R_primer = [], [], [], []
+    wanted_F_primers, wanted_R_primers = [], []
+    file_contains_F_primer, file_contains_R_primer = [], []
     position = 0
-    minimum_individuals = float(number_of_samples) * float(proportion_of_individuals)
+    minimum_individuals = float(number_of_samples) * \
+                          float(proportion_of_individuals)
     how_many_individuals = []
     how_many_files(all_F_lists, "F", minimum_individuals, how_many_individuals)
     #how_many_files(all_R_lists, "R", minimum_individuals, how_many_individuals)
-    with open("wanted_F_primers.txt", 'w') as wantedF, open("wanted_R_primers.txt", 'w') as wantedR:
+    with open("wanted_F_primers.txt", 'w') as wantedF, \
+         open("wanted_R_primers.txt", 'w') as wantedR:
         for x in wanted_F_primers:
             #print(x)
             wantedF.write(x + "\n")
@@ -424,9 +452,8 @@ if __name__ == "__main__":
             #print(y)
             wantedR.write(y + "\n")
 
-    # put the primer seqs and how many individuals they were found in, into a dict
+    # put the primer seqs and how many inds they were found in, into a dict
     which_individuals_F = dict(zip(wanted_F_primers, how_many_individuals))
-
     #which_individuals_R = dict(zip(wanted_R_primers, how_many_individuals))
 
     print "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -440,47 +467,44 @@ if __name__ == "__main__":
     if os.path.exists("Reverse_reads_for_assembly.fastq"):
         os.remove("Reverse_reads_for_assembly.fastq")
 
-    wanted_F_reads, wanted_R_reads, F_sequence_file, R_sequence_file = [], [], [], []
+    wanted_F_reads, wanted_R_reads, F_sequence_file = [], [], []
+    R_sequence_file, containing_file = [], []
     n = 0
-    for sequencefile, paired_sequence_file in zip(list_of_R1_files, list_of_R2_files):
+    for sequencefile, paired_sequence_file in \
+                       zip(list_of_R1_files, list_of_R2_files):
         print (time.strftime("%H:%M:%S"))
         print "Extracting reads from file: " + sequencefile + "\n"
-        get_reads(sequencefile, wanted_F_primers, file_contains_F_primer, n, paired_sequence_file, wanted_F_reads)
+        get_reads(sequencefile, wanted_F_primers, file_contains_F_primer, n, \
+                  paired_sequence_file, wanted_F_reads, containing_file)
         n = n + 1
-
-    n = 0
-    for sequencefile, paired_sequence_file in zip(list_of_R2_files, list_of_R1_files):
-        print (time.strftime("%H:%M:%S"))
-        print "Extracting reads from file: " + sequencefile + "\n"
-        get_reads(sequencefile, wanted_R_primers, file_contains_R_primer, n, paired_sequence_file, wanted_R_reads)
-        n = n + 1
-
-
-
-
-    print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-    print "Finished scanning samples for common primer sequences"
-    print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"
+    #n = 0
+    #for sequencefile, paired_sequence_file in zip(list_of_R2_files, list_of_R1_files):
+    #    print (time.strftime("%H:%M:%S"))
+    #    print "Extracting reads from file: " + sequencefile + "\n"
+    #    get_reads(sequencefile, wanted_R_primers, file_contains_R_primer, n, paired_sequence_file, wanted_R_reads)
+    #    n = n + 1
 
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    print (time.strftime("%H:%M:%S"))
+    print "Finished scanning samples for common primer sequences"
+    print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"
+    print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    print (time.strftime("%H:%M:%S"))
     print "Creating config file for pal_finder"
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-    print (time.strftime("%H:%M:%S"))
     # create a unique pal_finder config file for each
     # check for file of pal_finder configs, delete and re-create if necessary
 
     if os.path.isdir(wd + "/MiMi_output/pal_finder_files"):
         shutil.rmtree(wd + "/MiMi_output/pal_finder_files")
+    if os.path.isdir(wd + "/MiMi_output"):
+        shutil.rmtree(wd + "/MiMi_output")
     os.mkdir(wd + "/MiMi_output")
     os.mkdir(wd + "/MiMi_output/pal_finder_files")
     output_path = wd + "/MiMi_output/pal_finder_files/"
-    assemble_reads("Forward_reads_for_assembly.fastq", "Reverse_reads_for_assembly.fastq", "Assembled_reads.fasta" )
-
-
-    # section below needs 1 indent to the right
-        # create new alignment for each set of primer sequences - made of the assembled reads
-    # get a list of unique IDs contained in the file
-
+    assemble_reads("Forward_reads_for_assembly.fastq", \
+                    "Reverse_reads_for_assembly.fastq", \
+                    "Assembled_reads.fasta" )
 
     wd = os.getcwd()
     if os.path.isdir(wd + "/MiMi_output/Alignments"):
@@ -488,23 +512,24 @@ if __name__ == "__main__":
     os.mkdir(wd + "/MiMi_output/Alignments")
     output_path = wd + "/MiMi_output/Alignments/"
 
-
     wanted = set()
     fasta1 = SeqIO.parse("Assembled_reads.fasta",'fasta')
-    for seq in fasta1:
+    for seq,containing_file in zip(fasta1, containing_file):
         sequence_ID = (seq.id.split(":")[7].split("_")[0])
         sequence = str(seq.seq)
-        filePath = str(os.getcwd()) + '/MiMi_output/Alignments/%s.fasta' % (sequence_ID)
+        filePath = str(os.getcwd()) + '/MiMi_output/Alignments/%s.fasta' % \
+                       (sequence_ID)
         if sequence_ID in wanted:
             if os.path.exists(filePath):
                 with open(filePath, 'a') as f:
-                    f.write(">" + sequence_ID + "\n")
+                    f.write(">" + containing_file + "\n")
                     f.write(sequence + "\n")
-                    #SeqIO.write([seq], f, "fasta")
         else:
             with open(filePath, 'w') as f:
                 #SeqIO.write([seq], f, "fasta")
                 f.write(">" + sequence_ID + "\n")
+                f.write(sequence_ID + "\n")
+                f.write(">" + containing_file + "\n")
                 f.write(sequence + "\n")
         wanted.add(sequence_ID)
 
@@ -519,36 +544,56 @@ if __name__ == "__main__":
     for filename in os.listdir(wd + "/MiMi_output/Alignments"):
         if not file_len(wd + "/MiMi_output/Alignments/" + filename) > 2:
             os.remove(wd + "/MiMi_output/Alignments/" + filename)
-
     output_path = wd
-    copy_and_rename_file(pal_finder_config, output_path + "pal_finder_config_file.txt")
-    write_to_config(output_path + "pal_finder_config_file.txt","findPrimers 1", "findPrimers 0")
-    write_to_config(output_path + "pal_finder_config_file.txt","platform Illumina", "platform 454")
-    write_to_config(output_path + "pal_finder_config_file.txt","inputFormat fastq", "inputFormat fasta")
-    write_to_config(output_path + "pal_finder_config_file.txt","pairedEnd  1","pairedEnd  0" )
-    write_to_config(output_path + "pal_finder_config_file.txt","input454reads  test/data/454_All_python.fna", "input454reads " + wd + "/Assembled_reads.fasta")
-    write_to_config(output_path + "pal_finder_config_file.txt","MicrosatSumOut  test/output/test_microsat_summary.txt", "MicrosatSumOut " + output_path + "/MiMi_output/pal_finder_files/pal_finder_summary_out.txt")
-    write_to_config(output_path + "pal_finder_config_file.txt","PALsummaryOut  test/output/test_PAL_summary.txt", "PALsummaryOut " + output_path + "/MiMi_output/pal_finder_files/pal_finder_PAL_summary.txt")
-    write_to_config(output_path + "pal_finder_config_file.txt","2merMinReps 	6", "2merMinReps 	6")
-    write_to_config(output_path + "pal_finder_config_file.txt","3merMinReps 	0", "3merMinReps 	6")
-    write_to_config(output_path + "pal_finder_config_file.txt","4merMinReps 	0", "4merMinReps 	6")
-    write_to_config(output_path + "pal_finder_config_file.txt","5merMinReps 	0", "5merMinReps 	6")
-    write_to_config(output_path + "pal_finder_config_file.txt","6merMinReps 	0", "6merMinReps 	6")
-    pal_finder_command = 'perl ' + pal_finder_script + " " + output_path + "pal_finder_config_file.txt"
-    print "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    copy_and_rename_file(pal_finder_config, output_path + \
+                         "pal_finder_config_file.txt")
+    write_to_config(output_path + "pal_finder_config_file.txt", \
+                    "findPrimers 1", "findPrimers 0")
+    write_to_config(output_path + "pal_finder_config_file.txt", \
+                    "platform Illumina", "platform 454")
+    write_to_config(output_path + "pal_finder_config_file.txt", \
+                    "inputFormat fastq", "inputFormat fasta")
+    write_to_config(output_path + "pal_finder_config_file.txt", \
+                    "pairedEnd  1","pairedEnd  0" )
+    write_to_config(output_path + "pal_finder_config_file.txt", \
+                    "input454reads  test/data/454_All_python.fna", \
+                    "input454reads " + wd + "/Assembled_reads.fasta")
+    write_to_config(output_path + "pal_finder_config_file.txt", \
+                    "MicrosatSumOut  test/output/test_microsat_summary.txt", \
+                    "MicrosatSumOut " + output_path + \
+                    "/MiMi_output/pal_finder_files/pal_finder_summary_out.txt")
+    write_to_config(output_path + "pal_finder_config_file.txt", \
+                    "PALsummaryOut  test/output/test_PAL_summary.txt", \
+                    "PALsummaryOut " + output_path + \
+                    "/MiMi_output/pal_finder_files/pal_finder_PAL_summary.txt")
+    write_to_config(output_path + "pal_finder_config_file.txt", \
+                    "2merMinReps 	6", "2merMinReps 	6")
+    write_to_config(output_path + "pal_finder_config_file.txt", \
+                    "3merMinReps 	0", "3merMinReps 	6")
+    write_to_config(output_path + "pal_finder_config_file.txt", \
+                    "4merMinReps 	0", "4merMinReps 	6")
+    write_to_config(output_path + "pal_finder_config_file.txt", \
+                    "5merMinReps 	0", "5merMinReps 	6")
+    write_to_config(output_path + "pal_finder_config_file.txt", \
+                    "6merMinReps 	0", "6merMinReps 	6")
+    pal_finder_command = 'perl ' + pal_finder_script + " " + \
+                          output_path + "pal_finder_config_file.txt"
+    print "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    print (time.strftime("%H:%M:%S"))
     print "Running pal_finder."
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-    print (time.strftime("%H:%M:%S"))
+
     subprocess.call(pal_finder_command, shell=True)
 
     print "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    print (time.strftime("%H:%M:%S"))
     print "pal_finder complete."
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-    print (time.strftime("%H:%M:%S"))
 
     #### parse the pal_finder output to find the variable loci
     # get a list of unique IDs (the forward primer sequences)
-    with open(wd + "/MiMi_output/pal_finder_files/pal_finder_PAL_summary.txt") as pf:
+    with open(wd + "/MiMi_output/pal_finder_files/pal_finder_PAL_summary.txt") \
+        as pf:
         unique_primers = set()
         allele_count = []
         unique_alleles = []
@@ -561,9 +606,10 @@ if __name__ == "__main__":
                 unique_alleles.append("Motifs: ")
     list_unique_primers = list(unique_primers)
 
-    ## go through and get the unique alleles associated with each primer sequence
+    ## go through and get unique alleles associated with each primer sequence
     all_data = []
-    with open(wd + "/MiMi_output/pal_finder_files/pal_finder_PAL_summary.txt") as pf:
+    with open(wd + "/MiMi_output/pal_finder_files/pal_finder_PAL_summary.txt") \
+        as pf:
         for line in pf:
             motifs = (line.split("\t")[3])
             if (len(motifs.split(" "))-1) == 1:
@@ -587,16 +633,15 @@ if __name__ == "__main__":
         if (len(unique) == 1 and len(motifs.split(" ")) > 1):
             single_motif_only.append(row.rstrip(" "))
 
-
-    # calcualte the difference in size between the biggest number of repeats and the smallest
+    # calcualte difference in size between the biggest numof repeats and smallest
     diff_in_motif_size = []
     for row in single_motif_only:
         number_of_repeats = []
         for x in row.split("\t")[2].split(" ")[1:]:
             for result in (re.findall(r'\d+', x)):
                 number_of_repeats.append(int(result))
-        diff_in_motif_size.append((max(number_of_repeats) - min(number_of_repeats)))
-
+        diff_in_motif_size.append((max(number_of_repeats) - \
+                                   min(number_of_repeats)))
     # rank by difference in largest and samllest motifs
     ranked_output = []
     count = 0
@@ -604,19 +649,27 @@ if __name__ == "__main__":
         while count <= max(diff_in_motif_size):
             for x, y in zip(single_motif_only, diff_in_motif_size):
                 if y == count:
-                    ranked_output.insert(0, x.replace("Motifs: ", " ") + "\t" + str(y))
+                    ranked_output.insert(0, x.replace("Motifs: ", " ") + \
+                                         "\t" + str(y))
             count = count + 1
         # write out final output
         with open("MiMi_output/MiMi_output.txt", 'w') as final_output:
-            final_output.write("Foward_primer_seq\tReverse_primer_seq\tNumber_of_alleles\tFound_in_individuals\tAlleles_present\tSize-Range\n")
+            final_output.write("Foward_primer_seq\tReverse_primer_seq\t\
+                               Number_of_alleles\tFound_in_individuals\t\
+                               Alleles_present\tSize-Range\n")
             for x in ranked_output:
-                final_output.write(x.split("\t")[0] + "\t" + ReverseComplement(primer_pairs[x.split("\t")[0]]) + "\t" + x.split("\t")[1] + "\t" + str(which_individuals_F[x.split("\t")[0]]) + "\t" + x.split("\t")[2] + "\t" + x.split("\t")[3] + "\n")
+                final_output.write(x.split("\t")[0] + "\t" + \
+                             ReverseComplement(primer_pairs[x.split("\t")[0]]) \
+                             + "\t" + x.split("\t")[1] + "\t" + \
+                             str(which_individuals_F[x.split("\t")[0]]) + \
+                             "\t" + x.split("\t")[2] + "\t" + \
+                             x.split("\t")[3] + "\n")
         final_output.close()
     else:
-        print("Something has gone wrong and MiMi has not found any microsatellites" \
+        print("Something went wrong.MiMi has not found any microsatellites" \
                 "in the sequence data, which occur in multiple individuals.")
-        print("Please check all your input files. failing that, please contact the author.")
-
+        print("Please check all your input files. failing that, please contact"\
+        "the author.")
     # some tidying up of temporary files
     if os.path.exists("Forward_reads_for_assembly.fastq"):
         os.remove("Forward_reads_for_assembly.fastq")
@@ -635,5 +688,7 @@ if __name__ == "__main__":
     if os.path.exists("Assembled_reads.fasta"):
         os.remove("Assembled_reads.fasta")
 
-    print("\n\nSuccessfully completed MiMi analysis.")
+    print "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     print (time.strftime("%H:%M:%S"))
+    print("\n\nSuccessfully completed MiMi analysis.")
+    print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
