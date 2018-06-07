@@ -12,23 +12,10 @@ from subprocess import Popen, PIPE
 
 # it doesn't seem to affect the running of the script as far as I can tell
 
-## MiMi needs the files produced by pal_finder and pal_filter which
+## MiMi needs the files produced by pal_finder and pal_filter which end
 ## with filtered microsatellites
 
-####
-# Additional features that need to be included:
 
-# searching for reads containing the reverse primer will almost
-## certainly improve the rate at
-# which conserved reverse primer regions are discovered.
-## There will be a performance hit
-# but I think it is worth it.
-
-# similarly, if the alignment were done automatically
-# some sort of quality filter as to how good the primers score would also be nice.
-# (no idea how this would work in practice though)
-
-###
 ###########################################################
 # FUNCTION LIST
 ###########################################################
@@ -150,7 +137,7 @@ def count_primers(script, sequence_filecount, direction):
         scriptfile.flush()
         p = subprocess.Popen(['/bin/bash', scriptfile.name], \
                                 stdout=subprocess.PIPE)
-        out, err = p.communicate()
+        out = p.communicate()
         # break up the output string and put it into a list
         n = 0
         for x in out:
@@ -241,17 +228,17 @@ if __name__ == "__main__":
     print "          ~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     print "Multi-Individual-Microsatellite-Identification\n\n\n"
 
-    time.sleep(1)
+    #time.sleep(1)
     print("Reading config file......\n")
     # Read and parse the config file
-    time.sleep(1)
+    #time.sleep(1)
     configParser = ConfigParser.RawConfigParser()
     configParser.read(args.config1)
 
     # Get number of samples
     number_of_samples = configParser.get('config_file', 'number_of_samples')
     print number_of_samples + " samples to be analysed.\n"
-    time.sleep(1)
+    #time.sleep(1)
     proportion_of_individuals = configParser.get('config_file', \
                                                  'proportion_of_individuals')
     pal_finder_script = configParser.get('config_file', 'pal_finder_path')
@@ -267,7 +254,7 @@ if __name__ == "__main__":
     # files entered in config"
     # if they don't match, then it just errors
     ###############################
-    time.sleep(1)
+    #time.sleep(1)
     # Find the input files and check they exist (raw MiSeq fastQ files)
     n = 1
     check_for_duplicates = []
@@ -299,7 +286,7 @@ if __name__ == "__main__":
     # troubleshooting file path(s):
         print "Checking sequencing files and pal_finder output exist for \
                sample " + R1input + ":\n"
-        time.sleep(1)
+        #time.sleep(1)
         if os.path.isfile(R1_file_url) and os.path.isfile(R2_file_url) == True:
             print "Success: Found both sequencing files for sample \"" + \
                    R1input + "\""
@@ -347,11 +334,7 @@ if __name__ == "__main__":
                 Fprimerlist[y].append(line[7])
                 all_F_primers.append(line[7])
                 Rprimerlist[y].append(ReverseComplement(line[9]))
-                #Rprimerlist[y].append(line[9])
-                ### it is the reverse complement of the reverse primers which
-                ### actually appears in the R2 files
                 all_R_primers.append(ReverseComplement(line[9]))
-                #all_R_primers.append(line[9])
     # write out combined primer lists to files
     filePath = str(os.getcwd())
 
@@ -406,12 +389,7 @@ if __name__ == "__main__":
                                 str(end_pos+1) + " | tail -n " + str(diff+1) + \
                                 " | while read line ; do grep -c $line " + \
                                 Fsequencefile + "; done"
-                Rgrep_script = "cat " + Rprimerfile + " | head -n " + \
-                                str(end_pos+1) + " | tail -n " + str(diff+1) + \
-                                " | while read line ; do grep -c $line " + \
-                                Rsequencefile + "; done"
                 count_primers(Fgrep_script, sequencefile_count, "F")
-                #count_primers(Rgrep_script, sequencefile_count, "R")
                 start_pos = start_pos + len(Fprimerlist[primer_list])
                 primer_list = int(primer_list) + 1
             else:
