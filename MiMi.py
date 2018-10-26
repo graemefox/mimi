@@ -5,12 +5,9 @@ from subprocess import Popen, PIPE
 
 ####
 #   known bugs/problems:
-# the "cat: write error: broken pipe" error is very annoying.
-# if I run it with 4 samples, it gets through with no error.
-# if I run it with 8 samples, I get the error.
-# why would that be the case?
-
-# it doesn't seem to affect the running of the script as far as I can tell
+# there is some weirdness with the headers in the output file
+# lots of unnecessary white space generated for some reason.
+# does not affect the quality of the output, the headers are just wrong
 
 ## MiMi needs the files produced by pal_finder and pal_filter which end
 ## with filtered microsatellites
@@ -140,7 +137,7 @@ def count_primers(script, sequence_filecount, direction):
         out = p.communicate()
         # break up the output string and put it into a list
         n = 0
-        for x in out:
+        for x in out[0]:
             if x != "\n":
                 if direction == "F":
                     if x != "0":
@@ -369,6 +366,7 @@ if __name__ == "__main__":
     # Pair up every forward and reverse primer pair in a dict
     primer_pairs = dict(zip(all_F_primers, all_R_primers))
 
+
     # it selects different regions of the big Fprimerlist.txt to not bother
     # checking for primer sequences in the indiviual where they were detected
     Fprimerfile = "Fprimerlist.txt"
@@ -385,7 +383,7 @@ if __name__ == "__main__":
             diff = end_pos - start_pos
             if int(primer_list) != int(sequencefile_count):
                 # then it is a primer -> sequence file comparison that need to make
-                Fgrep_script = "cat " + Fprimerfile + " | head -n " + \
+                Fgrep_script = "cat " + Fprimerfile + " 2>/dev/null | head -n " + \
                                 str(end_pos+1) + " | tail -n " + str(diff+1) + \
                                 " | while read line ; do grep -c $line " + \
                                 Fsequencefile + "; done"
@@ -409,7 +407,6 @@ if __name__ == "__main__":
         sequencefile_count = int(sequencefile_count ) + 1
         sample_number = sample_number + 1
 
-
     ## now that we have all the sequence counts, we can go through the lists
     # and get a list of just those primers which occur in > 50% of individuals
     # get a list of all the primers which appear in >50% of individuals
@@ -419,6 +416,7 @@ if __name__ == "__main__":
     minimum_individuals = float(number_of_samples) * \
                           float(proportion_of_individuals)
     how_many_individuals = []
+
     how_many_files(all_F_lists, "F", minimum_individuals, how_many_individuals)
     #how_many_files(all_R_lists, "R", minimum_individuals, how_many_individuals)
     with open("wanted_F_primers.txt", 'w') as wantedF, \
@@ -649,6 +647,7 @@ if __name__ == "__main__":
         print("Please check all your input files. failing that, please contact"\
         "the author.")
     # some tidying up of temporary files
+    """
     if os.path.exists("Forward_reads_for_assembly.fastq"):
         os.remove("Forward_reads_for_assembly.fastq")
     if os.path.exists("Reverse_reads_for_assembly.fastq"):
@@ -665,6 +664,7 @@ if __name__ == "__main__":
         os.remove("wanted_R_primers.txt")
     if os.path.exists("Assembled_reads.fasta"):
         os.remove("Assembled_reads.fasta")
+    """
 
     print "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     print (time.strftime("%H:%M:%S"))
