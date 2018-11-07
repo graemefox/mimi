@@ -4,10 +4,11 @@ from Bio import SeqIO
 from subprocess import Popen, PIPE
 
 ####
-#   known bugs/problems:
-# there is some weirdness with the headers in the output file
-# lots of unnecessary white space generated for some reason.
-# does not affect the quality of the output, the headers are just wrong
+# appear to have fixed the issue where it was reporting reads coming from
+# incorrect files
+#
+# the "number of individuals" column in the output is not always correct
+
 
 ## MiMi needs the files produced by pal_finder and pal_filter which end
 ## with filtered microsatellites
@@ -186,7 +187,8 @@ def get_reads(sequencefile, wanted_primers, file_contains_primer, n, \
                             x.rstrip("\n") + "\" " + sequencefile
             result = get_seqs(grep_script, "1", sequencefile, \
                               paired_sequence_file, x)
-            if result is not None:
+            #if result is not None:
+            if len(result) > 0:
                 for sequence in result:
                     output.append(">" + x + "\n" + sequence.rstrip("\n"))
                     containing_file.append(sequencefile)
@@ -490,7 +492,34 @@ if __name__ == "__main__":
 
     wanted = set()
     fasta1 = SeqIO.parse("Assembled_reads.fasta",'fasta')
-    for seq,containing_file in zip(fasta1, containing_file):
+    #forward_reads = SeqIO.parse("Forward_reads_for_assembly.fastq",'fastq')g
+    #reverse_reads = SeqIO.parse("Reverse_reads_for_assembly.fastq",'fastq')
+
+    ## filter the list of source_files to just those reads which made it through
+    ## the assembly process
+
+    ## go through and get the reads IDs that were successfully assembled.
+    list_of_assembled_reads = []
+    with open("Assembled_reads.fasta", 'r') as assembled_reads_fasta:
+        for line in assembled_reads_fasta:
+            if line.startswith(">"):
+                list_of_assembled_reads.append(line.rsplit(":", 1)[0].lstrip(">"))
+
+    ## get the IDs from the pre-assembled reads (these correspond with the list
+    ## "containg_file" which lets us know from which individual each file comes
+    ## from)
+    pre_assembled_reads = []
+    with open("Forward_reads_for_assembly.fastq", 'r') as forward_assembly_reads:
+        for line in forward_assembly_reads:
+            if line.startswith("@"):
+                pre_assembled_reads.append(line.rsplit(":", 1)[0].lstrip("@").split(" ")[0])
+    ## filter the list of containing files to just the entries that made it through assembly.
+    wanted_containing_files = []
+    for pre_assembled, source_file in zip(pre_assembled_reads, containing_file):
+        if pre_assembled in list_of_assembled_reads:
+            wanted_containing_files.append(source_file)
+
+    for seq, containing_file in zip(fasta1, wanted_containing_files):
         sequence_ID = (seq.id.split(":")[7].split("_")[0])
         sequence = str(seq.seq)
         filePath = str(os.getcwd()) + '/MiMi_output/Alignments/%s.fasta' % \
@@ -521,6 +550,7 @@ if __name__ == "__main__":
         if not file_len(wd + "/MiMi_output/Alignments/" + filename) > 2:
             os.remove(wd + "/MiMi_output/Alignments/" + filename)
     output_path = wd
+
     copy_and_rename_file(pal_finder_config, output_path + \
                          "pal_finder_config_file.txt")
     write_to_config(output_path + "pal_finder_config_file.txt", \
@@ -647,6 +677,8 @@ if __name__ == "__main__":
         print("Please check all your input files. failing that, please contact"\
         "the author.")
     # some tidying up of temporary files
+
+
     """
     if os.path.exists("Forward_reads_for_assembly.fastq"):
         os.remove("Forward_reads_for_assembly.fastq")
