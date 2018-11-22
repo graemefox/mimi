@@ -3,16 +3,12 @@ import ConfigParser, subprocess, os, time, csv, Bio, argparse, re, shutil, time,
 from Bio import SeqIO
 from subprocess import Popen, PIPE
 
-####
-# appear to have fixed the issue where it was reporting reads coming from
-# incorrect files
-#
-# the "number of individuals" column in the output is not always correct
-
+## bugs and other comments
+## 22/11/2018 - tentaively fixed the problem where it was incorrectly
+# iddentifying which file the reads came from
 
 ## MiMi needs the files produced by pal_finder and pal_filter which end
 ## with filtered microsatellites
-
 
 ###########################################################
 # FUNCTION LIST
@@ -66,15 +62,12 @@ def get_seqs(script, get_paired, sequencefile, paired_sequence_file, primer_seq)
         count = 0
         while sequence <= number_of_seqs:
             n = 0
-            # get sequence ID - working but not currently in use
-            #matchObj = re.findall( r'^[0-9]*-', out.split("\n")[n], re.M|re.I)
             n = n + 1
             # get the line number to access the fastq information
             matchObj = re.findall( r'^[0-9]*', out.split("\n")[n], re.M|re.I)
             seq_ID_line_number = (int(str(matchObj).lstrip("\[\'").rstrip("\'\]"))-2)
             # get sequence itself
             seq = out.split("\n")[n].lstrip(str(matchObj))
-            #print(seq)
             output.append(seq.lstrip(":"))
             # increment 3 as a fastQ file is in blocks of 5
             n = n + 3
@@ -227,17 +220,17 @@ if __name__ == "__main__":
     print "          ~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     print "Multi-Individual-Microsatellite-Identification\n\n\n"
 
-    #time.sleep(1)
+    time.sleep(1)
     print("Reading config file......\n")
     # Read and parse the config file
-    #time.sleep(1)
+    time.sleep(1)
     configParser = ConfigParser.RawConfigParser()
     configParser.read(args.config1)
 
     # Get number of samples
     number_of_samples = configParser.get('config_file', 'number_of_samples')
     print number_of_samples + " samples to be analysed.\n"
-    #time.sleep(1)
+    time.sleep(1)
     proportion_of_individuals = configParser.get('config_file', \
                                                  'proportion_of_individuals')
     pal_finder_script = configParser.get('config_file', 'pal_finder_path')
@@ -285,7 +278,7 @@ if __name__ == "__main__":
     # troubleshooting file path(s):
         print "Checking sequencing files and pal_finder output exist for \
                sample " + R1input + ":\n"
-        #time.sleep(1)
+        time.sleep(1)
         if os.path.isfile(R1_file_url) and os.path.isfile(R2_file_url) == True:
             print "Success: Found both sequencing files for sample \"" + \
                    R1input + "\""
@@ -368,7 +361,6 @@ if __name__ == "__main__":
     # Pair up every forward and reverse primer pair in a dict
     primer_pairs = dict(zip(all_F_primers, all_R_primers))
 
-
     # it selects different regions of the big Fprimerlist.txt to not bother
     # checking for primer sequences in the indiviual where they were detected
     Fprimerfile = "Fprimerlist.txt"
@@ -424,15 +416,12 @@ if __name__ == "__main__":
     with open("wanted_F_primers.txt", 'w') as wantedF, \
          open("wanted_R_primers.txt", 'w') as wantedR:
         for x in wanted_F_primers:
-            #print(x)
             wantedF.write(x + "\n")
         for y in wanted_R_primers:
-            #print(y)
             wantedR.write(y + "\n")
 
     # put the primer seqs and how many inds they were found in, into a dict
     which_individuals_F = dict(zip(wanted_F_primers, how_many_individuals))
-    #which_individuals_R = dict(zip(wanted_R_primers, how_many_individuals))
 
     print "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     print "Merging all reads containing common primer sequences."
@@ -455,12 +444,6 @@ if __name__ == "__main__":
         get_reads(sequencefile, wanted_F_primers, file_contains_F_primer, n, \
                   paired_sequence_file, wanted_F_reads, containing_file)
         n = n + 1
-    #n = 0
-    #for sequencefile, paired_sequence_file in zip(list_of_R2_files, list_of_R1_files):
-    #    print (time.strftime("%H:%M:%S"))
-    #    print "Extracting reads from file: " + sequencefile + "\n"
-    #    get_reads(sequencefile, wanted_R_primers, file_contains_R_primer, n, paired_sequence_file, wanted_R_reads)
-    #    n = n + 1
 
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     print (time.strftime("%H:%M:%S"))
@@ -490,10 +473,9 @@ if __name__ == "__main__":
     os.mkdir(wd + "/MiMi_output/Alignments")
     output_path = wd + "/MiMi_output/Alignments/"
 
-    wanted = set()
+
     fasta1 = SeqIO.parse("Assembled_reads.fasta",'fasta')
-    #forward_reads = SeqIO.parse("Forward_reads_for_assembly.fastq",'fastq')g
-    #reverse_reads = SeqIO.parse("Reverse_reads_for_assembly.fastq",'fastq')
+    forward_reads = SeqIO.parse("Forward_reads_for_assembly.fastq",'fastq')
 
     ## filter the list of source_files to just those reads which made it through
     ## the assembly process
@@ -505,36 +487,45 @@ if __name__ == "__main__":
             if line.startswith(">"):
                 list_of_assembled_reads.append(line.rsplit(":", 1)[0].lstrip(">"))
 
-    ## get the IDs from the pre-assembled reads (these correspond with the list
-    ## "containg_file" which lets us know from which individual each file comes
-    ## from)
     pre_assembled_reads = []
-    with open("Forward_reads_for_assembly.fastq", 'r') as forward_assembly_reads:
-        for line in forward_assembly_reads:
-            if line.startswith("@"):
-                pre_assembled_reads.append(line.rsplit(":", 1)[0].lstrip("@").split(" ")[0])
+    ## need to get the IDs from the forward_for_asembly file and add them into this list
+
+    for record in forward_reads:
+        pre_assembled_reads.append(record.id)
+
     ## filter the list of containing files to just the entries that made it through assembly.
     wanted_containing_files = []
     for pre_assembled, source_file in zip(pre_assembled_reads, containing_file):
         if pre_assembled in list_of_assembled_reads:
             wanted_containing_files.append(source_file)
 
-    for seq, containing_file in zip(fasta1, wanted_containing_files):
-        sequence_ID = (seq.id.split(":")[7].split("_")[0])
-        sequence = str(seq.seq)
+    list_of_assembled_sequences = []
+    list_of_assembled_IDs = []
+    step = 2
+    with open("Assembled_reads.fasta", 'r') as assembled_reads_file:
+        for number, line in enumerate(assembled_reads_file):
+            if number % step != 0:
+                list_of_assembled_sequences.append(line)
+            else:
+                print(line)
+                list_of_assembled_IDs.append(line.rstrip("\n"))
+
+    wanted = set()
+    for ID, seq, containing_file in zip(list_of_assembled_IDs, list_of_assembled_sequences, wanted_containing_files):
+        sequence_ID = (ID.split(":")[7])
+        sequence = str(seq.rstrip("\n"))
         filePath = str(os.getcwd()) + '/MiMi_output/Alignments/%s.fasta' % \
                        (sequence_ID)
         if sequence_ID in wanted:
             if os.path.exists(filePath):
                 with open(filePath, 'a') as f:
-                    f.write(">" + containing_file + "\n")
+                    f.write(">" + containing_file.split("/")[len(containing_file.split("/"))-1] + "\n")
                     f.write(sequence + "\n")
         else:
             with open(filePath, 'w') as f:
-                #SeqIO.write([seq], f, "fasta")
                 f.write(">" + sequence_ID + "\n")
                 f.write(sequence_ID + "\n")
-                f.write(">" + containing_file + "\n")
+                f.write(">" + containing_file.split("/")[len(containing_file.split("/"))-1] + "\n")
                 f.write(sequence + "\n")
         wanted.add(sequence_ID)
 
@@ -673,13 +664,11 @@ if __name__ == "__main__":
         final_output.close()
     else:
         print("Something went wrong.MiMi has not found any microsatellites" \
-                "in the sequence data, which occur in multiple individuals.")
+                " in the sequence data, which occur in multiple individuals.")
         print("Please check all your input files. failing that, please contact"\
-        "the author.")
+        " the author.")
     # some tidying up of temporary files
 
-
-    """
     if os.path.exists("Forward_reads_for_assembly.fastq"):
         os.remove("Forward_reads_for_assembly.fastq")
     if os.path.exists("Reverse_reads_for_assembly.fastq"):
@@ -696,7 +685,6 @@ if __name__ == "__main__":
         os.remove("wanted_R_primers.txt")
     if os.path.exists("Assembled_reads.fasta"):
         os.remove("Assembled_reads.fasta")
-    """
 
     print "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     print (time.strftime("%H:%M:%S"))
