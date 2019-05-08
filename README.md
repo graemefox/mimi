@@ -86,6 +86,10 @@ exit()
 
 to exit the Python prompt.
 
+#### Troubleshooting error messages
+Upon running MiMi, if you receive the error message: "ImportError: No module named Bio" this indicates that Biopython is not correctly installed.
+Please review the installation instructions at "https://biopython.org/DIST/docs/install/Installation.html" to ensure the module is correctly installed.
+
 #### Clone the MiMi repository to your disk
 ```
 git clone https://github.com/graemefox/mimi.git
