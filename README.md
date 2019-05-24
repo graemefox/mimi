@@ -49,8 +49,8 @@ This was made by a humble biology PhD student, not a "programmer", so please be 
 This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 18.04) but *should* also work on OSX (your mileage may vary).
 
 #### Dependencies
-You need to have [Python](https://www.python.org/), [Biopython](https://biopython.org/) and [PANDAseq](https://github.com/neufeld/pandaseq) installed.
-PANDAseq must be in your $PATH.
+You need to have [Python](https://www.python.org/), [Biopython](https://biopython.org/), [MUSCLE] (https://www.drive5.com/muscle/downloads.htm) and [PANDAseq](https://github.com/neufeld/pandaseq) installed.
+PANDAseq and MUSCLE must be in your $PATH.
 
 #### Test PANDAseq installation:
 Run the following from a terminal on your system.
@@ -86,9 +86,24 @@ exit()
 
 to exit the Python prompt.
 
+#### Test MUSCLE installation
+Run the following from a terminal on your system:
+```
+muscle
+```
+
+You should see a lot of information relating to the muscle program, which begins:
+(although the version number may vary)
+```
+MUSCLE v3.8.31 by Robert C. Edgar
+```
+
 #### Troubleshooting error messages
 Upon running MiMi, if you receive the error message: "ImportError: No module named Bio" this indicates that Biopython is not correctly installed.
 Please review the installation instructions at "https://biopython.org/DIST/docs/install/Installation.html" to ensure the module is correctly installed.
+
+If you do not see the information relating to the MUSCLE program, this is indicative that the program is not properly installed.
+Please refer to the installation instructions at (https://www.drive5.com/muscle/manual/install.html) to ensure the program is correctly installed.
 
 #### Clone the MiMi repository to your disk
 ```
