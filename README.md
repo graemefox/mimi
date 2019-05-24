@@ -42,7 +42,12 @@ sequence conservation.
 ![Figure3 - insertion/deletion mutation](/images/fig2.png)
 
 ### Versions
-v0.1 - This is the initial version which should establish core functionality. Bugs are likely to be found and improvements/modifications will come in the future.
+v0.2 (release date: ?????) - This is an updated version of the MiMi software. The core functionality of locus detection is unchanged. I have implemented some additional, automated filtering
+of the output. Alignments are automatically aligned using MUSCLE (additional software requirements now apply), alignments are trimmed to the primer positions, low quality alignments are
+automatically removed (based upon a metric of 'gappiness' of an alignment - it's crude but effective), loci are ranked by the conservation of primer sequences. A new log file is produced
+detailing the proportions of putative markers which have been removed by the filters, and also retaining all the loci should the user want to access any markers which have been filtered out.
+
+v0.1 (no longer available) - This is the initial version which should establish core functionality. Bugs are likely to be found and improvements/modifications will come in the future.
 This was made by a humble biology PhD student, not a "programmer", so please be patient!
 
 ### Installation Instructions
