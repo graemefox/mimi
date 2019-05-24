@@ -36,7 +36,7 @@ are an important source of error and would otherwise be very difficult to detect
 
 **Fig. 3**
 
-A section of flanking sequence (in between a priming region and the microsatellite itsel). One individual has a significant deletion mutation (highlighted in red) in otherwise strong
+A section of flanking sequence (in between a priming region and the microsatellite itself). One individual has a significant deletion mutation (highlighted in red) in otherwise strong
 sequence conservation.
 
 ![Figure3 - insertion/deletion mutation](/images/fig2.png)
