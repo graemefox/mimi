@@ -54,7 +54,7 @@ This was made by a humble biology PhD student, not a "programmer", so please be 
 This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 18.04) but *should* also work on OSX (your mileage may vary).
 
 #### Dependencies
-You need to have [Python](https://www.python.org/), [Biopython](https://biopython.org/), [MUSCLE](https://www.drive5.com/muscle/downloads.htm) and [PANDAseq](https://github.com/neufeld/pandaseq) installed.
+You need to have [Python](https://www.python.org/), [Biopython](https://biopython.org/), [MUSCLE](https://www.drive5.com/muscle/downloads.htm) and [PANDAseq](https://github.com/neufeld/pandaseq) installed. Additionally, the Python module "statistics" is required.
 PANDAseq and MUSCLE must be in your $PATH.
 
 #### Test PANDAseq installation:
