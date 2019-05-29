@@ -3,12 +3,12 @@
 
 ###########################################################
 # Amount of individuals sequenced:
-number_of_samples = 4
+number_of_samples = 5
 
 
 ###########################################################
 # Proportion of individuals in which a microsatellite loci should occur (default 0.5)
-proportion_of_individuals = 0.3
+proportion_of_individuals = 0.2
 
 ###########################################################
 # Each Individual should have two input files: paths to "R1" and "R2" file in the
@@ -30,6 +30,8 @@ input3_R1 =  demo_data/sequence_data/Sample3_R1.fastq
 input3_R2 =  demo_data/sequence_data/Sample3_R2.fastq
 input4_R1 =  demo_data/sequence_data/Sample4_R1.fastq
 input4_R2 =  demo_data/sequence_data/Sample4_R2.fastq
+input5_R1 =  demo_data/sequence_data/Sample5_R1.fastq
+input5_R2 =  demo_data/sequence_data/Sample5_R2.fastq
 
 ###########################################################
 # Prior to running MiMi, each individual should have been processed with pal_finder and the
@@ -47,6 +49,7 @@ input1_pal_finder = demo_data/pal_filter_output/Sample1_pal_filter_output.txt.cs
 input2_pal_finder = demo_data/pal_filter_output/Sample2_pal_filter_output.txt.csv
 input3_pal_finder = demo_data/pal_filter_output/Sample3_pal_filter_output.txt.csv
 input4_pal_finder = demo_data/pal_filter_output/Sample4_pal_filter_output.txt.csv
+input5_pal_finder = demo_data/pal_filter_output/Sample4_pal_filter_output.txt.csv
 
 ###########################################################
 
