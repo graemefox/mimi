@@ -1,0 +1,27 @@
+09:09:24
+Statistics relating to numbers of loci filtered out by automated MiMi quality filters
+
+Total number of putative microsatellite markers detected by MiMi: 6.0
+Number of putative markers classified as HIGH quality: 1 (16.7% passed)
+Number of putative markers classified as GOOD quality: 1 (16.7% passed)
+Markers determined to be low quality alignments: 1 (16.7% filtered)
+Markers determined to be monomorphic: 2 (33.3% filtered)
+Mutations in reverse primer binding site: 1 (16.7% filtered)
+
+
+The filtered loci are printed below for your reference: 
+
+LOW QUALITY ALIGNMENTS
+Foward_primer_seq	Reverse_primer_seq	Number_of_alleles	Found_in_individuals	Alleles_present	Size_range
+AAACCAACCAGGTCTACAGGG	TGAGTAACAACCCACAGGGC	2	3	 ATAG(64) ATAG(44)	20
+
+
+MONOMORPHIC LOCI
+Foward_primer_seq	Reverse_primer_seq	Number_of_alleles	Found_in_individuals	Alleles_present	Size_range
+GCAAAATCAGCTCTGCTTGG	TCCTCAGGACACTTTCACCC	2	3	 AC(12) AC(12)	0
+AATAATTGGGCAGGTTTGGG	GCTGTGCAAATTCACACTTCC	2	3	 AC(18) AC(18)	0
+
+
+MUTATIONS IN REVERSE PRIMER SEQUENCE
+Foward_primer_seq	Reverse_primer_seq	Number_of_alleles	Found_in_individuals	Alleles_present	Size_range
+AGATTGGCAGGTCTTCATGG	AAAAGGAGTTGTGAAGCCCC	2	3	 ATG(39) ATG(54)	15
