@@ -1,5 +1,5 @@
 [config_file]
-# Coniguration file for MiMi - Multi-Individual-Microsatellite-Identification
+# Coniguration file for MiMi - Multi-Individual-Microsatellite-Identification- v0.02
 
 ###########################################################
 # Amount of individuals sequenced:
@@ -59,7 +59,7 @@ pal_finder_config = pal_finder/config.txt
 # (otherwise, leave these blank)
 
 muscle_exe =
-PANDAseq_exe = 
+PANDAseq_exe =
 
 ###########################################################
 # Advanced filtering options
