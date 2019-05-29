@@ -179,13 +179,13 @@ These are different and both are required.
 #### Run the script
 You may need to give MiMi permission to run:
 ```
-sudo chmod +x MiMi.py
+sudo chmod +x MiMi_v0.02.py
 
 ```
 
 #### Usage
 ```
-./MiMi.py -c /path/to/config.txt
+./MiMi_v0.02.py -c /path/to/config.txt
 ```
 
 The usage is very simple. You only need to pass the MiMi_config file with the "-c" flag. All other settings are contained within the config file itself.
@@ -197,7 +197,7 @@ This information is not supplied pre-configured. If these programs are in your $
 
 Run the script and pass the demo_config file:
 ```
-./MiMi.py -c /demo_data/demo_config.txt
+./MiMi_v0.02.py -c /demo_data/demo_config.txt
 ```
 
 #### Interpret demo data output
@@ -221,7 +221,7 @@ You should have already detected microsatellite loci and designed primers using 
 
 Configure the MiMi_config.txt file to contain paths to each of your paired-end sequencing FASTQ files, each of your pal_filter output files and the pal_finder scripts. Finally, run the script and pass the MiMi_config file:
 ```
-./MiMi.py -c /path/to/MiMi_config.txt
+./MiMi_v0.02.py -c /path/to/MiMi_config.txt
 ```
 On my modest desktop machine, using data from a single Miseq run (approx 12-16Gb) the MiMi process runs in approximately four hours.
 
