@@ -199,9 +199,16 @@ def get_reads(sequencefile, wanted_primers, file_contains_primer, n, \
 
 def assemble_reads(forward_fastq, reverse_fastq, assembled_reads):
     # description of options:
-    pandaseq_command = 'pandaseq -f ' + forward_fastq + \
-                        ' -r ' + reverse_fastq + ' -w ' + \
-                         assembled_reads
+    if not configParser.get('config_file', 'PANDAseq_exe'):
+        pandaseq_command = 'pandaseq -f ' + forward_fastq + \
+                            ' -r ' + reverse_fastq + ' -w ' + \
+                             assembled_reads
+    else:
+        if configParser.get('config_file', 'PANDAseq_exe'):
+            pandaseq_command = configParser.get('config_file', 'PANDAseq_exe') \
+                + ' -f ' + forward_fastq + ' -r ' + reverse_fastq + ' -w ' + \
+                assembled_reads
+
    ## redirect all pandaseqs spiel to dev/null/
     FNULL = open(os.devnull, 'w')
     subprocess.call(pandaseq_command, shell=True, stdout=FNULL, \
@@ -255,6 +262,11 @@ if __name__ == "__main__":
         print "Cannot find pal_finder script or pal_finder config file."
         print "Please check paths given in the config file"
         quit()
+    ## check if the user has chosen to provide absolute paths to muscle and PANDAseq
+    if configParser.get('config_file', 'muscle_exe'):
+        muscle_path = configParser.get('config_file', 'muscle_exe')
+    if configParser.get('config_file', 'PANDAseq_exe'):
+        PANDAseq_path = configParser.get('config_file', 'PANDAseq_exe')
 
     ##############################
     # need a method of checking that "sample number" matches the amount of
@@ -709,7 +721,15 @@ if __name__ == "__main__":
     wd = os.getcwd()
     for (dirpath, dirnames, filenames) in walk(wd + "/MiMi_output/Alignments"):
         for MSA in filenames:
-            align_command = "muscle -in " + wd + "/MiMi_output/Alignments/" + MSA + " -out " + wd + "/MiMi_output/Alignments/" + MSA + ".aln -quiet"
+            if not configParser.get('config_file', 'muscle_exe'):
+                align_command = "muscle -in " + wd + "/MiMi_output/Alignments/" + MSA + " -out " + wd + "/MiMi_output/Alignments/" + MSA + ".aln -quiet"
+                print(align_command)
+            else:
+                if configParser.get('config_file', 'muscle_exe'):
+                    align_command = configParser.get('config_file', 'muscle_exe') + " -in " + wd + "/MiMi_output/Alignments/" + MSA + " -out " + wd + "/MiMi_output/Alignments/" + MSA + ".aln -quiet"
+                    print(align_command)
+
+
 
             ### alignment works, but commented out for speed during testing
             subprocess.call(align_command, shell=True)

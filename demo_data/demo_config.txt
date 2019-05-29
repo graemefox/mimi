@@ -64,10 +64,13 @@ pal_finder_config = demo_data/pal_finder_0.02.04/config.txt
 
 
 ###########################################################
-# Enable tidy up of temporary files.
-# Set to 1 to remove temporary files after analysis is completed.
+# If you would rather provide absolute paths to MUSCLE and PANDAseq executables,
+# rather than include them in your $PATH. You can provide them here.
+# (otherwise, leave these blank)
 
-temp_file_cleanup = 0
+PANDAseq_exe =
+muscle_exe =
+
 
 ###########################################################
 # Advanced filtering options

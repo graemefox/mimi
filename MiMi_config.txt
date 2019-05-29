@@ -5,7 +5,6 @@
 # Amount of individuals sequenced:
 number_of_samples = 3
 
-
 ###########################################################
 # Proportion of individuals in which a microsatellite loci should occur (default 0.5)
 proportion_of_individuals = 0.5
@@ -28,8 +27,6 @@ input2_R1 =  /YOUR/PATH/HERE
 input2_R2 =  /YOUR/PATH/HERE
 input3_R1 =  /YOUR/PATH/HERE
 input3_R2 =  /YOUR/PATH/HERE
-
-
 
 
 ###########################################################
@@ -56,12 +53,13 @@ input3_pal_finder = /YOUR/PATH/HERE
 pal_finder_path = pal_finder/pal_finder_v0.02.04.pl
 pal_finder_config = pal_finder/config.txt
 
-
 ###########################################################
-# Enable tidy up of temporary files.
-# Set to 1 to remove temporary files after analysis is completed.
+# If you would rather provide absolute paths to MUSCLE and PANDAseq executables,
+# rather than include them in your $PATH. You can provide them here.
+# (otherwise, leave these blank)
 
-temp_file_cleanup = 0
+muscle_exe =
+PANDAseq_exe = 
 
 ###########################################################
 # Advanced filtering options
