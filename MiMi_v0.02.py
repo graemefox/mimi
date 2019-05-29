@@ -8,16 +8,25 @@ from os import walk
 ## added additional filtering functions to the output files
 ## MiMi now automatically detects and filters/retains:
 ## a) polymorphic/monomorphic loci
-## b) low quality alignments (developed a new metric to test the overall 'quality' of an alignment)
-## c) ranks the quality of the conservation of primer regions based on the following:
-      # - all forward primer regions should be perfectly conserved otherwise would not pass MiMi
-      # - full length, perfectly conserved regions in >1 individuals are given highest priority
-      # - partial, perfectly conserved regions in > 1 individuals are given second priority
-      # - no additional primer info available are given third priority
-      # - primer regions where we can visualise mutations (SNP or INDEL etc.) are filtered out
+## b) low quality alignments (developed a new metric to test the overall
+#'quality' of an alignment)
+## c) ranks the quality of the conservation of primer regions based
+#on the following:
 
-## a new log file is procued giving statistics on how many putative markers have been removed,
-## and under which filtering conditions. All putative markers are retained in the log
+# - all forward primer regions should be perfectly conserved otherwise would #
+# not pass MiMi
+# - full length, perfectly conserved regions in >1 individuals are given h
+#ighest priority
+# - partial, perfectly conserved regions in > 1 individuals are given
+#second priority
+# - no additional primer info available are given third priority
+# - primer regions where we can visualise mutations (SNP or INDEL etc.)
+#are filtered out
+
+## a new log file is procued giving statistics on how many putative markers
+#have been removed,
+## and under which filtering conditions. All putative markers are retained
+#n the log
 ## file should the user wish to access them
 
 ###########################################################
@@ -213,10 +222,6 @@ def assemble_reads(forward_fastq, reverse_fastq, assembled_reads):
     FNULL = open(os.devnull, 'w')
     subprocess.call(pandaseq_command, shell=True, stdout=FNULL, \
                     stderr=subprocess.STDOUT)
-
-def hamming_distance(s1, s2):
-    assert len(s1) == len(s2)
-    return sum(ch1 != ch2 for ch1, ch2 in zip(s1, s2))
 
 ###########################################################
 # MAIN PROGRAM
@@ -500,7 +505,6 @@ if __name__ == "__main__":
     os.mkdir(wd + "/MiMi_output/Alignments")
     output_path = wd + "/MiMi_output/Alignments/"
 
-
     fasta1 = SeqIO.parse("Assembled_reads.fasta",'fasta')
     forward_reads = SeqIO.parse("Forward_reads_for_assembly.fastq",'fastq')
 
@@ -712,37 +716,35 @@ if __name__ == "__main__":
         os.remove("wanted_R_primers.txt")
     if os.path.exists("Assembled_reads.fasta"):
         os.remove("Assembled_reads.fasta")
+    if os.path.isdir(wd + "/MiMi_output/pal_finder_files"):
+        shutil.rmtree(wd + "/MiMi_output/pal_finder_files")
 
-
-
-
+    ### additional filtering added as the suggestion by peer review
 
     ##### align all the fasta files in the Alignment directory using MUSCLE
     wd = os.getcwd()
     for (dirpath, dirnames, filenames) in walk(wd + "/MiMi_output/Alignments"):
         for MSA in filenames:
             if not configParser.get('config_file', 'muscle_exe'):
-                align_command = "muscle -in " + wd + "/MiMi_output/Alignments/" + MSA + " -out " + wd + "/MiMi_output/Alignments/" + MSA + ".aln -quiet"
-                print(align_command)
+                align_command = "muscle -in " + wd + "/MiMi_output/Alignments/" \
+                + MSA + " -out " + wd + "/MiMi_output/Alignments/" + MSA \
+                + ".aln -quiet"
             else:
                 if configParser.get('config_file', 'muscle_exe'):
-                    align_command = configParser.get('config_file', 'muscle_exe') + " -in " + wd + "/MiMi_output/Alignments/" + MSA + " -out " + wd + "/MiMi_output/Alignments/" + MSA + ".aln -quiet"
-                    print(align_command)
-
-
-
-            ### alignment works, but commented out for speed during testing
+                    align_command = configParser.get('config_file', 'muscle_exe') \
+                    + " -in " + wd + "/MiMi_output/Alignments/" + MSA \
+                    + " -out " + wd + "/MiMi_output/Alignments/" + MSA \
+                    + ".aln -quiet"
             subprocess.call(align_command, shell=True)
 
-
     ## trim everything previous to the position of the forward primer in the alignment
-
     ### get the position where the left side trim should occur (ie. where  F primer sits)
     left_side_trim = []
     with open("MiMi_output/MiMi_output_all_loci.txt", 'r') as mimi_output:
         next(mimi_output)
         for line in mimi_output:
-            record_dict = SeqIO.parse("MiMi_output/Alignments/" + line.split("\t")[0] + ".fasta.aln", "fasta")
+            record_dict = SeqIO.parse("MiMi_output/Alignments/" \
+                    + line.split("\t")[0] + ".fasta.aln", "fasta")
             for record in record_dict:
                 ## find the entry in the MSA which is just the F primer
                 if not ".fastq" in record.id:
@@ -759,8 +761,10 @@ if __name__ == "__main__":
     with open("MiMi_output/MiMi_output_all_loci.txt", 'r') as mimi_output:
         next(mimi_output)
         for line, trim_pos in zip(mimi_output, left_side_trim):
-            with open("MiMi_output/Alignments/" + line.split("\t")[0] + ".trimmed", 'w') as trimmed_fasta:
-                record_dict = SeqIO.parse("MiMi_output/Alignments/" + line.split("\t")[0] + ".fasta.aln", "fasta")
+            with open("MiMi_output/Alignments/" + line.split("\t")[0] \
+            + ".trimmed", 'w') as trimmed_fasta:
+                record_dict = SeqIO.parse("MiMi_output/Alignments/" \
+                            + line.split("\t")[0] + ".fasta.aln", "fasta")
                 for record in record_dict:
                     trimmed_fasta.write(">" + record.id + "\n")
                     trimmed_fasta.write(str(record.seq[trim_pos:]) + "\n")
@@ -777,20 +781,22 @@ if __name__ == "__main__":
         partial_match = 0
         for line in mimi_output:
             counter = 0
-            record_dict = SeqIO.parse("MiMi_output/Alignments/" + line.split("\t")[0] + ".trimmed", "fasta")
+            record_dict = SeqIO.parse("MiMi_output/Alignments/" \
+                            + line.split("\t")[0] + ".trimmed", "fasta")
             ## get the position of the reverse primer in the alignment
             for record in record_dict:
                 if ReverseComplement(line.split("\t")[1]) in record.seq:
                     rev_position = str(record.seq).index(ReverseComplement(line.split("\t")[1]))
 
             ## handle non-perfect matches, and choose which loci to discard if have mis-matches etc.
-            record_dict2 = SeqIO.parse("MiMi_output/Alignments/" + line.split("\t")[0] + ".trimmed", "fasta")
+            record_dict2 = SeqIO.parse("MiMi_output/Alignments/" \
+                            + line.split("\t")[0] + ".trimmed", "fasta")
 
             for record in record_dict2:
                 ### look at the section of alignment where the rev primer falls
                 ## if string contains ACGT - ie. is not just an empty piece of alignment
-                if bool(re.search('[ACGT]', str(record.seq[rev_position:rev_position + len(line.split("\t")[1])]))):
-                    #print(record.seq[rev_position:rev_position + len(line.split("\t")[1])])
+                if bool(re.search('[ACGT]', str(record.seq[rev_position:rev_position \
+                                            + len(line.split("\t")[1])]))):
                     ## if it is a full, length perfect match:
                     if ReverseComplement(line.split("\t")[1]) in record.seq[rev_position:rev_position + len(line.split("\t")[1])]:
                         counter = counter + 1  # not sure that counter is doing anything here
@@ -869,7 +875,9 @@ if __name__ == "__main__":
                 ## anything else goes to priority2 output, for easy ranking
                 elif rev_primer != "1":
                     OK_qual_counter = OK_qual_counter + 1
-                    priority2_output.append(line.rstrip("\n") + "\t" + rev_primer + "\t" + full_length_cons + "\t" + partial + "\t" + low_qual + "\n")
+                    priority2_output.append(line.rstrip("\n") + "\t" \
+                            + rev_primer + "\t" + full_length_cons \
+                            + "\t" + partial + "\t" + low_qual + "\n")
         mimi_output.close()
         filtered_output.write("GOOD QUALITY LOCI\n")
         for priority2 in priority2_output:
@@ -878,7 +886,9 @@ if __name__ == "__main__":
                 if priority2.split("\t")[7] == "1":
                     filtered_output.write("\t".join(priority2.split("\t")[0:6])+"\n")
                 elif priority2.split("\t")[8] == "1":
-                    priority3_output.append(priority2.rstrip("\n") + "\t" + rev_primer + "\t" + full_length_cons + "\t" + partial + "\t" + low_qual + "\n")
+                    priority3_output.append(priority2.rstrip("\n") + "\t" \
+                            + rev_primer + "\t" + full_length_cons + "\t" \
+                            + partial + "\t" + low_qual + "\n")
             else:
                 ## otherwise, we specifically have a mutation in the primer and it should be avoided
                 mutations_in_rev_primer.append("\t".join(priority2.split("\t")[0:6])+"\n")
@@ -891,9 +901,13 @@ if __name__ == "__main__":
         filter_log.write(time.strftime("%H:%M:%S") + "\n")
         filter_log.write("Statistics relating to numbers of loci filtered out by automated MiMi quality filters\n\n")
         filter_log.write("Total number of putative microsatellite markers detected by MiMi: " + str(total_loci) + "\n")
-        filter_log.write("Number of putative markers classified as HIGH quality: " + str(high_qual_counter) + " (" + str("{:.1f}".format((high_qual_counter/total_loci)*100)) \
+        filter_log.write("Number of putative markers classified as HIGH quality: " \
+                        + str(high_qual_counter)
+                        + " (" + str("{:.1f}".format((high_qual_counter/total_loci)*100)) \
                             + "% passed)" + "\n")
-        filter_log.write("Number of putative markers classified as GOOD quality: " + str(OK_qual_counter) + " (" + str("{:.1f}".format((OK_qual_counter/total_loci)*100)) \
+        filter_log.write("Number of putative markers classified as GOOD quality: " \
+                        + str(OK_qual_counter) \
+                        + " (" + str("{:.1f}".format((OK_qual_counter/total_loci)*100)) \
                             + "% passed)" + "\n")
         filter_log.write("Markers determined to be low quality alignments: " \
         + str(len(retain_low_qual_alignments)) + \
