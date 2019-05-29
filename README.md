@@ -55,7 +55,7 @@ This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 1
 
 #### Dependencies
 You need to have [Python](https://www.python.org/), [Biopython](https://biopython.org/), [MUSCLE](https://www.drive5.com/muscle/downloads.htm) and [PANDAseq](https://github.com/neufeld/pandaseq) installed. Additionally, the Python module "statistics" is required.
-PANDAseq and MUSCLE must be in your $PATH.
+PANDAseq and MUSCLE must either be in your $PATH, or you specify paths to their executables in the config.txt file.
 
 #### Test PANDAseq installation:
 Run the following from a terminal on your system.
@@ -63,13 +63,16 @@ Run the following from a terminal on your system.
 pandaseq
 ```
 
-If PANDAseq is correctly installed, you will see:
+If PANDAseq is correctly installed and in your $PATH, you will see:
 
 ```
 You must supply both forward and reverse reads.
 Too confused to continue.
 Try -h for help.
 ```
+
+If you have a PANDAseq executable which runs, but it is not in your $PATH, you can supply a path to the executable
+in the config.txt file instead.
 
 #### Test Biopython Installation
 Run the following from a terminal on your system:
@@ -107,7 +110,7 @@ MUSCLE v3.8.31 by Robert C. Edgar
 Upon running MiMi, if you receive the error message: "ImportError: No module named Bio" this indicates that Biopython is not correctly installed.
 Please review the installation instructions at "https://biopython.org/DIST/docs/install/Installation.html" to ensure the module is correctly installed.
 
-If you do not see the information relating to the MUSCLE program, this is indicative that the program is not properly installed.
+If you do not see the information relating to the MUSCLE program, this is indicative that the program is either not properly installed, or not in your $PATH. If you have a muscle executable which runs, supply the path to this in the config file.
 Please refer to the installation instructions at (https://www.drive5.com/muscle/manual/install.html) to ensure the program is correctly installed.
 
 #### Clone the MiMi repository to your disk
@@ -189,6 +192,8 @@ The usage is very simple. You only need to pass the MiMi_config file with the "-
 
 #### Testing with the demo data
 When you clone the MiMi repository, it supplies some demo data and a pre-configured MiMi_config file to test your installation.
+NOTE: If you do not have PANDAseq and MUSCLE in your $PATH, you will need to provide paths to their executables in the demo_config.txt file.
+This information is not supplied pre-configured. If these programs are in your $PATH, you do not need to make any changes to demo_config.txt.
 
 Run the script and pass the demo_config file:
 ```
@@ -196,19 +201,14 @@ Run the script and pass the demo_config file:
 ```
 
 #### Interpret demo data output
-If the script ran correctly you will see a directory named "MiMi_output" in the MiMi directory. Within this directory is a file "MiMi_output.txt" and a directory "Alignments".
-The demo data consisted of small 'shotgun', paired-end sequencing datasets of four individuals provided in the "sequence_data" directory of the demo data.
+If the script ran correctly you will see a directory named "MiMi_output" in the MiMi directory. Within this directory are three files and a directory "Alignments".
+
+The demo data consisted of small 'shotgun', paired-end sequencing datasets of five individuals provided in the "sequence_data" directory of the demo data.
 Microsatellites had already been detected in these individuals and primers designed
 using the Griffiths et al. (2016) workflow (available here: https://palfinder.ls.manchester.ac.uk/). The output files from the Griffiths workflow were provided in the "pal_filter_output"
-directory in the demo data. MiMi detected that one of these primer pairs was found in three of the four individuals
-and has extracted those reads and placed them into a FASTA file in the Alignments directory. The FASTA file is named with the forward primer sequence. Furthermore, in the "MiMi_output.txt"
-file, the three alleles which were found at this locus are listed (Fig 4).
+directory in the demo data.
 
-**Fig. 4**
-
-![Figure4 - Demo output](/images/demo_output.png)
-Figure 4. Showing the MiMi output for one microsatellite locus. The primer sequences are provided along with the number of alleles which have been detected, the number of individuals' datasets
-in which this locus has been detected, the alleles present (numbers in brackets represent the number of repeats) and the size range between the smallest and largest allele.
+MiMi has screen all individuals for these loci, detected some loci which are present in three or more individuals, and provided the output relating to these loci. The file "MiMi_output_all_loci.txt" contains all loci which MiMi was able to find in three or more individuals (six loci in this case.). This file is filtered using some automatic quality control to remove loci which are monomorphic, did not align properly (low quality alignments) or had mutations within the primer regions. Loci which did not show evidence of any of these negative characteristics are contained within the "MiMi_output_filtered_loci.txt" file (two loci in this case). Details of the four loci which were removed by quality control filters can be seen in the "MiMi_loci_filter.log" file. In this case, two loci were removed as they produced low quality alignments, one locus was removed as it was monomorphic and one locus was removed as it contained mutations within the reverse primer region.
 
 ### Run MiMi with real data
 
