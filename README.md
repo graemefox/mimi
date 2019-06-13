@@ -54,7 +54,7 @@ This was made by a humble biology PhD student, not a "programmer", so please be 
 This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 18.04) but *should* also work on OSX (your mileage may vary).
 
 #### Dependencies
-You need to have [Python](https://www.python.org/), [Biopython](https://biopython.org/), [MUSCLE](https://www.drive5.com/muscle/downloads.htm) and [PANDAseq](https://github.com/neufeld/pandaseq) installed. Additionally, the Python module "statistics" is required.
+You need to have [Python2.7](https://www.python.org/), [Biopython](https://biopython.org/), [MUSCLE](https://www.drive5.com/muscle/downloads.htm) and [PANDAseq](https://github.com/neufeld/pandaseq) installed. Additionally, the Python module "statistics" is required. Currently, MiMi will not function using Python3.x. It will at some point be updated in the future.
 PANDAseq and MUSCLE must either be in your $PATH, or you specify paths to their executables in the config.txt file.
 
 #### Test PANDAseq installation:

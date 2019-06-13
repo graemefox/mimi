@@ -1,0 +1,10 @@
+>Sample3_R1.fastq
+TCACAAAAGAGATCAGCACTGGGAAACTCTTTTCCCCCTCTCTTTTCTTAATATGCGGAGGCGTCAGAAGGGTATAAGAGACAGGGAAATAAGGTAGCATGTGTAGATGGCAGAATGCACATTTTTGGGGAAGTTTTAAGGAAGTGTTAACAGCAAGTATTACTGCCCATCAACACCTGCCTCCAAAAATTGGAAAAGTGACTCAGTGCCAAAAAACCTAAGAATCAAACTAAGAAAACACAACCACAAGAGGATGGTACTTCTACATAGTCTAGATTGATGAAAATTATTCACAAAAGAGATCAGCACTGGGAAACTCTTTTCCCCCTCTCTTTTCTTAATAT
+>Sample4_R1.fastq
+TCACAAAAGAGATCAGCACTGGGAAACTCTTTTCCCCCTCTCTTTTCTTAATAT-----------------------------------------------------------ATTGCACA-----------------------------------------------------------------------GAAAAGTGTAC--ACAC----------------------------ACACACACACAAACATACACCAAC-----------------------------------------------------------------------------------
+>Sample3_R1.fastq
+TCACAAAAGAGATCAGCACTGGGAAACTCTTTTCCCCCTCTCTTTTCTTAATAT-----------------------------------------------------------ATTGCACA-----------------------------------------------------------------------GAAAAGTGTACACACAC----------------------------ACACACACACAAACATACACCAACTGCAAACAGTTCAGAGGGAAATTACCACAAACAGAGTGAAAAAAAAGCCAAAAAAAAAATGCAACTCAGTGT-----------
+>F_primer:_TCACAAAAGAGATCAGCACTGG
+TCACAAAAGAGATCAGCACTGG----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+>Sample1_R1.fastq
+TCACAAAAGAGATCAGCACTGGGAAACTCTTTTCCCCCTCTCTTTTCTTAATAT-----------------------------------------------------------ATTGCACA-----------------------------------------------------------------------GAAAAGTGT----ACAC----------------------------ACACACACACAAACATACACCAACTGCAAACAGTTCAGAGG------------------------------------------------------------------

@@ -84,7 +84,9 @@ def get_seqs(script, get_paired, sequencefile, paired_sequence_file, primer_seq)
             n = 0
             n = n + 1
             # get the line number to access the fastq information
+            print(out)
             matchObj = re.findall( r'^[0-9]*', out.split("\n")[n], re.M|re.I)
+            print(matchObj)
             seq_ID_line_number = (int(str(matchObj).lstrip("\[\'").rstrip("\'\]"))-2)
             # get sequence itself
             seq = out.split("\n")[n].lstrip(str(matchObj))
@@ -196,7 +198,7 @@ def get_reads(sequencefile, wanted_primers, file_contains_primer, n, \
     for x, y in zip(wanted_primers, file_contains_primer):
         # if y==1 then the primer appears in that file, so do the search
         if str(y[n:n+1]) == "('1',)":
-            grep_script = "grep -nr -B 1 -A 2 \"" + \
+            grep_script = "grep -nrh -B 1 -A 2 \"" + \
                             x.rstrip("\n") + "\" " + sequencefile
             result = get_seqs(grep_script, "1", sequencefile, \
                               paired_sequence_file, x)
