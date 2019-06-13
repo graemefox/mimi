@@ -260,8 +260,8 @@ if __name__ == "__main__":
     try:
         import statistics
     except ImportError:
-        print("Please ensure that the Python module \"statistics\" is available.")
-        print("Try the command \"pip2 install statistics\"\n\n\n")
+        print("Please ensure that the Python module \"numpy\" is available.")
+        print("Try the command \"pip2 install numpy\"\n\n\n")
         pass
     time.sleep(1)
     print("\n\nReading MiMi config file......\n")
