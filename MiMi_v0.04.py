@@ -85,9 +85,7 @@ def get_seqs(script, get_paired, sequencefile, paired_sequence_file, primer_seq)
             n = 0
             n = n + 1
             # get the line number to access the fastq information
-            print(out)
             matchObj = re.findall( r'^[0-9]*', out.split("\n")[n], re.M|re.I)
-            print(matchObj)
             seq_ID_line_number = (int(str(matchObj).lstrip("\[\'").rstrip("\'\]"))-2)
             # get sequence itself
             seq = out.split("\n")[n].lstrip(str(matchObj))
