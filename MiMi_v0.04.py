@@ -258,7 +258,7 @@ if __name__ == "__main__":
         print("Try the command \"pip2 install biopython\"\n\n\n")
         pass
     try:
-        import statistics
+        import numpy
     except ImportError:
         print("Please ensure that the Python module \"numpy\" is available.")
         print("Try the command \"pip2 install numpy\"\n\n\n")
@@ -647,7 +647,9 @@ if __name__ == "__main__":
             motifs = (line.split("\t")[3])
             if (len(motifs.split(" "))-1) == 1:
                 ID = line.split("\t")[0]
-                unique_primers.add(ID.split(":")[7])
+                temp_primer = ID.split(":")[7]
+                unique_primers.add(temp_primer.split(";")[0])
+                #unique_primers.add(ID.split(":")[7])
                 allele_count.append(0)
                 unique_alleles.append("Motifs: ")
     list_unique_primers = list(unique_primers)
@@ -671,6 +673,7 @@ if __name__ == "__main__":
 
     # remove any lines which have reported multiple motifs
     single_motif_only = []
+    print(all_data)
     for row in all_data:
         unique = set()
         motifs = row.split("\t")[2].split(":")[1].lstrip(" ").rstrip(" ")
@@ -681,8 +684,10 @@ if __name__ == "__main__":
 
     # calcualte difference in size between the biggest numof repeats and smallest
     diff_in_motif_size = []
+    print(single_motif_only)
     for row in single_motif_only:
         number_of_repeats = []
+        print(row)
         for x in row.split("\t")[2].split(" ")[1:]:
             for result in (re.findall(r'\d+', x)):
                 number_of_repeats.append(int(result))
@@ -694,6 +699,7 @@ if __name__ == "__main__":
     if len(diff_in_motif_size) > 0:
         while count <= max(diff_in_motif_size):
             for x, y in zip(single_motif_only, diff_in_motif_size):
+                print(x, y)
                 if y == count:
                     ranked_output.insert(0, x.replace("Motifs: ", " ") + \
                                          "\t" + str(y))
