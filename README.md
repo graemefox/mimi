@@ -1,6 +1,13 @@
-# 'Multi individual Microsatelite identification' - (MiMi)
+# 'Multi individual Microsatelite Identification' - (MiMi)
 ### A tool to improve the design of novel microsatellite panels from genomic next-generation sequencing data.
 
+#### Cite MiMi
+If you find this tool useful please cite MiMi:
+
+Graeme Fox, Richard F. Preziosi, Rachael A. Antwis, Fraser J. Combe, W. Edwin Harris, Ian R. Hartley, Andrew C. Kitchener, Selvino R. de Kort, Anne-Isola Nekaris,
+Milena Benavides-Serrato, Jennifer K. Rowntree (accepted - awaiting publication) Multi-individual Microsatellite Identification (MiMi). A microsatellite design workflow incorporating multiple genomes. *Molecular Ecology Resources*
+
+(MiMi, and associated manuscript, has been through peer review and has been accepted for publication in Molecular Ecology Resources {June 2019}).
 
 #### What does it do?
 MiMi is a Python script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/) (Castoe et al., 2012)
@@ -230,14 +237,6 @@ On my modest desktop machine, using data from a single Miseq run (approx 12-16Gb
 Data interpretation is identical to that described in the demo_data section, however you will hopefully have many more results. The rows in the "MiMi_output.txt" are ranked by the
 "Size Range" column as we propose that a large range in allele size is most likely to be indicative of a true polymorphic microsatellite as opposed to a sequencing error which may
 result in smaller slippages producing an inflated number of alleles.
-
-#### Cite MiMi
-If you found this tool useful please cite MiMi:
-
-Graeme Fox, Richard F. Preziosi, Rachael A. Antwis, Fraser J. Combe, W. Edwin Harris, Ian R. Hartley, Andrew C. Kitchener, Selvino R. de Kort, Anne-Isola Nekaris,
-Milena Benavides-Serrato, Jennifer K. Rowntree (accepted - awaiting publication) Multi-individual Microsatellite Identification (MiMi). A microsatellite design workflow incorporating multiple genomes. *Molecular Ecology Resources*
-
-(MiMi, and associated manuscript, has been through peer review and has been accepted for publication in Molecular Ecology Resources {June 2019}).
 
 #### References
 Castoe, T.A., Poole, A.W., Jason de Koning, A. P., Jones, K.L., Tomback, D.F., Oyler-McCance, S.J., Fike, J.A., Lance, S.L., Streicher, J.W., Smith, E.N. and Pollock, D.D. (2012) Rapid Microsatellite Identification from Illumina Paired-End Genomic Sequencing in Two Birds and a Snake. *PLoS ONE*. 7(2): e30953
