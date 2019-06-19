@@ -234,9 +234,10 @@ result in smaller slippages producing an inflated number of alleles.
 #### Cite MiMi
 If you found this tool useful please cite MiMi:
 
-Fox, G., Antwis, R., Preziosi, R.F. and Rowntree, J.K. (in progress) Multi individual Microsatellite identification (MiMi). A microsatellite design workflow incorporating multiple genomes.
+Graeme Fox, Richard F. Preziosi, Rachael A. Antwis, Fraser J. Combe, W. Edwin Harris, Ian R. Hartley, Andrew C. Kitchener, Selvino R. de Kort, Anne-Isola Nekaris,
+Milena Benavides-Serrato, Jennifer K. Rowntree (accepted - awaiting publication) Multi-individual Microsatellite Identification (MiMi). A microsatellite design workflow incorporating multiple genomes. *Molecular Ecology Resources*
 
-(MiMi is currently a work in progress but will be submitted for peer review and publication very soon).
+(MiMi, and associated manuscript, has been through peer review and has been accepted for publication in Molecular Ecology Resources {June 2019}).
 
 #### References
 Castoe, T.A., Poole, A.W., Jason de Koning, A. P., Jones, K.L., Tomback, D.F., Oyler-McCance, S.J., Fike, J.A., Lance, S.L., Streicher, J.W., Smith, E.N. and Pollock, D.D. (2012) Rapid Microsatellite Identification from Illumina Paired-End Genomic Sequencing in Two Birds and a Snake. *PLoS ONE*. 7(2): e30953
