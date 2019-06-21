@@ -195,7 +195,7 @@ def get_reads(sequencefile, wanted_primers, file_contains_primer, n, \
     for x, y in zip(wanted_primers, file_contains_primer):
         # if y==1 then the primer appears in that file, so do the search
         if str(y[n:n+1]) == "('1',)":
-            grep_script = "grep -nr -B 1 -A 2 \"" + \
+            grep_script = "grep -nrh -B 1 -A 2 \"" + \
                             x.rstrip("\n") + "\" " + sequencefile
             result = get_seqs(grep_script, "1", sequencefile, \
                               paired_sequence_file, x)
