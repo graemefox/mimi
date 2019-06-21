@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/python -tt
 ## sarah's machine: /usr/bin/python
-import ConfigParser, Bio, subprocess, os, time, csv, argparse, re, shutil, time, tempfile, argparse, numpy, sys
+import ConfigParser, Bio, subprocess, os, time, csv, argparse, re, shutil, time, tempfile, argparse, statistics, sys
 from Bio import SeqIO
 from subprocess import Popen, PIPE
 from os import walk
@@ -260,8 +260,8 @@ if __name__ == "__main__":
     try:
         import numpy
     except ImportError:
-        print("Please ensure that the Python module \"numpy\" is available.")
-        print("Try the command \"pip2 install numpy\"\n\n\n")
+        print("Please ensure that the Python module \"statistics\" is available.")
+        print("Try the command \"pip2 install statistics\"\n\n\n")
         pass
     time.sleep(1)
     print("\n\nReading MiMi config file......\n")
