@@ -1,5 +1,5 @@
 #!/usr/bin/python -tt
-import ConfigParser, subprocess, os, time, csv, Bio, argparse, re, shutil, time, tempfile, argparse, statistics
+import ConfigParser, subprocess, os, time, csv, Bio, argparse, re, shutil, time, tempfile, argparse, numpy
 from Bio import SeqIO
 from subprocess import Popen, PIPE
 from os import walk
@@ -848,7 +848,7 @@ if __name__ == "__main__":
                     l = re.compile("(-)*").split(str(record.seq.lstrip("-").rstrip("-")))
                     average.append(len(l))
             ## anything where this score is < 3 is a "low quality" alignment
-            if statistics.mean(average) < int(configParser.get('config_file', 'overall_alignment_qual_score')):
+            if float(sum(average))/float(len(average)) < int(configParser.get('config_file', 'overall_alignment_qual_score')):
                 low_qual_alignment_loci.append("1")
             else:
                 low_qual_alignment_loci.append("0")
