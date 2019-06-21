@@ -246,17 +246,17 @@ if __name__ == "__main__":
     print "          ~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     print "Multi-Individual-Microsatellite-Identification\n\n\n"
 
-    #time.sleep(1)
+    time.sleep(1)
     print("Reading config file......\n")
     # Read and parse the config file
-    #time.sleep(1)
+    time.sleep(1)
     configParser = ConfigParser.RawConfigParser()
     configParser.read(args.config1)
 
     # Get number of samples
     number_of_samples = configParser.get('config_file', 'number_of_samples')
     print number_of_samples + " samples to be analysed.\n"
-    #time.sleep(1)
+    time.sleep(1)
     proportion_of_individuals = configParser.get('config_file', \
                                                  'proportion_of_individuals')
     pal_finder_script = configParser.get('config_file', 'pal_finder_path')
@@ -278,7 +278,7 @@ if __name__ == "__main__":
     # files entered in config"
     # if they don't match, then it just errors
     ###############################
-    ##time.sleep(1)
+    #time.sleep(1)
     # Find the input files and check they exist (raw MiSeq fastQ files)
     n = 1
     check_for_duplicates = []
@@ -310,7 +310,7 @@ if __name__ == "__main__":
     # troubleshooting file path(s):
         print "Checking sequencing files and pal_finder output exist for \
                sample " + R1input + ":\n"
-        #time.sleep(1)
+        time.sleep(1)
         if os.path.isfile(R1_file_url) and os.path.isfile(R2_file_url) == True:
             print "Success: Found both sequencing files for sample \"" + \
                    R1input + "\""
