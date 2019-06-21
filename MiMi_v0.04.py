@@ -555,7 +555,7 @@ if __name__ == "__main__":
             if number % step != 0:
                 list_of_assembled_sequences.append(line)
             else:
-                list_of_assembled_IDs.append(line.rstrip("\n"))
+                list_of_assembled_IDs.append(line.rstrip("\n").split(";")[0])
 
     wanted = set()
     for ID, seq, containing_file in zip(list_of_assembled_IDs, list_of_assembled_sequences, wanted_containing_files):
@@ -648,8 +648,7 @@ if __name__ == "__main__":
             if (len(motifs.split(" "))-1) == 1:
                 ID = line.split("\t")[0]
                 temp_primer = ID.split(":")[7]
-                unique_primers.add(temp_primer.split(";")[0])
-                #unique_primers.add(ID.split(":")[7])
+                unique_primers.add(ID.split(":")[7].split(";")[0])
                 allele_count.append(0)
                 unique_alleles.append("Motifs: ")
     list_unique_primers = list(unique_primers)
@@ -663,7 +662,7 @@ if __name__ == "__main__":
             if (len(motifs.split(" "))-1) == 1:
                 ID = line.split("\t")[0]
                 for i, primer_line in enumerate(list_unique_primers):
-                    if ID.split(":")[7] == primer_line:
+                    if ID.split(":")[7].split(";")[0] == primer_line:
                         allele_count[i] = allele_count[i] + 1
                         unique_alleles[i] = unique_alleles[i] + motifs
 
