@@ -58,7 +58,7 @@ v0.1 (no longer available) - This is the initial version which should establish 
 This was made by a humble biology PhD student, not a "programmer", so please be patient!
 
 ### Installation Instructions
-This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 19.04) but *should* also work on OSX (your mileage may vary).
+This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 19.04) and has been successfully tested on OSX 10.14.3. MiMi depends on some other packages (PANDAseq, MUSCLE) which are occasionally updated and which may therefore break MiMi. If you have any trouble, you may have found one of these break-inducing updates. Please let the author know (g.fox@mmu.ac.uk).
 Ubuntu users should be able to easily install all required software and modules by running, or following, the "ubuntu_install_instructions.sh" shell script.
 
 #### Dependencies

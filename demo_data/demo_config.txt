@@ -68,8 +68,8 @@ pal_finder_config = demo_data/pal_finder_0.02.04/config.txt
 # rather than include them in your $PATH. You can provide them here.
 # (otherwise, leave these blank)
 
-PANDAseq_exe =
-muscle_exe =
+PANDAseq_exe = 
+muscle_exe = a/broken/path
 
 
 ###########################################################

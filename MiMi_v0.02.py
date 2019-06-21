@@ -214,9 +214,16 @@ def assemble_reads(forward_fastq, reverse_fastq, assembled_reads):
                              assembled_reads
     else:
         if configParser.get('config_file', 'PANDAseq_exe'):
-            pandaseq_command = configParser.get('config_file', 'PANDAseq_exe') \
-                + ' -f ' + forward_fastq + ' -r ' + reverse_fastq + ' -w ' + \
-                assembled_reads
+            if os.path.isfile(configParser.get('config_file', 'PANDAseq_exe')):
+                pandaseq_command = configParser.get('config_file', 'PANDAseq_exe') \
+                    + ' -f ' + forward_fastq + ' -r ' + reverse_fastq + ' -w ' + \
+                    assembled_reads
+            else:
+                print("ERROR............")
+                print("The location of PANDAseq specified in the config file")
+                print("is not correct.")
+                print("Please double check and update the filepath.\n")
+                quiit()
 
    ## redirect all pandaseqs spiel to dev/null/
     FNULL = open(os.devnull, 'w')
@@ -732,10 +739,17 @@ if __name__ == "__main__":
                 + ".aln -quiet"
             else:
                 if configParser.get('config_file', 'muscle_exe'):
-                    align_command = configParser.get('config_file', 'muscle_exe') \
-                    + " -in " + wd + "/MiMi_output/Alignments/" + MSA \
-                    + " -out " + wd + "/MiMi_output/Alignments/" + MSA \
-                    + ".aln -quiet"
+                    if os.path.isfile(configParser.get('config_file', 'muscle_exe')):
+                        align_command = configParser.get('config_file', 'muscle_exe') \
+                        + " -in " + wd + "/MiMi_output/Alignments/" + MSA \
+                        + " -out " + wd + "/MiMi_output/Alignments/" + MSA \
+                        + ".aln -quiet"
+                    else:
+                        print("ERROR.........")
+                        print("The path to the MUSCLE aligner specified in the")
+                        print("config file is not correct.")
+                        print("Please double check and update the filepath.\n")
+                        quit()
             subprocess.call(align_command, shell=True)
 
     ## trim everything previous to the position of the forward primer in the alignment
