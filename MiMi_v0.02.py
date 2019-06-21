@@ -246,17 +246,17 @@ if __name__ == "__main__":
     print "          ~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     print "Multi-Individual-Microsatellite-Identification\n\n\n"
 
-    time.sleep(1)
+    #time.sleep(1)
     print("Reading config file......\n")
     # Read and parse the config file
-    time.sleep(1)
+    #time.sleep(1)
     configParser = ConfigParser.RawConfigParser()
     configParser.read(args.config1)
 
     # Get number of samples
     number_of_samples = configParser.get('config_file', 'number_of_samples')
     print number_of_samples + " samples to be analysed.\n"
-    time.sleep(1)
+    #time.sleep(1)
     proportion_of_individuals = configParser.get('config_file', \
                                                  'proportion_of_individuals')
     pal_finder_script = configParser.get('config_file', 'pal_finder_path')
@@ -278,7 +278,7 @@ if __name__ == "__main__":
     # files entered in config"
     # if they don't match, then it just errors
     ###############################
-    #time.sleep(1)
+    ##time.sleep(1)
     # Find the input files and check they exist (raw MiSeq fastQ files)
     n = 1
     check_for_duplicates = []
@@ -310,7 +310,7 @@ if __name__ == "__main__":
     # troubleshooting file path(s):
         print "Checking sequencing files and pal_finder output exist for \
                sample " + R1input + ":\n"
-        time.sleep(1)
+        #time.sleep(1)
         if os.path.isfile(R1_file_url) and os.path.isfile(R2_file_url) == True:
             print "Success: Found both sequencing files for sample \"" + \
                    R1input + "\""
@@ -522,7 +522,7 @@ if __name__ == "__main__":
     ## need to get the IDs from the forward_for_asembly file and add them into this list
 
     for record in forward_reads:
-        pre_assembled_reads.append(record.id)
+        pre_assembled_reads.append(record.id)#
 
     ## filter the list of containing files to just the entries that made it through assembly.
     wanted_containing_files = []
@@ -538,7 +538,7 @@ if __name__ == "__main__":
             if number % step != 0:
                 list_of_assembled_sequences.append(line)
             else:
-                list_of_assembled_IDs.append(line.rstrip("\n"))
+                list_of_assembled_IDs.append(line.rstrip("\n").split(";")[0])
 
     wanted = set()
     for ID, seq, containing_file in zip(list_of_assembled_IDs, list_of_assembled_sequences, wanted_containing_files):
@@ -629,10 +629,11 @@ if __name__ == "__main__":
             motifs = (line.split("\t")[3])
             if (len(motifs.split(" "))-1) == 1:
                 ID = line.split("\t")[0]
-                unique_primers.add(ID.split(":")[7])
+                unique_primers.add(ID.split(":")[7].split(";")[0])
                 allele_count.append(0)
                 unique_alleles.append("Motifs: ")
     list_unique_primers = list(unique_primers)
+
 
     ## go through and get unique alleles associated with each primer sequence
     all_data = []
@@ -643,12 +644,13 @@ if __name__ == "__main__":
             if (len(motifs.split(" "))-1) == 1:
                 ID = line.split("\t")[0]
                 for i, primer_line in enumerate(list_unique_primers):
-                    if ID.split(":")[7] == primer_line:
+                    if ID.split(":")[7].split(";")[0] == primer_line:
                         allele_count[i] = allele_count[i] + 1
                         unique_alleles[i] = unique_alleles[i] + motifs
 
     # merge multiple lists
     for x, y, z in zip(unique_primers, allele_count, unique_alleles):
+        print(str(x) + "\t" + str(y) + "\t" + str(z))
         all_data.append("\t".join([x, str(y), z]))
 
     # remove any lines which have reported multiple motifs

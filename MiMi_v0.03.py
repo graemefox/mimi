@@ -265,17 +265,17 @@ if __name__ == "__main__":
         print("Please ensure that the Python module \"statistics\" is available.")
         print("Try the command \"pip2 install statistics\"\n\n\n")
         pass
-    time.sleep(1)
+    #time.sleep(1)
     print("\n\nReading MiMi config file......\n")
     # Read and parse the config file
-    time.sleep(1)
+    #time.sleep(1)
     configParser = ConfigParser.RawConfigParser()
     configParser.read(args.config1)
 
     # Get number of samples
     number_of_samples = configParser.get('config_file', 'number_of_samples')
     print number_of_samples + " samples to be analysed.\n"
-    time.sleep(1)
+    #time.sleep(1)
     proportion_of_individuals = configParser.get('config_file', \
                                                  'proportion_of_individuals')
     pal_finder_script = configParser.get('config_file', 'pal_finder_path')
@@ -329,7 +329,7 @@ if __name__ == "__main__":
     # troubleshooting file path(s):
         print "Checking sequencing files and pal_finder output exist for \
                sample " + R1input + ":\n"
-        time.sleep(1)
+        #time.sleep(1)
         if os.path.isfile(R1_file_url) and os.path.isfile(R2_file_url) == True:
             print "Success: Found both sequencing files for sample \"" + \
                    R1input + "\""
@@ -659,6 +659,7 @@ if __name__ == "__main__":
     with open(wd + "/MiMi_output/pal_finder_files/pal_finder_PAL_summary.txt") \
         as pf:
         for line in pf:
+            print(line)
             motifs = (line.split("\t")[3])
             if (len(motifs.split(" "))-1) == 1:
                 ID = line.split("\t")[0]
@@ -666,13 +667,14 @@ if __name__ == "__main__":
                     if ID.split(":")[7] == primer_line:
                         allele_count[i] = allele_count[i] + 1
                         unique_alleles[i] = unique_alleles[i] + motifs
-
+    """
     # merge multiple lists
     for x, y, z in zip(unique_primers, allele_count, unique_alleles):
         all_data.append("\t".join([x, str(y), z]))
 
     # remove any lines which have reported multiple motifs
     single_motif_only = []
+    print(all_data)
     for row in all_data:
         unique = set()
         motifs = row.split("\t")[2].split(":")[1].lstrip(" ").rstrip(" ")
@@ -683,6 +685,7 @@ if __name__ == "__main__":
 
     # calcualte difference in size between the biggest numof repeats and smallest
     diff_in_motif_size = []
+    print(single_motif_only)
     for row in single_motif_only:
         number_of_repeats = []
         for x in row.split("\t")[2].split(" ")[1:]:
@@ -960,3 +963,4 @@ if __name__ == "__main__":
     print (time.strftime("%H:%M:%S"))
     print("\n\nSuccessfully completed MiMi analysis.")
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+    """

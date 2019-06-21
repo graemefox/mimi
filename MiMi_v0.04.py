@@ -687,7 +687,6 @@ if __name__ == "__main__":
     print(single_motif_only)
     for row in single_motif_only:
         number_of_repeats = []
-        print(row)
         for x in row.split("\t")[2].split(" ")[1:]:
             for result in (re.findall(r'\d+', x)):
                 number_of_repeats.append(int(result))
