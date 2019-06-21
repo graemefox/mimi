@@ -650,7 +650,6 @@ if __name__ == "__main__":
 
     # merge multiple lists
     for x, y, z in zip(unique_primers, allele_count, unique_alleles):
-        print(str(x) + "\t" + str(y) + "\t" + str(z))
         all_data.append("\t".join([x, str(y), z]))
 
     # remove any lines which have reported multiple motifs
