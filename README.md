@@ -5,7 +5,7 @@
 If you find this tool useful please cite MiMi:
 
 Graeme Fox, Richard F. Preziosi, Rachael A. Antwis, Fraser J. Combe, W. Edwin Harris, Ian R. Hartley, Andrew C. Kitchener, Selvino R. de Kort, Anne-Isola Nekaris,
-Milena Benavides-Serrato, Jennifer K. Rowntree (2019) Multi-individual Microsatellite Identification (MiMi). A microsatellite design workflow incorporating multiple genomes. *Molecular Ecology Resources* 19(6). Pp 1672-1680. https://doi-org.mmu.idm.oclc.org/10.1111/1755-0998.13065
+Milena Benavides-Serrato, Jennifer K. Rowntree (2019) Multi-individual Microsatellite Identification (MiMi). A microsatellite design workflow incorporating multiple genomes. *Molecular Ecology Resources*. 19(6). Pp. 1672-1680. https://doi-org.mmu.idm.oclc.org/10.1111/1755-0998.13065
 
 #### What does it do?
 MiMi is a Python script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/) (Castoe et al., 2012)
