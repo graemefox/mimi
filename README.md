@@ -5,9 +5,7 @@
 If you find this tool useful please cite MiMi:
 
 Graeme Fox, Richard F. Preziosi, Rachael A. Antwis, Fraser J. Combe, W. Edwin Harris, Ian R. Hartley, Andrew C. Kitchener, Selvino R. de Kort, Anne-Isola Nekaris,
-Milena Benavides-Serrato, Jennifer K. Rowntree (accepted - awaiting publication) Multi-individual Microsatellite Identification (MiMi). A microsatellite design workflow incorporating multiple genomes. *Molecular Ecology Resources*
-
-(MiMi, and associated manuscript, has been through peer review and has been accepted for publication in Molecular Ecology Resources {June 2019}).
+Milena Benavides-Serrato, Jennifer K. Rowntree (2019) Multi-individual Microsatellite Identification (MiMi). A microsatellite design workflow incorporating multiple genomes. *Molecular Ecology Resources* https://doi-org.mmu.idm.oclc.org/10.1111/1755-0998.13065
 
 #### What does it do?
 MiMi is a Python script that attempts to build on the microsatellite markers design process [pal_finder](https://sourceforge.net/projects/palfinder/) (Castoe et al., 2012)
@@ -48,6 +46,9 @@ sequence conservation.
 
 ![Figure3 - insertion/deletion mutation](/images/fig2.png)
 
+### Notes on processing time and data input
+MiMi was designed to process Illumina MiSeq data. Whilst MiMi will analyse data from much larger Illumina sequencing platforms there is a significant increase in processing time. I regularly process eight samples, where each has approximately 1 million sequence reads. If your data is significantly bigger than this I suggest you subsample to reduce the size of your files and run MiMi on those.
+
 ### Versions
 v0.2 (release date: May 2019) - This is an updated version of the MiMi software. The core functionality of locus detection is unchanged. I have implemented some additional, automated filtering
 of the output. Alignments are automatically aligned using MUSCLE (additional software requirements now apply), alignments are trimmed to the primer positions, low quality alignments are
@@ -55,7 +56,6 @@ automatically removed (based upon a metric of 'gappiness' of an alignment - it's
 detailing the proportions of putative markers which have been removed by the filters, and also retaining all the loci should the user want to access any markers which have been filtered out.
 
 v0.1 (no longer available) - This is the initial version which should establish core functionality. Bugs are likely to be found and improvements/modifications will come in the future.
-This was made by a humble biology PhD student, not a "programmer", so please be patient!
 
 ### Installation Instructions
 This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 19.04) and has been successfully tested on OSX 10.14.3. MiMi depends on some other packages (PANDAseq, MUSCLE) which are occasionally updated and which may therefore break MiMi. If you have any trouble, you may have found one of these break-inducing updates. Please let the author know (g.fox@mmu.ac.uk).
