@@ -247,5 +247,4 @@ Castoe, T.A., Poole, A.W., Jason de Koning, A. P., Jones, K.L., Tomback, D.F., O
 Griffiths, S.M., Fox, G., Briggs, J., Donaldson, I.J., Hood, S., Richardson, P., Leaver, G.W., Truelove, N.K. and Preziosi, R.F. (2016) A Galaxy-based bioinformatics pipeline for optimised, streamlined microsatellite development from Illumina next-generation sequencing data. *Conservation Genetics Resources.* 8(4)pp. 481-486.
 
 #### Who made this?
-[Graeme Fox](https://graemefox.github.io)
-g.fox@mmu.ac.uk
+[Graeme Fox](https://graemefox.github.io) (g.fox@mmu.ac.uk)
