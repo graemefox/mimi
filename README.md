@@ -50,19 +50,22 @@ sequence conservation.
 MiMi was designed to process Illumina MiSeq data. Whilst MiMi will analyse data from much larger Illumina sequencing platforms there is a significant increase in processing time. I regularly process eight samples, where each has approximately 1 million sequence reads. If your data is significantly bigger than this I suggest you subsample to reduce the size of your files and run MiMi on those.
 
 ### Versions
-v0.2 (release date: May 2019) - This is an updated version of the MiMi software. The core functionality of locus detection is unchanged. I have implemented some additional, automated filtering
+v0.03 (release date August 2021 - This version of MiMi has been updated to run on Python3 since
+Python2 reached the end of life. Functionality should remain the same as previous versions.
+
+v0.02 (release date: May 2019 - no longer available) - This is an updated version of the MiMi software. The core functionality of locus detection is unchanged. I have implemented some additional, automated filtering
 of the output. Alignments are automatically aligned using MUSCLE (additional software requirements now apply), alignments are trimmed to the primer positions, low quality alignments are
 automatically removed (based upon a metric of 'gappiness' of an alignment - it's crude but effective), loci are ranked by the conservation of primer sequences. A new log file is produced
 detailing the proportions of putative markers which have been removed by the filters, and also retaining all the loci should the user want to access any markers which have been filtered out.
 
-v0.1 (no longer available) - This is the initial version which should establish core functionality. Bugs are likely to be found and improvements/modifications will come in the future.
+v0.01 (no longer available) - This is the initial version which should establish core functionality. Bugs are likely to be found and improvements/modifications will come in the future.
 
 ### Installation Instructions
-This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 19.04) and has been successfully tested on OSX 10.14.3. MiMi depends on some other packages (PANDAseq, MUSCLE) which are occasionally updated and which may therefore break MiMi. If you have any trouble, you may have found one of these break-inducing updates. Please let the author know (g.fox@mmu.ac.uk).
+This was made and tested on [Ubuntu Linux](https://www.ubuntu.com/) (currently 21.04) and has been successfully tested on OSX 10.14.3. MiMi depends on some other packages (PANDAseq, MUSCLE, pal_finder) which are occasionally updated and which may therefore break MiMi. If you have any trouble, you may have found one of these break-inducing updates. Please let the author know (g.fox@mmu.ac.uk).
 Ubuntu users should be able to easily install all required software and modules by running, or following, the "ubuntu_install_instructions.sh" shell script.
 
 #### Dependencies
-You need to have [Python2.7](https://www.python.org/), [Biopython](https://biopython.org/), [MUSCLE](https://www.drive5.com/muscle/downloads.htm) and [PANDAseq](https://github.com/neufeld/pandaseq) installed. Additionally, the Python module "numpy" is required. Currently, MiMi will not function using Python3.x. It will at some point be updated in the future.
+You need to have [Python3](https://www.python.org/), [Biopython](https://biopython.org/), [MUSCLE](https://www.drive5.com/muscle/downloads.htm) and [PANDAseq](https://github.com/neufeld/pandaseq) installed. Additionally, the Python module "numpy" is required.
 PANDAseq and MUSCLE must either be in your $PATH, or you specify paths to their executables in the config.txt file.
 
 #### Test PANDAseq installation:
@@ -231,7 +234,7 @@ Configure the MiMi_config.txt file to contain paths to each of your paired-end s
 ```
 ./MiMi_v0.02.py -c /path/to/MiMi_config.txt
 ```
-On my modest desktop machine, using data from a single Miseq run (approx 12-16Gb) the MiMi process runs in approximately four hours.
+On my (modest) desktop machine, using data from a single Miseq run (approx 12-16Gb) the MiMi process runs in approximately four hours, your mileage may vary.
 
 #### Interpret the results
 Data interpretation is identical to that described in the demo_data section, however you will hopefully have many more results. The rows in the "MiMi_output.txt" are ranked by the
@@ -245,3 +248,4 @@ Griffiths, S.M., Fox, G., Briggs, J., Donaldson, I.J., Hood, S., Richardson, P.,
 
 #### Who made this?
 [Graeme Fox](https://graemefox.github.io)
+g.fox@mmu.ac.uk
